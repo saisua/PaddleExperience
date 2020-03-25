@@ -5,21 +5,29 @@
  */
 package paddleexperience;
 
+// Javafx imports
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+// Internal imports
+import paddleexperience.Stopable;
+
 /**
  *
  * @author joandzmn
  */
+import javafx.fxml.Initializable;
 public class PaddleExperience extends Application {
+    FXMLLoader loader;
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLPaddleExperience.fxml"));
+        this.loader = new FXMLLoader(getClass().getResource("FXMLPaddleExperience.fxml"));
+        
+        Parent root = this.loader.load();
         
         Scene scene = new Scene(root);
         
@@ -27,6 +35,13 @@ public class PaddleExperience extends Application {
         stage.show();
     }
 
+    @Override
+    public void stop(){
+        Stopable controller = this.loader.<Stopable>getController();
+        
+        controller.stop();
+    }
+    
     /**
      * @param args the command line arguments
      */
