@@ -10,38 +10,43 @@ import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import java.lang.Character;
 
 // Scene
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 // Internal imports
 import paddleexperience.PasswordChecker;
+import paddleexperience.Stopable;
 
 /**
  * FXML Controller class
  *
  * @author saisua
  */
-public class FXMLPaddleLoginController implements Initializable {
+public class FXMLPaddleLoginController implements Initializable, Stopable {
     // // Scene
     @FXML
     private Text text_usuari;
     @FXML
-    private Text textfield_usuari;
+    private TextField textfield_usuari;
     @FXML
     private Text text_contrasena;
     @FXML
-    private Text textfield_contrasena;
+    private PasswordField textfield_contrasena;
     @FXML
     private Button button_continua;
     
     // Atributs estètics
-    private double button_opacity = button_continua.getOpacity();
+    private double button_opacity;
   
     // Atributs auxiliars
-    private boolean password_was_good = false;
+    private boolean password_was_good = true;
 
     /**
      * Initializes the controller class.
@@ -51,10 +56,23 @@ public class FXMLPaddleLoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println(PasswordChecker.check_password("c00RRectpa$$"));
+        
+       this.button_opacity = button_continua.getOpacity();
     }    
     
-    public void on_keyreleased_contrasena(Event _e){
-        boolean is_good = PasswordChecker.check_password(this.textfield_contrasena.getText());
+    @Override
+    public void stop(){}
+    
+    @FXML
+    public void on_keyTyped_contrasena(KeyEvent event){
+        boolean is_good = PasswordChecker.check_password(
+                this.textfield_contrasena.getText() + 
+                        ((PasswordChecker.is_valid_string(event.getCharacter())) 
+                                ? event.getCharacter() : ""
+                        )
+            );
+
+        System.out.println(event.getCharacter());
         
         // Comprove si la contrasenya era bona abans per
         // si en un futur havera de modificar moltes coses,
@@ -62,7 +80,7 @@ public class FXMLPaddleLoginController implements Initializable {
         if(password_was_good != is_good){
             if(is_good){ // La contraseña es valida
                 this.text_contrasena.setFill(Color.BLACK);
-                this.textfield_contrasena.setStroke(Color.BLACK);
+                //this.textfield_contrasena.getShape().setStroke(Color.BLACK);
                 
                 this.button_continua.setOpacity(1);
                 if(this.textfield_usuari.getText().length() > 0)
@@ -70,7 +88,7 @@ public class FXMLPaddleLoginController implements Initializable {
                 
             } else { // La contraseña no es valida
                 this.text_contrasena.setFill(Color.RED);
-                this.textfield_contrasena.setStroke(Color.RED);
+                //this.textfield_contrasena.getShape().setStroke(Color.RED);
                 
                 this.button_continua.setOpacity(this.button_opacity);
                 this.button_continua.setDisable(true);
@@ -81,6 +99,7 @@ public class FXMLPaddleLoginController implements Initializable {
     }
     
     public void on_click_continua(Event _e){
+        System.out.println("Password is good!!!");
         // Accedix a la base de dades, comprova veracitat usuari i canvia escena
     }
     

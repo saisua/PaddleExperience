@@ -6,24 +6,34 @@
 package paddleexperience;
 
 // Java imports
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Random;
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
 // JavaFX imports
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 // Internal imports
 import paddleexperience.Stopable;
+import paddleexperience.PaddleExperience;
 
 /**
  *
@@ -79,15 +89,27 @@ public class FXMLPaddleExperienceController implements Initializable, Stopable{
     // Objecte que conté el thread que va canviant la opacitat
     private OpacityThread thread;
     
+    URL url;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.thread = new OpacityThread(this.text_benvinguda);
         this.thread.start();
+        
+        this.url = url;
     }
     
     public void stop() throws InterruptedException{
         this.thread.open = false;
-        this.thread.join(300);
+        this.thread.join(3000);
+    }
+    
+    // Manejadors d'events
+    public void on_click_login(Event event) throws InterruptedException, IOException{
+        System.out.println("\nClicked login!");
+        this.stop();
+        
+        PaddleExperience.setRoot(event, "FXMLPaddleLogin.fxml");
     }
 }
 
@@ -101,7 +123,7 @@ class OpacityThread extends Thread{
     
     
     // // Variables auxiliars
-    private static final double OPACITY_PERC_ds = ((double) Math.pow(10,(Math.floor((Math.log10(FADE))-1))))/FADE;
+    private static final double OPACITY_PERC_ds = Math.pow(10,(Math.floor((Math.log10(FADE))-1)))/FADE;
     
     private boolean opacity_up = false;
     // Iterador per a accés més veloç
@@ -110,9 +132,7 @@ class OpacityThread extends Thread{
     public OpacityThread(Text text_benvinguda){
         this.text_benvinguda = text_benvinguda;
         
-        for(int initial_pos = 0; initial_pos < (new Random().nextInt(FXMLPaddleExperienceController.WELCOME.size()-2)); initial_pos++){
-            this.WELCOME_ITERATOR.next();
-        }
+        Collections.shuffle(FXMLPaddleExperienceController.WELCOME);
         
         this.text_benvinguda.setText((String) this.WELCOME_ITERATOR.next());
     }
@@ -124,14 +144,10 @@ class OpacityThread extends Thread{
             if(this.opacity_up){
                 this.text_benvinguda.setOpacity(this.text_benvinguda.getOpacity() + OPACITY_PERC_ds);
                 
-                System.out.println(this.text_benvinguda.getOpacity());
-                
                 if(this.text_benvinguda.getOpacity() >= 1) this.opacity_up = false;
                 
             } else {
                 this.text_benvinguda.setOpacity(this.text_benvinguda.getOpacity() - OPACITY_PERC_ds);
-                
-                System.out.println(this.text_benvinguda.getOpacity());
                 
                 if(this.text_benvinguda.getOpacity() <= 0){
                     this.opacity_up = true;
