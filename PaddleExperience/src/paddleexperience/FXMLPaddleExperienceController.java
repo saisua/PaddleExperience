@@ -19,7 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
 // Internal imports
@@ -32,7 +32,7 @@ import paddleexperience.Stopable;
 public class FXMLPaddleExperienceController implements Initializable, Stopable{
     // // SCENE
     @FXML
-    private Image image_logo;
+    private ImageView image_logo;
     @FXML
     private Text text_benvinguda;
     @FXML
@@ -101,8 +101,7 @@ class OpacityThread extends Thread{
     
     
     // // Variables auxiliars
-    // Si el fade està mal es culpa de esta linea
-    private static final double opacity_perc_ds = Math.pow(10,(Math.floor(Math.log(FADE))-1))/FADE;
+    private static final double OPACITY_PERC_ds = ((double) Math.pow(10,(Math.floor((Math.log10(FADE))-1))))/FADE;
     
     private boolean opacity_up = false;
     // Iterador per a accés més veloç
@@ -123,12 +122,16 @@ class OpacityThread extends Thread{
     public void run(){
         while(this.open){
             if(this.opacity_up){
-                this.text_benvinguda.setOpacity(this.text_benvinguda.getOpacity() + opacity_perc_ds);
+                this.text_benvinguda.setOpacity(this.text_benvinguda.getOpacity() + OPACITY_PERC_ds);
+                
+                System.out.println(this.text_benvinguda.getOpacity());
                 
                 if(this.text_benvinguda.getOpacity() >= 1) this.opacity_up = false;
                 
             } else {
-                this.text_benvinguda.setOpacity(this.text_benvinguda.getOpacity() - opacity_perc_ds);
+                this.text_benvinguda.setOpacity(this.text_benvinguda.getOpacity() - OPACITY_PERC_ds);
+                
+                System.out.println(this.text_benvinguda.getOpacity());
                 
                 if(this.text_benvinguda.getOpacity() <= 0){
                     this.opacity_up = true;
