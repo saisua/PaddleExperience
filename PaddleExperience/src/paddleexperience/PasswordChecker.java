@@ -36,21 +36,21 @@ public class PasswordChecker {
         // Afegir lookahead de majúscules
         if(MINIMUM_UPPER > 0){
             result += "(?=";
-            for(int upper = 0; upper < MINIMUM_UPPER;) result += ".*[A-Z]";
+            for(int upper = 0; upper < MINIMUM_UPPER; upper++) result += ".*[A-Z]";
             result += ')';
         }
 
         // Afegir lookahead de numeros
         if(MINIMUM_NUMBERS > 0){
             result += "(?=";
-            for(int upper = 0; upper < MINIMUM_UPPER;) result += ".*\\d";
+            for(int numbers = 0; numbers < MINIMUM_NUMBERS;) result += ".*\\d";
             result += ')';
         }
 
         // Afegir lookahead de símbols (@,$,!,%,*,?,&)
         if(MINIMUM_SYMBOL > 0){
             result += "(?=";
-            for(int upper = 0; upper < MINIMUM_UPPER;) result += ".*[@$!%*?&]";
+            for(int symbol = 0; symbol < MINIMUM_SYMBOL;) result += ".*[@$!%*?&]";
             result += ')';
         }
 
