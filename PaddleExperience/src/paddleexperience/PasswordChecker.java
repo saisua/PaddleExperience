@@ -43,14 +43,14 @@ public class PasswordChecker {
         // Afegir lookahead de numeros
         if(MINIMUM_NUMBERS > 0){
             result += "(?=";
-            for(int numbers = 0; numbers < MINIMUM_NUMBERS;) result += ".*\\d";
+            for(int numbers = 0; numbers < MINIMUM_NUMBERS; numbers++) result += ".*\\d";
             result += ')';
         }
 
         // Afegir lookahead de símbols (@,$,!,%,*,?,&)
         if(MINIMUM_SYMBOL > 0){
             result += "(?=";
-            for(int symbol = 0; symbol < MINIMUM_SYMBOL;) result += ".*[@$!%*?&]";
+            for(int symbol = 0; symbol < MINIMUM_SYMBOL; symbol++) result += ".*[@$!%*?&]";
             result += ')';
         }
 
