@@ -21,8 +21,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 // Internal imports
-import paddleexperience.PasswordChecker;
-import paddleexperience.Stopable;
+import paddleexperience.Structures.PasswordChecker;
+import paddleexperience.Structures.Stopable;
+import model.Member;
+import DBAcess.ClubDBAccess;
+import paddleexperience.PaddleExperience;
+import paddleexperience.PaddleExperience;
+import paddleexperience.Structures.PasswordChecker;
+import paddleexperience.Structures.Stopable;
 
 /**
  * FXML Controller class
@@ -55,13 +61,18 @@ public class FXMLPaddleLoginController implements Initializable, Stopable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println(PasswordChecker.check_password("c00RRectpa$$"));
+        // Tests
+        PasswordChecker.club.getMembers().add(new Member("John","Doe","601234567","aaaa","AA11@@aa","","",null));
+        // End tests
         
        this.button_opacity = button_continua.getOpacity();
     }    
     
-    @Override
-    public void stop(){}
+    public void stop() throws InterruptedException{
+        System.out.println("Login Stopped Successfully");
+    }
+    
+    // // Manejadors d'events
     
     @FXML
     public void on_keyTyped_contrasena(KeyEvent event){
@@ -71,8 +82,11 @@ public class FXMLPaddleLoginController implements Initializable, Stopable {
                                 ? event.getCharacter() : ""
                         )
             );
-
-        System.out.println(event.getCharacter());
+        
+        System.out.println(this.textfield_contrasena.getText() + 
+                        ((PasswordChecker.is_valid_string(event.getCharacter())) 
+                                ? event.getCharacter() : ""
+                        ));
         
         // Comprove si la contrasenya era bona abans per
         // si en un futur havera de modificar moltes coses,
@@ -82,9 +96,10 @@ public class FXMLPaddleLoginController implements Initializable, Stopable {
                 this.text_contrasena.setFill(Color.BLACK);
                 //this.textfield_contrasena.getShape().setStroke(Color.BLACK);
                 
-                this.button_continua.setOpacity(1);
-                if(this.textfield_usuari.getText().length() > 0)
+                if(this.textfield_usuari.getText().length() > 0){
+                    this.button_continua.setOpacity(1);
                     this.button_continua.setDisable(false);
+                }
                 
             } else { // La contraseña no es valida
                 this.text_contrasena.setFill(Color.RED);
@@ -98,9 +113,42 @@ public class FXMLPaddleLoginController implements Initializable, Stopable {
         this.password_was_good = is_good;
     }
     
+    @FXML
+    public void on_keyTyped_ususari(KeyEvent event){
+        if((this.textfield_usuari.getText() + 
+                        ((PasswordChecker.is_valid_string(event.getCharacter())) 
+                                ? event.getCharacter() : ""
+                        ))
+                    .length() > 0){
+            this.text_usuari.setFill(Color.BLACK);
+            
+            if(this.password_was_good && this.textfield_contrasena.getText().length() > 0){
+                this.button_continua.setOpacity(1);
+                this.button_continua.setDisable(false);
+            }
+        }
+    }
+    
+    @FXML
     public void on_click_continua(Event _e){
-        System.out.println("Password is good!!!");
-        // Accedix a la base de dades, comprova veracitat usuari i canvia escena
+        String pass = this.textfield_contrasena.getText();
+        String login = this.textfield_usuari.getText();
+        if(!PasswordChecker.club.existsLogin(login)) {
+            System.out.println("User "+login+" does not exist");
+            this.text_usuari.setFill(Color.RED);
+        }
+        //else
+        if(PasswordChecker.club.getMemberByCredentials(login, pass) != null)
+            System.out.println("Member is valid!");
+            // Canvia la escena al home
+        else 
+            System.out.println("Member is not valid!");
+    }
+    
+    @FXML
+    public void on_click_enrere(Event event){
+        System.out.println("Clicked back!");
+        PaddleExperience.setRoot(event, "FXMLPaddleExperience.fxml");
     }
     
 }

@@ -32,8 +32,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 // Internal imports
-import paddleexperience.Stopable;
+import paddleexperience.Structures.Stopable;
 import paddleexperience.PaddleExperience;
+import paddleexperience.PaddleExperience;
+import paddleexperience.PaddleExperience;
+import paddleexperience.Structures.Stopable;
 
 /**
  *
@@ -89,27 +92,29 @@ public class FXMLPaddleExperienceController implements Initializable, Stopable{
     // Objecte que conté el thread que va canviant la opacitat
     private OpacityThread thread;
     
-    URL url;
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.thread = new OpacityThread(this.text_benvinguda);
         this.thread.start();
-        
-        this.url = url;
     }
     
     public void stop() throws InterruptedException{
         this.thread.open = false;
         this.thread.join(3000);
+        System.out.println("Welcome Stoped Successfully");
     }
     
-    // Manejadors d'events
+    // // Manejadors d'events
     public void on_click_login(Event event) throws InterruptedException, IOException{
-        System.out.println("\nClicked login!");
         this.stop();
         
         PaddleExperience.setRoot(event, "FXMLPaddleLogin.fxml");
+    }
+    
+    public void on_click_pistes(Event event) throws InterruptedException, IOException{
+        this.stop();
+        
+        PaddleExperience.setRoot(event, "FXMLPaddleReserva.fxml");
     }
 }
 
