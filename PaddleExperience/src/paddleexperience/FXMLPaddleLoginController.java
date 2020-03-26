@@ -24,17 +24,17 @@ import javafx.scene.text.TextFlow;
 // Internal imports
 import model.Member;
 import DBAcess.ClubDBAccess;
-import paddleexperience.Structures.Stopable;
 import paddleexperience.PaddleExperience;
 import paddleexperience.Structures.PasswordChecker;
 import paddleexperience.Dataclasses.Estat;
+import paddleexperience.Structures.Stoppable;
 
 /**
  * FXML Controller class
  *
  * @author saisua
  */
-public class FXMLPaddleLoginController implements Initializable, Stopable {
+public class FXMLPaddleLoginController implements Initializable, Stoppable {
     // // Scene
     @FXML
     private Text text_usuari;

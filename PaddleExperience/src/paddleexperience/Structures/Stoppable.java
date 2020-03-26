@@ -9,7 +9,7 @@ package paddleexperience.Structures;
  *
  * @author saisua
  */
-public interface Stopable{
+public interface Stoppable{
     public void stop() throws InterruptedException;
     
     public void refresh();

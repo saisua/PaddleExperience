@@ -21,7 +21,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 // Internal imports
-import paddleexperience.Structures.Stopable;
+import paddleexperience.Structures.Stoppable;
 
 /**
  *
@@ -74,7 +74,7 @@ public class PaddleExperience extends Application {
     public void stop() throws InterruptedException{
         if(controllers.get(back_root) == null) return;
         
-        Stopable controller = (Stopable) controllers.get(back_root);
+        Stoppable controller = (Stoppable) controllers.get(back_root);
         
         //System.out.println(controller);
         
@@ -98,8 +98,8 @@ public class PaddleExperience extends Application {
     public static void setRoot(Event event, String sceneName) throws InterruptedException{
         ((Node) event.getSource()).getScene().setRoot(root.get(sceneName));
         
-        ((Stopable) controllers.get(back_root)).stop();
-        ((Stopable) controllers.get(sceneName)).refresh();
+        ((Stoppable) controllers.get(back_root)).stop();
+        ((Stoppable) controllers.get(sceneName)).refresh();
         
         prev_root = back_root;
         back_root = sceneName;
@@ -112,8 +112,8 @@ public class PaddleExperience extends Application {
     public static void back(Event event) throws InterruptedException{
         ((Node) event.getSource()).getScene().setRoot(root.get(prev_root));
         
-        ((Stopable) controllers.get(back_root)).stop();
-        ((Stopable) controllers.get(prev_root)).refresh();
+        ((Stoppable) controllers.get(back_root)).stop();
+        ((Stoppable) controllers.get(prev_root)).refresh();
         
         // Swap prev_root, back_root
             String aux = prev_root;
@@ -123,12 +123,12 @@ public class PaddleExperience extends Application {
     
     // 
     public static Parent getParent(){
-        ((Stopable) controllers.get(back_root)).refresh();
+        ((Stoppable) controllers.get(back_root)).refresh();
         
         return (Parent) controllers.get(back_root);
     }
     public static Parent getParent(String sceneName){
-        ((Stopable) controllers.get(sceneName)).refresh();
+        ((Stoppable) controllers.get(sceneName)).refresh();
         
         return (Parent) controllers.get(sceneName);
     }

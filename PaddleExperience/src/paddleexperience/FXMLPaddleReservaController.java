@@ -30,14 +30,14 @@ import javafx.scene.text.Text;
 import paddleexperience.PaddleExperience;
 import paddleexperience.Dataclasses.Hora;
 import paddleexperience.PaddleExperience;
-import paddleexperience.Structures.Stopable;
+import paddleexperience.Structures.Stoppable;
 
 /**
  * FXML Controller class
  *
  * @author saisua
  */
-public class FXMLPaddleReservaController implements Initializable, Stopable {
+public class FXMLPaddleReservaController implements Initializable, Stoppable {
     // // Scene
     @FXML
     private GridPane gridpane_main;

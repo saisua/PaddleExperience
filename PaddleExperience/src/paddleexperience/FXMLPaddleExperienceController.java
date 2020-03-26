@@ -33,17 +33,17 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 // Internal imports
-import paddleexperience.Structures.Stopable;
 import paddleexperience.PaddleExperience;
 import paddleexperience.PaddleExperience;
 import paddleexperience.PaddleExperience;
-import paddleexperience.Structures.Stopable;
+import paddleexperience.Structures.Stoppable;
+import paddleexperience.Structures.Stoppable;
 
 /**
  *
  * @author saisua
  */
-public class FXMLPaddleExperienceController implements Initializable, Stopable {
+public class FXMLPaddleExperienceController implements Initializable, Stoppable {
 
     // // SCENE
     @FXML
