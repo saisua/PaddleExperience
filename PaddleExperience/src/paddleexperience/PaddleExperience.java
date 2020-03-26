@@ -13,9 +13,11 @@ import java.util.HashMap;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 // Internal imports
@@ -26,34 +28,55 @@ import paddleexperience.Structures.Stopable;
  * @author joandzmn
  */
 public class PaddleExperience extends Application {
-    FXMLLoader loader;
     
+    private static final int minHeight = 350;
+    private static final int minWidth = 300;
+    
+    // Loader
     private static final HashMap<String, Parent> root = new HashMap<String, Parent>();
+    private static final HashMap<String, Object> controllers = new HashMap<String, Object>();
     private static String back_root, prev_root;
 
     @Override
     public void start(Stage stage) throws Exception {
-        // Carrega tots els fxml en un diccionari per poder obrir-los més tard
-        for(File file : new File("./src/paddleexperience/").listFiles())
-            if (file.isFile() && file.getName().endsWith(".fxml")) 
-                root.put(file.getName(), FXMLLoader.load(getClass().getResource(file.getName())));
-        
         // Initial scene
         back_root = "FXMLPaddleExperience.fxml";
         prev_root = back_root;
         
-        this.loader = new FXMLLoader(getClass().getResource(back_root));
+        
+        // Carrega tots els fxml en un diccionari per poder obrir-los més tard
+        FXMLLoader loader;
+        Parent initial_root = null;
+        
+        for(File file : new File("./src/paddleexperience/").listFiles())
+            if (file.isFile() && file.getName().endsWith(".fxml")){
+                loader = new FXMLLoader(getClass().getResource(file.getName()));
+                root.put(file.getName(), loader.load());
+                controllers.put(file.getName(), loader.getController());
+                
+                if(file.getName().equals(back_root)) initial_root = root.get(file.getName());
+            }
+        
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        
+        stage.setWidth(minWidth);//screenBounds.getWidth());
+        stage.setHeight(minHeight);//screenBounds.getHeight());
+        
+        stage.setMinHeight(minHeight);
+        stage.setMinWidth(minWidth);
         
         stage.setTitle("Paddle Experience - International");
-        stage.setScene(new Scene(this.loader.load()));
+        stage.setScene(new Scene(initial_root));
         stage.show();
     }
 
     @Override
     public void stop() throws InterruptedException{
-        if(this.loader == null) return;
+        if(controllers.get(back_root) == null) return;
         
-        Stopable controller = this.loader.<Stopable>getController();
+        Stopable controller = (Stopable) controllers.get(back_root);
+        
+        //System.out.println(controller);
         
         if(controller == null) return;
         
@@ -72,8 +95,11 @@ public class PaddleExperience extends Application {
     // Canvia el root de l'escena en la finestra
     // on ha ocorregut l'Event event. Esta funció
     // NO ha de ser utilitzada com a manejador d'events
-    public static void setRoot(Event event, String sceneName){
+    public static void setRoot(Event event, String sceneName) throws InterruptedException{
         ((Node) event.getSource()).getScene().setRoot(root.get(sceneName));
+        
+        ((Stopable) controllers.get(back_root)).stop();
+        ((Stopable) controllers.get(sceneName)).refresh();
         
         prev_root = back_root;
         back_root = sceneName;
@@ -83,12 +109,27 @@ public class PaddleExperience extends Application {
     // en la finestra on ha ocorregut l'Event event.
     // Esta funció NO ha de ser utilitzada com a manejador 
     // d'events
-    public static void back(Event event){
+    public static void back(Event event) throws InterruptedException{
         ((Node) event.getSource()).getScene().setRoot(root.get(prev_root));
+        
+        ((Stopable) controllers.get(back_root)).stop();
+        ((Stopable) controllers.get(prev_root)).refresh();
         
         // Swap prev_root, back_root
             String aux = prev_root;
             prev_root = back_root;
             back_root = aux;
+    }
+    
+    // 
+    public static Parent getParent(){
+        ((Stopable) controllers.get(back_root)).refresh();
+        
+        return (Parent) controllers.get(back_root);
+    }
+    public static Parent getParent(String sceneName){
+        ((Stopable) controllers.get(sceneName)).refresh();
+        
+        return (Parent) controllers.get(sceneName);
     }
 }

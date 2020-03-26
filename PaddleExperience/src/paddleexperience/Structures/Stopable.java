@@ -11,4 +11,6 @@ package paddleexperience.Structures;
  */
 public interface Stopable{
     public void stop() throws InterruptedException;
+    
+    public void refresh();
 }

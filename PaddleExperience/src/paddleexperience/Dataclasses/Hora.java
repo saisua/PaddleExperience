@@ -8,27 +8,33 @@ package paddleexperience.Dataclasses;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 
 /**
  *
  * @author saisua
  */
 public final class Hora{
-    private final Pane hora = new Pane();
-    private final Pane test = new Pane();
+    private final TextFlow hora = new TextFlow();
+    private final TextFlow test = new TextFlow();
     
     public Hora(String hora){
-        this.hora.getChildren().add(new Text(hora));
-        this.test.getChildren().add(new Text("Test"));
+        Text h = new Text(hora);
         
-        //this.hora.setStyle("-fx-alignment: UPPER-RIGHT;");
+        //System.out.println(this.hora.getLayoutY());
+        //System.out.println(this.hora.layoutBoundsProperty().getValue());
+        //h.layoutYProperty().set(this.hora.layoutBoundsProperty().getValue().getHeight()/2);
+        
+        
+        this.hora.getChildren().add(h);
+        this.test.getChildren().add(new Text("Test"));
     }
     
-    public Pane getHora(){
+    public TextFlow getHora(){
         return this.hora;
     }
     
-    public Pane getTest(){
+    public TextFlow getTest(){
         return this.test;
     }
 }

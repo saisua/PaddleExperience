@@ -13,17 +13,13 @@ import DBAcess.ClubDBAccess;
  * @author saisua
  */
 public class PasswordChecker {
-    // Instancia de ClubDBAccess per poder accedir a la mateixa instància
-    // amb mètodes estàtics desde tot el projecte
-    public static final ClubDBAccess club = ClubDBAccess.getSingletonClubDBAccess();
-    
     // // Login requeriments contrasenya
-    private static int MINIMUM_LETTERS = 8;
-    private static final int MINIMUM_UPPER = 2;
-    private static final int MINIMUM_NUMBERS = 2;
-    private static final int MINIMUM_SYMBOL = 1;
+    public static int MINIMUM_LETTERS = 8;
+    public static final int MINIMUM_UPPER = 2;
+    public static final int MINIMUM_NUMBERS = 2;
+    public static final int MINIMUM_SYMBOL = 1;
     
-    private static final String VALID_SYMBOLS = "@$!%*?&";
+    public static final String VALID_SYMBOLS = "@$!%()*?&";
     
     // Deixe esta variable en minuscula per a diferenciar-la
     private static final String password_regexp = create_regexp();
@@ -40,13 +36,6 @@ public class PasswordChecker {
         return String.valueOf(character).matches("[a-z\\d"+VALID_SYMBOLS+"]");
     }
     
-    
-    
-    // // GETTERS
-    // No deuria ser gastada esta funció
-    public static ClubDBAccess get_club(){
-        return club;
-    }
     
     // // AUXILIAR FUNCTIONS
     
