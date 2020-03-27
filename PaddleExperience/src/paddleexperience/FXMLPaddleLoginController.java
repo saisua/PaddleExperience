@@ -24,6 +24,7 @@ import javafx.scene.text.TextFlow;
 // Internal imports
 import model.Member;
 import DBAcess.ClubDBAccess;
+import javafx.scene.input.KeyCode;
 import paddleexperience.PaddleExperience;
 import paddleexperience.Structures.PasswordChecker;
 import paddleexperience.Dataclasses.Estat;
@@ -152,14 +153,24 @@ public class FXMLPaddleLoginController implements Initializable, Stoppable {
     }
     
     @FXML
-    public void on_click_continua(Event _e){
+    public void on_enter_continua(KeyEvent event) throws InterruptedException{
+        if(!this.button_continua.isDisabled() && event.getCode() == KeyCode.ENTER) {
+            this.on_click_continua((Event) event);
+            event.consume();
+        }
+    }
+    
+    @FXML
+    public void on_click_continua(Event event) throws InterruptedException {
         String pass = this.textfield_contrasena.getText();
         String login = this.textfield_usuari.getText();
         
-        //else
-        if(Estat.club.getMemberByCredentials(login, pass) != null){
-            System.out.println("Member is valid!");
-            // Canvia la escena al home
+        Member login_result = Estat.club.getMemberByCredentials(login, pass);
+        
+        if(login_result != null){
+            Estat.setMember(login_result);
+            
+            PaddleExperience.setParent(event, "FXMLSidebar.fxml");
             return;
         }
         else 
@@ -181,7 +192,7 @@ public class FXMLPaddleLoginController implements Initializable, Stoppable {
     @FXML
     public void on_click_enrere(Event event) throws InterruptedException{
         System.out.println("Clicked back!");
-        PaddleExperience.setRoot(event, "FXMLPaddleExperience.fxml");
+        PaddleExperience.setParent(event, "FXMLPaddleExperience.fxml");
     }
     
 }

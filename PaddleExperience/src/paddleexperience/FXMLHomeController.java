@@ -16,13 +16,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import model.Booking;
+import paddleexperience.Dataclasses.Estat;
+import paddleexperience.Structures.Stoppable;
 
 /**
  * FXML Controller class
  *
  * @author joandzmn
  */
-public class FXMLHomeController implements Initializable {
+public class FXMLHomeController implements Initializable, Stoppable {
 
     @FXML
     private ImageView imPerfil;
@@ -40,8 +42,22 @@ public class FXMLHomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        this.refresh();
+    }
+    
+    // S'executa cada vegada que es tanca l'escena
+    @Override
+    public void stop() throws InterruptedException{
+        System.out.println("Home closed");
+    }
+    
+    
+    // S'executa cada vegada que es carrega l'escena
+    @Override
+    public void refresh(){
         ClubDBAccess clubDBAccess;
-        clubDBAccess = ClubDBAccess.getSingletonClubDBAccess();
+        clubDBAccess = Estat.club;
         ArrayList<Booking> listaReservas = clubDBAccess.getBookings();
         int proximaReserva = proximaReserva(listaReservas);
         int ultimaReserva = ultimaReserva(listaReservas);

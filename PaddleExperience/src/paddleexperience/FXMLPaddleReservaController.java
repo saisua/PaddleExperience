@@ -25,6 +25,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import paddleexperience.Dataclasses.Estat;
 
 // Interal imports
 import paddleexperience.PaddleExperience;
@@ -54,6 +55,7 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // Tests
         this.tablecolumn_hora.setCellValueFactory(new PropertyValueFactory<>("hora"));
         this.tablecolumn_test.setCellValueFactory(new PropertyValueFactory<>("test"));
         
@@ -61,6 +63,9 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
         
         this.tableview_horari.getItems().add(new Hora("19:00"));
         this.tableview_horari.getItems().add(new Hora("20:00"));
+        // End tests
+        
+        this.refresh();
     }    
     
     public void stop() throws InterruptedException{
@@ -69,6 +74,8 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
     
     public void refresh(){
         System.out.println("Login Refreshed");
+        
+        if(Estat.getMember() != null) this.button_enrere.setVisible(false);
     }
     
     // Manejadors d'events

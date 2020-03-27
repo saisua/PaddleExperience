@@ -31,7 +31,7 @@ public final class Estat {
     
     // // STATE METHODS
     
-    public void save(){
+    public static void save(){
         if(club.saveDB())
             System.out.println("Base de dades actualitzada!");
         else{
@@ -46,34 +46,34 @@ public final class Estat {
     
     // // GETTERS
     
-    public ClubDBAccess getClub(){
+    public static ClubDBAccess getClub(){
         return club;
     }
     
-    public Member getMember(){
+    public static Member getMember(){
         return member;
     }
     
-    public LocalDateTime getDate(){
+    public static LocalDateTime getDate(){
         return data;
     }
     
-    public LocalDate getTime(){
+    public static LocalDate getTime(){
         return hora;
     }
     
     
     // // SETTERS
     
-    public void setMember(Member member_set){
+    public static void setMember(Member member_set){
         member = member_set;
     }
     
-    public void setDate(LocalDateTime new_date){
+    public static void setDate(LocalDateTime new_date){
         data = new_date;
     }
     
-    public void setTime(LocalDate new_time){
+    public static void setTime(LocalDate new_time){
         hora = new_time;
     }
 }

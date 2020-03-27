@@ -11,7 +11,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="395.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLPaddleExperienceController">
    <children>
       <GridPane alignment="CENTER" prefHeight="211.0" prefWidth="317.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -55,7 +54,7 @@
                   <Insets bottom="15.0" />
                </GridPane.margin>
             </Text>
-            <Button fx:id="button_registrar" alignment="CENTER" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="20.0" text="Registra't" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <Button fx:id="button_registrar" alignment="CENTER" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#on_click_registre" prefHeight="20.0" text="Registra't" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="9.0" />
                </font>

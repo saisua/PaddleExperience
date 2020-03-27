@@ -15,9 +15,9 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="382.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLPaddleLoginController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLPaddleLoginController">
    <children>
-      <GridPane alignment="CENTER" prefHeight="382.0" prefWidth="600.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
+      <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="99.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.0" minWidth="10.0" prefWidth="345.0" />
@@ -35,9 +35,9 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </Button>
-            <VBox minWidth="0.0" prefHeight="239.0" prefWidth="325.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="0.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <HBox spacing="75.0">
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="75.0">
                      <children>
                         <Text fx:id="text_usuari" stroke="#969696" strokeType="OUTSIDE" strokeWidth="0.3" text="Usuari" HBox.hgrow="ALWAYS">
                            <font>
@@ -47,8 +47,8 @@
                         <Text fx:id="text_error_usuari" fill="#3c3c3c" strokeType="OUTSIDE" strokeWidth="0.0" text="El usuari no és vàlid" visible="false" />
                      </children>
                   </HBox>
-                  <TextField fx:id="textfield_usuari" minWidth="0.0" onKeyTyped="#on_keyTyped_ususari" />
-                  <Separator prefWidth="200.0" />
+                  <TextField fx:id="textfield_usuari" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="0.0" onKeyPressed="#on_enter_continua" onKeyTyped="#on_keyTyped_ususari" />
+                  <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" />
                   <HBox spacing="25.0">
                      <children>
                         <Text fx:id="text_contrasena" stroke="#969696" strokeType="OUTSIDE" strokeWidth="0.3" text="Contraseña" HBox.hgrow="ALWAYS">
@@ -59,7 +59,7 @@
                         <Text fx:id="text_error_contrasena" fill="#3c3c3c" strokeType="OUTSIDE" strokeWidth="0.0" text="La contrasenya no és vàlida" visible="false" />
                      </children>
                   </HBox>
-                  <PasswordField fx:id="textfield_contrasena" onKeyTyped="#on_keyTyped_contrasena" />
+                  <PasswordField fx:id="textfield_contrasena" onKeyPressed="#on_enter_continua" onKeyTyped="#on_keyTyped_contrasena" />
                   <Separator prefWidth="200.0" />
                   <TextFlow maxHeight="-Infinity" prefHeight="75.0" prefWidth="361.0">
                      <children>

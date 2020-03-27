@@ -114,15 +114,15 @@ public class FXMLPaddleExperienceController implements Initializable, Stoppable 
     
     // // Manejadors d'events
     public void on_click_login(Event event) throws InterruptedException, IOException {
-        this.stop();
-
-        PaddleExperience.setRoot(event, "FXMLPaddleLogin.fxml");
+        PaddleExperience.setParent(event, "FXMLPaddleLogin.fxml");
+    }
+    
+    public void on_click_registre(Event event) throws InterruptedException, IOException {
+        PaddleExperience.setParent(event, "FXMLRegistro.fxml");
     }
 
     public void on_click_pistes(Event event) throws InterruptedException, IOException {
-        this.stop();
-
-        PaddleExperience.setRoot(event, "FXMLPaddleReserva.fxml");
+        PaddleExperience.setParent(event, "FXMLPaddleReserva.fxml");
     }
 }
 
