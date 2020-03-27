@@ -5,20 +5,26 @@
  */
 package paddleexperience;
 
+// Java imports
 import java.net.URL;
 import java.util.ResourceBundle;
+
+// JavaFX imports
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+// Java imports
+import paddleexperience.Structures.Stoppable;
+
 /**
  * FXML Controller class
  *
  * @author saisua
  */
-public class FXMLReservaHoraController implements Initializable {
+public class FXMLReservaHoraController implements Initializable, Stoppable {
 
     // Scene
     @FXML
@@ -44,7 +50,16 @@ public class FXMLReservaHoraController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        System.out.println("ReservaHora init");
     }    
     
+    @Override
+    public void stop() throws InterruptedException {
+        System.out.println("ReservaHora stopped");
+    }    
+    
+    @Override
+    public void refresh() {
+        System.out.println("ReservaHora refreshed");
+    }   
 }

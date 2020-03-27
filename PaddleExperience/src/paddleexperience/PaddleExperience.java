@@ -54,6 +54,9 @@ public class PaddleExperience extends Application {
                 root.put(file.getName(), loader.load());
                 controllers.put(file.getName(), loader.getController());
                 
+                System.out.println(file.getName());
+                System.out.println(root.get(file.getName()));
+                
                 if(file.getName().equals(back_root)) initial_root = root.get(file.getName());
             }
         
@@ -95,7 +98,7 @@ public class PaddleExperience extends Application {
     // Canvia el root de l'escena en la finestra
     // on ha ocorregut l'Event event. Esta funció
     // NO ha de ser utilitzada com a manejador d'events
-    public static void setRoot(Event event, String sceneName) throws InterruptedException{
+    public static void setParent(Event event, String sceneName) throws InterruptedException{
         ((Node) event.getSource()).getScene().setRoot(root.get(sceneName));
         
         ((Stoppable) controllers.get(back_root)).stop();
@@ -125,11 +128,12 @@ public class PaddleExperience extends Application {
     public static Parent getParent(){
         ((Stoppable) controllers.get(back_root)).refresh();
         
-        return (Parent) controllers.get(back_root);
+        return root.get(back_root);
     }
+    
     public static Parent getParent(String sceneName){
         ((Stoppable) controllers.get(sceneName)).refresh();
         
-        return (Parent) controllers.get(sceneName);
+        return root.get(sceneName);
     }
 }

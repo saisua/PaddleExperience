@@ -14,10 +14,10 @@ import DBAcess.ClubDBAccess;
  */
 public class PasswordChecker {
     // // Login requeriments contrasenya
-    public static int MINIMUM_LETTERS = 8;
-    public static final int MINIMUM_UPPER = 2;
-    public static final int MINIMUM_NUMBERS = 2;
-    public static final int MINIMUM_SYMBOL = 1;
+    public static int MINIMUM_LETTERS = 6;
+    public static final int MINIMUM_UPPER = 1;
+    public static final int MINIMUM_NUMBERS = 1;
+    public static final int MINIMUM_SYMBOL = 0;
     
     public static final String VALID_SYMBOLS = "@$!%()*?&";
     

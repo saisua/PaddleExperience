@@ -8,13 +8,14 @@ package paddleexperience;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import paddleexperience.Structures.Stoppable;
 
 /**
  * FXML Controller class
  *
  * @author joandzmn
  */
-public class FXMLRegistroController implements Initializable {
+public class FXMLRegistroController implements Initializable, Stoppable {
 
     /**
      * Initializes the controller class.
@@ -24,4 +25,16 @@ public class FXMLRegistroController implements Initializable {
         // TODO
     }
 
+    // S'executa cada vegada que es tanca l'escena
+    @Override
+    public void stop() throws InterruptedException{
+        System.out.println("Historico stopped");
+    }
+    
+    // S'executa cada vegada que es carrega l'escena
+    @Override
+    public void refresh(){
+        System.out.println("Historico refreshed");
+    }
+    
 }

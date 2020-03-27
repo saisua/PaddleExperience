@@ -78,7 +78,7 @@ public class FXMLPaddleLoginController implements Initializable, Stoppable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Tests
-        Estat.club.getMembers().add(new Member("John","Doe","601234567","aaaa","AA11@@aa","","",null));
+        Estat.club.getMembers().add(new Member("John","Doe","601234567","Login1","Password1","","",null));
         // End tests
         
         this.button_opacity = button_continua.getOpacity();

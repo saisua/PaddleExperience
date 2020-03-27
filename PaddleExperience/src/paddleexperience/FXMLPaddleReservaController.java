@@ -23,6 +23,8 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import paddleexperience.Dataclasses.Estat;
@@ -40,6 +42,8 @@ import paddleexperience.Structures.Stoppable;
  */
 public class FXMLPaddleReservaController implements Initializable, Stoppable {
     // // Scene
+    @FXML
+    private BorderPane borderpane_main;
     @FXML
     private GridPane gridpane_main;
     @FXML
@@ -88,7 +92,10 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
         //System.out.println("Horari");
         this.gridpane_main.setEffect(new GaussianBlur(10));
         
-        Parent root = PaddleExperience.getParent("");
+        Parent root = PaddleExperience.getParent("FXMLReservaHora.fxml");
+        
+        this.borderpane_main.setCenter(root);
+        this.borderpane_main.setVisible(true);
     }
     
 }
