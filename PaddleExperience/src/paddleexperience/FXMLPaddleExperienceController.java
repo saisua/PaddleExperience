@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Random;
 import java.util.Collections;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -62,7 +62,7 @@ public class FXMLPaddleExperienceController implements Initializable, Stoppable 
     private Tooltip tooltip_text_benvinguda = new Tooltip("Benvingut/da en diversos llenguatges");
 
     // Llista benvingut en diversos llenguatges
-    static final ArrayList WELCOME = new ArrayList<String>(Arrays.asList(
+    static final LinkedList WELCOME = new LinkedList<String>(Arrays.asList(
             "欢迎光临", // Chino mandarín
             "Bienvenido", "Bienvenida", // Español
             "Welcome", // Inglés

@@ -22,19 +22,19 @@ public class FXMLRegistroController implements Initializable, Stoppable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        System.out.println("Registro init");
     }
 
     // S'executa cada vegada que es tanca l'escena
     @Override
     public void stop() throws InterruptedException{
-        System.out.println("Historico stopped");
+        System.out.println("Registro stopped");
     }
     
     // S'executa cada vegada que es carrega l'escena
     @Override
     public void refresh(){
-        System.out.println("Historico refreshed");
+        System.out.println("Registro refreshed");
     }
     
 }

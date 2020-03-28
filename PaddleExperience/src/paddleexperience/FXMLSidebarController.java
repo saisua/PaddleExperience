@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import paddleexperience.PaddleExperience;
 import paddleexperience.Structures.Stoppable;
+import paddleexperience.Dataclasses.Estat;
 
 /**
  * FXML Controller class
@@ -37,6 +38,10 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     @FXML
     private Button btn_historico;
 
+    public void FXMLSidebarController(){
+        Estat.setSidebar(this);
+    }
+    
     /**
      * Initializes the controller class.
      */
@@ -46,7 +51,10 @@ public class FXMLSidebarController implements Initializable, Stoppable {
         btn_home.setStyle("-fx-background-color:#78909C;");
         btn_reserva.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_historico.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
-        loadUI("FXMLHome");
+        
+        try{
+            loadUI("FXMLHome");
+        } catch (IOException err){}
     }
     
     // S'executa cada vegada que es tanca l'escena
@@ -62,7 +70,7 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     }
 
     @FXML
-    private void goHome(MouseEvent event) {
+    private void goHome(MouseEvent event) throws IOException {
         btn_home.setStyle("-fx-background-color:#78909C;");
         btn_reserva.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_historico.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
@@ -70,7 +78,7 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     }
 
     @FXML
-    private void goReserva(MouseEvent event) {
+    private void goReserva(MouseEvent event) throws IOException {
         btn_home.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_reserva.setStyle("-fx-background-color:#78909C;");
         btn_historico.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
@@ -78,14 +86,14 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     }
 
     @FXML
-    private void goHistorial(MouseEvent event) {
+    private void goHistorial(MouseEvent event) throws IOException {
         btn_home.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_reserva.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_historico.setStyle("-fx-background-color:#78909C;");
         loadUI("FXMLHistorico");
     }
 
-    private void loadUI(String ui) {
+    public void loadUI(String ui) throws IOException {
         //Parent root = null;
         //try {
         Parent root = PaddleExperience.getParent(ui + ".fxml");

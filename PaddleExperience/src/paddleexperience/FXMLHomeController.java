@@ -42,8 +42,6 @@ public class FXMLHomeController implements Initializable, Stoppable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-        this.refresh();
     }
     
     // S'executa cada vegada que es tanca l'escena

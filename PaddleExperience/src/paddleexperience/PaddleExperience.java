@@ -7,6 +7,7 @@ package paddleexperience;
 
 // Java imports
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 // Javafx imports
@@ -36,6 +37,9 @@ public class PaddleExperience extends Application {
     private static final HashMap<String, Parent> root = new HashMap<String, Parent>();
     private static final HashMap<String, Object> controllers = new HashMap<String, Object>();
     private static String back_root, prev_root;
+    
+    // Auxiliar
+    static Class static_class;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -43,6 +47,7 @@ public class PaddleExperience extends Application {
         back_root = "FXMLPaddleExperience.fxml";
         prev_root = back_root;
         
+        static_class = getClass();
         
         // Carrega tots els fxml en un diccionari per poder obrir-los més tard
         FXMLLoader loader;
@@ -50,12 +55,12 @@ public class PaddleExperience extends Application {
         
         for(File file : new File("./src/paddleexperience/").listFiles())
             if (file.isFile() && file.getName().endsWith(".fxml")){
+                
+                System.out.println(file.getName());
+                
                 loader = new FXMLLoader(getClass().getResource(file.getName()));
                 root.put(file.getName(), loader.load());
                 controllers.put(file.getName(), loader.getController());
-                
-                System.out.println(file.getName());
-                System.out.println(root.get(file.getName()));
                 
                 if(file.getName().equals(back_root)) initial_root = root.get(file.getName());
             }
@@ -106,7 +111,7 @@ public class PaddleExperience extends Application {
         
         prev_root = back_root;
         back_root = sceneName;
-    }
+    } 
     
     // Canvia el root de l'escena a l'anterior root
     // en la finestra on ha ocorregut l'Event event.
@@ -124,15 +129,37 @@ public class PaddleExperience extends Application {
             back_root = aux;
     }
     
-    // 
-    public static Parent getParent(){
+    public static void stop(String sceneName) throws InterruptedException{
+        ((Stoppable) controllers.get(back_root)).stop();
+    }
+    
+    public static void refresh(String sceneName){
         ((Stoppable) controllers.get(back_root)).refresh();
+    }
+    
+    
+    // // GETTERS
+    
+    public static Parent getParent() throws IOException{
+        if(controllers.containsKey(back_root))
+            ((Stoppable) controllers.get(back_root)).refresh();
+        else {
+            Parent p = FXMLLoader.load(static_class.getResource(back_root));
+            root.put(back_root, p);
+            controllers.put(back_root, p);
+        }
         
         return root.get(back_root);
     }
     
-    public static Parent getParent(String sceneName){
-        ((Stoppable) controllers.get(sceneName)).refresh();
+    public static Parent getParent(String sceneName) throws IOException{
+        if(controllers.containsKey(sceneName))
+            ((Stoppable) controllers.get(sceneName)).refresh();
+        else {
+            Parent p = FXMLLoader.load(static_class.getResource(sceneName));
+            root.put(sceneName, p);
+            controllers.put(sceneName, p);
+        }
         
         return root.get(sceneName);
     }

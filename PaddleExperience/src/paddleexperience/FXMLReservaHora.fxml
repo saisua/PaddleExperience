@@ -25,47 +25,43 @@
           <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox alignment="CENTER_LEFT" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <VBox fx:id="vbox_Lhora" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_click_befHora" prefHeight="80.0" prefWidth="75.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <children>
                   <ImageView fx:id="imageview_Lfletxa" fitHeight="74.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../camera_digital_camera_photography-b_5.jpg" />
                      </image>
                      <VBox.margin>
-                        <Insets left="20.0" />
+                        <Insets />
                      </VBox.margin>
                   </ImageView>
                   <Text fx:id="text_Lhora" strokeType="OUTSIDE" strokeWidth="0.0" text="18:00">
                      <VBox.margin>
-                        <Insets left="35.0" />
+                        <Insets left="15.0" />
                      </VBox.margin>
                   </Text>
                </children>
             </VBox>
-            <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <VBox fx:id="vbox_Rhora" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_click_nextHora" prefHeight="80.0" prefWidth="75.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <children>
-                  <VBox alignment="CENTER_RIGHT" prefHeight="243.0" prefWidth="150.0">
-                     <children>
-                        <ImageView fx:id="imageview_Rfletxa" fitHeight="74.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../camera_digital_camera_photography-b_5.jpg" />
-                           </image>
-                           <VBox.margin>
-                              <Insets right="20.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <Text fx:id="text_Rhora" strokeType="OUTSIDE" strokeWidth="0.0" text="20:00">
-                           <VBox.margin>
-                              <Insets right="40.0" />
-                           </VBox.margin>
-                        </Text>
-                     </children>
-                  </VBox>
+                  <ImageView fx:id="imageview_Rfletxa" fitHeight="74.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../camera_digital_camera_photography-b_5.jpg" />
+                     </image>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </ImageView>
+                  <Text fx:id="text_Rhora" strokeType="OUTSIDE" strokeWidth="0.0" text="20:00">
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
+                  </Text>
                </children>
             </VBox>
             <AnchorPane GridPane.columnIndex="1">
                <children>
-                  <Text fx:id="text_data" layoutY="43.20556640625" strokeType="OUTSIDE" strokeWidth="0.0" text="19/01/19" wrappingWidth="113.7294921875" AnchorPane.leftAnchor="0.0">
+                  <Text fx:id="text_data" layoutX="-8.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="19/01/19" wrappingWidth="156.7294921875" AnchorPane.leftAnchor="-8.0">
                      <font>
                         <Font size="25.0" />
                      </font>
