@@ -84,8 +84,6 @@ public class PaddleExperience extends Application {
         
         Stoppable controller = (Stoppable) controllers.get(back_root);
         
-        //System.out.println(controller);
-        
         if(controller == null) return;
         
         controller.stop();

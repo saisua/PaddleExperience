@@ -27,10 +27,10 @@ import javafx.scene.image.ImageView;
  * @author saisua
  */
 public final class Hora{
-    private final HashMap<Integer, String> images = new HashMap<Integer, String>(){{
-       // put(0, "/image_pista_lliure")
-       // put(1, "/image_pista_ocupada")
-       // put(2, "/image_pista_reservada")
+    public static final HashMap<Integer, Image> images = new HashMap<Integer, Image>(){{
+       put(0, new Image("file:src/paddleexperience/pistaGris.png"));
+       put(1, new Image("file:src/paddleexperience/pistaRoig.png"));
+       put(2, new Image("file:src/paddleexperience/pistaVerd.png"));
     }};
     
     private LocalTime time;
@@ -41,7 +41,7 @@ public final class Hora{
     private final TextFlow reservat = new TextFlow();
     
     // // Auxiliar
-    private ObservableList<ImageView> courts_images;
+    private ObservableList<Node> courts_images = this.courts.getChildren();
     
     public Hora(LocalTime hora, List<Integer> courts_state){
         this.time = hora;
@@ -50,33 +50,50 @@ public final class Hora{
         this.hora.getChildren().add(new Text(this.time_str));
         
         Text h = new Text(this.time_str);
-        h.setVisible(false);
+        h.setVisible(false); 
         
-        // Falta plenar this.images
-        //this.courts.getChildren().setAll(this.courts_images);
+        new ImageView(this.images.get(0));
         
-        //for(int court : courts_state)
-        //    this.courts_images.add(new ImageView(this.images.get(court)));
+        this.courts_images.add(new ImageView(this.images.get(0)));
+        
+        for(int court : courts_state)
+            this.courts_images.add(new ImageView(this.images.get(court)));
+
+        this.courts.getChildren().setAll(this.courts_images);
     }
     
     
     public void updateCourt(int index, int state){
         ((ImageView) this.courts_images.get(index))
-                .setImage(new Image(this.images.get(state)));
+                .setImage(this.images.get(state));
     }
     
     public void updateCourts(List<Integer> courts_state){
         Iterator states = courts_state.iterator();
         
-        for(ImageView court : this.courts_images)
-            court.setImage(new Image(this.images.get(states.next())));
+        for(Node court : this.courts_images)
+            ((ImageView) court).setImage(this.images.get(states.next()));
     }
     
     public void updateCourts(Integer[] courts_state){
         int index = 0;
         
-        for(ImageView court : this.courts_images)
-            court.setImage(new Image(this.images.get(courts_state[index++])));
+        for(Node court : this.courts_images)
+            ((ImageView) court).setImage(this.images.get(courts_state[index++]));
+    }
+    
+    public void updateCourtsImages(List<Image> courts_state){
+        Iterator states = courts_state.iterator();
+        
+        for(Node court : this.courts_images)
+            ((ImageView) court).setImage((Image) states.next());
+    }
+    
+    public void updateCourtsImages(Image[] courts_state){
+        int index = 0;
+        
+        for(Node court : this.courts_images)
+            ((ImageView) court).setImage(courts_state[index++]);
     }
     
     
