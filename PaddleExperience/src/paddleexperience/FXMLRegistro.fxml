@@ -1,78 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="532.0" prefWidth="703.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="10.0">
-         <children>
-            <VBox prefHeight="512.0" prefWidth="561.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <HBox prefHeight="180.0" prefWidth="449.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="860.0" style="-fx-background-color: #263238;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLRegistroController">
+    <children>
+        <GridPane prefHeight="586.0" prefWidth="756.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="76.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="772.0" minWidth="10.0" prefWidth="697.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="76.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="27.0" vgrow="ALWAYS" />
+                <RowConstraints maxHeight="565.0" minHeight="10.0" prefHeight="565.0" valignment="CENTER" vgrow="NEVER" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="25.0" vgrow="ALWAYS" />
+            </rowConstraints>
+            <children>
+                <AnchorPane prefHeight="510.0" prefWidth="717.0" style="-fx-background-color: #37474F; -fx-border-color: #78909C; -fx-border-radius: 3; -fx-effect: dropshadow( gaussian, rgba(28,28,28), 10, 0.3, 0.0, 0.0 );" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
+                    <children>
+                        <Button layoutX="1.0" layoutY="-2.0" mnemonicParsing="false" onMouseClicked="#on_click_enrere" opacity="0.8" prefHeight="57.0" prefWidth="76.0" style="-fx-background-color: transparent;" text="←" textFill="#fafafa" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <font>
+                                <Font name="Ubuntu" size="28.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                        <JFXTextField fx:id="textfield_nom" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="87.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#comprovaPositiu" prefHeight="35.0" prefWidth="280.0" promptText="Nom" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="87.0">
+                            <font>
+                                <Font name="Ubuntu" size="16.0" />
+                            </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="textfield_cognom" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="152.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#comprovaPositiu" prefHeight="35.0" prefWidth="280.0" promptText="Cognom" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="152.0">
+                            <font>
+                                <Font name="Ubuntu" size="16.0" />
+                            </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="textfield_usuari" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="217.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#on_keyTyped_usuari" prefHeight="35.0" prefWidth="280.0" promptText="Usuari" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="217.0">
+                            <font>
+                                <Font name="Ubuntu" size="16.0" />
+                            </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="textfield_telefon" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="282.0" maxWidth="280.0" minWidth="280.0" onKeyTyped="#on_click_telefon" prefHeight="35.0" prefWidth="280.0" promptText="Telèfon" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="282.0">
+                            <font>
+                                <Font name="Ubuntu" size="16.0" />
+                            </font>
+                        </JFXTextField>
+                  <HBox layoutX="67.0" layoutY="348.0" spacing="10.0" AnchorPane.leftAnchor="66.0" AnchorPane.rightAnchor="66.0">
                      <children>
-                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="180.0" prefWidth="241.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nom:" />
-                              <TextField />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cognoms:" />
-                              <TextField />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Telefon:" />
-                              <TextField />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
-                              <TextField />
-                           </children>
-                        </VBox>
-                        <AnchorPane prefHeight="180.0" prefWidth="234.0">
-                           <children>
-                              <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
-                                 <image>
-                                    <Image url="@../../../camera_digital_camera_photography-b_5.jpg" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </AnchorPane>
+                              <JFXPasswordField fx:id="textfield_contrasena" focusColor="#78909c" labelFloat="true" maxWidth="300.0" minWidth="280.0" onKeyReleased="#on_keyTyped_contrasena" prefHeight="35.0" prefWidth="280.0" promptText="Contrasenya" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa">
+                                  <font>
+                                      <Font name="Ubuntu" size="16.0" />
+                                  </font>
+                              </JFXPasswordField>
+                              <JFXPasswordField fx:id="textfield_ConfContrasena" focusColor="#78909c" labelFloat="true" maxWidth="280.0" minWidth="200.0" onKeyReleased="#on_keyTyped_comprova" prefHeight="35.0" prefWidth="280.0" promptText="Confirmar contrasenya" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa">
+                                  <font>
+                                      <Font name="Ubuntu" size="16.0" />
+                                  </font>
+                              </JFXPasswordField>
                      </children>
                   </HBox>
-                  <HBox spacing="15.0">
+                  <HBox layoutX="67.0" layoutY="418.0" spacing="10.0" AnchorPane.leftAnchor="67.0" AnchorPane.rightAnchor="67.0">
                      <children>
-                        <AnchorPane prefWidth="240.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contrasenya:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane prefHeight="18.0" prefWidth="256.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirmar contrasenya:" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="0.0" />
-                           </children>
-                        </AnchorPane>
+                              <JFXTextField fx:id="textfield_targeta" focusColor="#78909c" labelFloat="true" maxWidth="376.0" minWidth="315.0" onKeyTyped="#on_click_targeta" prefHeight="35.0" prefWidth="376.0" promptText="Tarjeta de crèdit (Opcional)" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa">
+                                  <font>
+                                      <Font name="Ubuntu" size="16.0" />
+                                  </font>
+                              </JFXTextField>
+                              <JFXTextField fx:id="textfield_svc" focusColor="#78909c" labelFloat="true" maxWidth="181.0" minWidth="110.0" onKeyTyped="#on_click_svc" prefHeight="35.0" prefWidth="181.0" promptText="SVC" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa">
+                                  <font>
+                                      <Font name="Ubuntu" size="16.0" />
+                                  </font>
+                              </JFXTextField>
                      </children>
                   </HBox>
-                  <HBox prefHeight="27.0" prefWidth="548.0" spacing="15.0">
-                     <children>
-                        <TextField prefHeight="27.0" prefWidth="240.0" />
-                        <AnchorPane prefHeight="200.0" prefWidth="240.0">
-                           <children>
-                              <TextField prefWidth="240.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </HBox>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Targeta credit: (Opcional)" />
-                  <TextField prefHeight="27.0" prefWidth="217.0" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="SVC: (Opcional)" />
-                  <TextField />
-               </children>
-            </VBox>
-            <Button layoutX="543.0" layoutY="463.0" mnemonicParsing="false" text="Acceptar" />
-         </children>
-      </AnchorPane>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="&lt;" />
-   </children>
+                        <ImageView fx:id="userImage" fitHeight="150.0" fitWidth="150.0" layoutX="457.0" layoutY="106.0" onMouseClicked="#seleccioImatge" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="106.0">
+                            <image>
+                                <Image url="@Images/anonymous-user.png" />
+                            </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                        </ImageView>
+                  <Button fx:id="button_continua" disable="true" layoutX="600.0" layoutY="527.0" mnemonicParsing="false" onMouseClicked="#on_click_continuar" opacity="0.2" prefHeight="43.0" prefWidth="98.0" style="-fx-background-radius: 2; -fx-background-color: #263238;" text="Continuar" textAlignment="CENTER" textFill="#fafafa" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                     <font>
+                        <Font name="Ubuntu" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Text fx:id="text_errorContrsena" layoutX="77.0" layoutY="388.0" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #fafafa;" text="*Mínim 6 caracters">
+                     <font>
+                        <Font name="Ubuntu" size="11.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="notEqual_text" layoutX="367.0" layoutY="389.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #FF5722;" text="La contrasenya no coincideix" visible="false">
+                     <font>
+                        <Font name="Ubuntu" size="11.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="text_usuari_existent" layoutX="77.0" layoutY="263.0" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #FF5722;" text="Aquest usuari ja existeix" visible="false" AnchorPane.topAnchor="248.0">
+                     <font>
+                        <Font name="Ubuntu" size="11.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="455.0" layoutY="463.0" opacity="0.85" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #fafafa;" text="*SVC és el codi de tres números ">
+                     <font>
+                        <Font name="Ubuntu" size="11.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="459.0" layoutY="475.0" opacity="0.85" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #fafafa;" text="de la part trasera de la targeta">
+                     <font>
+                        <Font name="Ubuntu" size="11.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="455.0" layoutY="275.0" onMouseClicked="#seleccioImatge" opacity="0.65" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #fafafa;" text="Imatge de perfil" textAlignment="CENTER" wrappingWidth="150.0000074505806" AnchorPane.rightAnchor="91.9999925494194" AnchorPane.topAnchor="260.0880002975464">
+                     <font>
+                        <Font name="Ubuntu" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text layoutX="455.0" layoutY="296.0" onMouseClicked="#seleccioImatge" opacity="0.65" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #fafafa;" text="(Opcional)" textAlignment="CENTER" wrappingWidth="150.00000104308128" AnchorPane.rightAnchor="91.99999895691872" AnchorPane.topAnchor="282.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                    </children>
+                </AnchorPane>
+            </children>
+        </GridPane>
+    </children>
 </AnchorPane>
