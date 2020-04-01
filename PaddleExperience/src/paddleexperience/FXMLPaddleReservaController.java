@@ -16,11 +16,12 @@ import java.time.temporal.ChronoField;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
-import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 
 // JavaFX imports
 import javafx.fxml.FXML;
@@ -43,11 +44,17 @@ import javafx.scene.text.TextFlow;
 import javafx.event.Event;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.TableColumn.SortType;
+import javafx.scene.paint.Paint;
+import javafx.util.Callback;
 
 // Interal imports
 import paddleexperience.PaddleExperience;
 import paddleexperience.Dataclasses.Hora;
 import paddleexperience.Structures.Stoppable;
+import paddleexperience.Structures.Cache;
 import model.Booking;
 import model.Court;
 import model.Member;
@@ -61,7 +68,11 @@ import paddleexperience.Dataclasses.Estat;
 public class FXMLPaddleReservaController implements Initializable, Stoppable {
     // // Scene
     @FXML
+    private Text text_data;
+    @FXML
     private BorderPane borderpane_main;
+    @FXML
+    private BorderPane borderpane_overlay;
     @FXML
     private GridPane gridpane_main;
     @FXML
@@ -74,36 +85,27 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
     private TableColumn tablecolumn_courts;
     @FXML
     private TableColumn tablecolumn_reservat;
-    
-    // Cache
-    static HashMap<LocalDate, HashMap<LocalTime, Image[]>> cache = new HashMap<LocalDate, HashMap<LocalTime, Image[]>>(){};
-    
-    private CacheThread thread_avant = new CacheThread(true);
-    private CacheThread thread_arrere = new CacheThread(false);
-    
-    static LocalDate max_day = Estat.getBeforeDate();
-    static LocalDate min_day = Estat.getNextDate();
+    @FXML
+    private ScrollBar scrollbar;
     
     // Auxiliar
-    private Member was_logged_in = null;
     private boolean menu_hora = false;
-    
-    private HashMap<String, Hora> hores = new HashMap<String, Hora>();
-    
+
     // Testing
-    public static ArrayList<Booking> test_booking = new ArrayList<Booking>(){};
+    public static HashMap<LocalDate ,ArrayList<Booking>> test_booking = new HashMap<LocalDate ,ArrayList<Booking>>(){};
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Tests
+        System.out.println("Initializing reserva...");
+        
         this.tablecolumn_hora.setCellValueFactory(new PropertyValueFactory<>("hora"));
         this.tablecolumn_courts.setCellValueFactory(new PropertyValueFactory<>("courts"));
         this.tablecolumn_reservat.setCellValueFactory(new PropertyValueFactory<>("reservat"));
-        
-        this.tablecolumn_hora.setStyle("-fx-alignment: CENTER;"); 
         
         for(int partida = 0; partida < Estat.partides_dia; partida++){
             // Hora falta des-comentar
@@ -111,8 +113,25 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
                     Arrays.asList(0,0,0,0));
             
             this.tableview_horari.getItems().add(hora);
-            this.hores.put(hora.getTimeStr(), hora);
+            
+            Estat.hores.put(hora.getTimeStr(), hora);
         }
+        
+        /*
+        this.tablecolumn_hora.setComparator((Object hora1, Object hora2) -> {
+            return (this.tablecolumn_hora.getSortType() == SortType.ASCENDING)
+                ? ((Hora) hora1).compareTo(((Hora) hora2)) : 
+                    ((Hora) hora2).compareTo(((Hora) hora1));
+        });
+        */
+                
+        this.tableview_horari.setSortPolicy(table_view -> {
+                Comparator<Hora> comparator = (hora1, hora2)
+                        -> this.tablecolumn_hora.getSortType() == SortType.ASCENDING
+                                ? hora1.compareTo(hora2) : hora2.compareTo(hora1); //columns are sorted: sort accordingly
+                FXCollections.sort(this.tableview_horari.getItems(), comparator);
+                return true;
+        });;
         
         //Booking(LocalDateTime bookingDate, LocalDate madeForDay, 
         //    LocalTime fromHour, boolean paid, Court court, Member member)
@@ -120,45 +139,44 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
                             Estat.getInitialTime(),
                             true, Estat.club.getCourts().get(1), Estat.getMember());
         
-        for(int partida = 0; partida < Estat.partides_dia; partida++)
-            test_booking.add(new Booking(LocalDateTime.now(), Estat.getDate(),
+        LocalDate date = Estat.getDate().minusDays(8);
+        for(int dia = 0; dia < 33; dia++){
+            System.out.println("Added test bookings for "+date.toString());
+            test_booking.put(date, new ArrayList<Booking>());
+            
+            for(int partida = 0; partida < Estat.partides_dia; partida++)
+                test_booking.get(date).add(new Booking(LocalDateTime.now(), Estat.getDate(),
                             Estat.getInitialTime().plusMinutes(
                                     Estat.partides_duracio*partida),
                             true, Estat.club.getCourts().get(0), Estat.getMember()));
-        
+            date = date.plusDays(1);
+        }
+            
         // No funciona perque el xml no està en el directori
         // que toca (vore pdf)
         Estat.club.getBookings().add(new_booking);
         
-        test_booking.add(new_booking);
+        test_booking.get(Estat.getDate()).add(new_booking);
         
         //System.out.println("Test Booking at " + new_booking.getFromTime().toString());
-        // End tests
+        // End tests      
+        this.borderpane_main.setEffect(new GaussianBlur(0));
+
+        this.tableview_horari.getStylesheets().add("file:src/paddleexperience/CSS/PaddleReserva.css");
+        this.tableview_horari.applyCss();
         
-        this.max_day = Estat.getBeforeDate();
-        this.min_day = Estat.getNextDate();
-        
-        this.gridpane_main.setEffect(new GaussianBlur(0));
+        this.scrollbar = ((ScrollBar) this.tableview_horari.lookup(".scroll-bar:vertical"));
         
         try{
-            this.borderpane_main.setCenter(PaddleExperience.getParent("FXMLReservaHora.fxml"));
-        } catch(IOException err) {};
+            this.borderpane_overlay.setCenter(PaddleExperience.getParent("FXMLReservaHora.fxml"));
+            this.borderpane_overlay.setVisible(false);
+        } catch(IOException err) {}
         
         System.out.println("Reserva initialized");
     }    
     
     @Override
     public void stop() throws InterruptedException{
-        if(this.thread_avant.open){
-            this.thread_avant.open = false;
-            this.thread_avant.join(3000);
-        }
-        
-        if(this.thread_arrere.open){
-            this.thread_arrere.open = false;
-            this.thread_arrere.join(3000);
-        }
-        
         System.out.println("Reserva Stoped Successfully");
     }
     
@@ -168,86 +186,23 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
         // Si el usuari ha fet login, amaga el botó de tornar enrere,
         // pues ha de gastar el menú
         if(Estat.getMember() != null) this.button_enrere.setVisible(false);
-        
-        // Hashmap on guarde una representació del dia LocalTime
-        // com a un array d'enters que posteriorment es tradueïx
-        // a la imatge corresponent
-        HashMap<LocalTime, Image[]> courts;
-        
-        // En cas que no n'hi ha ningún booking, es farà ús de
-        // una còpia de default_court que és un array plé de 0
-        Image[] default_court = new Image[Estat.numero_pistes];
-        Arrays.fill(default_court, Hora.images.get(0));
-        
-        // Es mira si el usuari ha canviat de login
-        boolean login_dif = this.was_logged_in != Estat.getMember();
-        this.was_logged_in = Estat.getMember();
-        
-        // Si l'usuari ha canviat de login (o entrat o eixit), tant com
-        // si l'usuari decideix veure una data que no está en caché, la
-        // caché ja existent es considera inútil i es neteja
-        if(login_dif || Estat.getDate().compareTo(max_day) > 0 || Estat.getDate().compareTo(min_day) < 0){
-            // Es neteja la caché
-            cache.clear();
-            
-            // Si el fil de caché ja estava obert no es torna
-            // a obrir, sino que s'actualitza el dia de búsqueda
-            if(this.thread_avant.open)
-                this.thread_avant.setDate(Estat.getNextDate());
-            else 
-                this.thread_avant.start();
 
-            // Si el fil de caché ja estava obert no es torna
-            // a obrir, sino que s'actualitza el dia de búsqueda
-            if(this.thread_arrere.open)
-                this.thread_arrere.setDate(Estat.getBeforeDate());
-            else
-                this.thread_arrere.start();
+        this.text_data.setText(Estat.getDate().toString());
         
-            // Esta variable guarda la caché de un dia representat
-            // per un array de enters, que agafen el sentit que la
-            // classe Hora li done. Actualment, Hora.imatges
-            courts = new HashMap<LocalTime, Image[]>();
-
-            // Fem un recorregut lineal del bookings del dia, i apuntem
-            // quines pistes están ocupades.
-            // El resultat es guarda dins de courts
-            for(Booking reserva : test_booking){//Estat.club.getForDayBookings(Estat.getDate())){
-                // Agafem el array si ja n'hem guardat
-                Image[] court = courts.get(reserva.getFromTime());
-                
-                // si no n'hem guardat encara, clonem default_court
-                if(court == null){
-                    court = default_court.clone();
-                    courts.put(reserva.getFromTime(), court);
-                }
-
-                // Actualitzem l'estat del array
-                court[Estat.court_index.get(reserva.getCourt())] 
-                        = Hora.images.get((reserva.getMember() == Estat.getMember()) ? 2 : 1);
-            }
-        } 
-        else 
-            // else el dia que volem carregar està en la caché, per tant el carreguem
-            
-            // agafem el array que representa el dia. Si no està dins del
-            // HashMap vol dir que quan es va carregar el caché no n'hi havia
-            // ningun booking, per tant agafem un HashMap buit
-            courts = cache.getOrDefault(Estat.getDate(), new HashMap<LocalTime, Image[]>());
+        HashMap<LocalTime, Image[]> dia = Cache.get();
         
         // Fem un recorregut per totes les hores, modificant els arxius de
         // Hora hora per els carregats en courts
-        for(Hora hora : this.hores.values()){
-            System.out.println("Hora "+hora.getTimeStr()+" "+Arrays.toString(
-                    courts.getOrDefault(hora.getTime(), default_court)));
+        for(Hora hora : Estat.hores.values()){
+            //System.out.println("Hora "+hora.getTimeStr());
             
-            hora.updateCourtsImages(courts.getOrDefault(hora.getTime(), default_court));
+            hora.updateCourtsImages(dia.getOrDefault(hora.getTime(), Cache.default_court));
         }
-        // Tests
-        //System.out.println(Estat.club.getForDayBookings(Estat.getDate()));
-        // End tests
         
-        cache.put(Estat.getDate(), courts);
+        if(this.scrollbar == null) 
+            this.scrollbar = ((ScrollBar) this.tableview_horari.lookup(".scroll-bar:vertical"));
+        else 
+            this.scrollbar.setValue(0);
         
         System.out.println("Reserva Refreshed");
     }
@@ -263,39 +218,37 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
             Estat.setTime(Estat.time_inici.plusMinutes(Estat.partides_duracio*((TableCell) ((TextFlow)
                             event.getTarget()).getParent()).getTableRow().getIndex()));
 
-            this.gridpane_main.setDisable(true);
+            this.borderpane_main.setDisable(true);
             
-            ((GaussianBlur) this.gridpane_main.getEffect()).setRadius(10);
+            ((GaussianBlur) this.borderpane_main.getEffect()).setRadius(10);
             
-            this.borderpane_main.setVisible(true);
+            this.borderpane_overlay.setVisible(true);
             
             this.menu_hora = true;
+            
+            System.out.println(Estat.getTime().toString());
             
             PaddleExperience.refresh("FXMLReservaHora.fxml");
         }
     }
     
-    public void on_keypress_exit(KeyEvent event) throws InterruptedException {
-        System.out.println("Exit");
-        
+    public void on_keypress_exit(KeyEvent event) throws InterruptedException { 
         if(this.menu_hora && event.getCode().equals(KeyCode.ESCAPE)){
-            this.borderpane_main.setVisible(false);
+            this.borderpane_overlay.setVisible(false);
             
-            ((GaussianBlur) this.gridpane_main.getEffect()).setRadius(0);
+            ((GaussianBlur) this.borderpane_main.getEffect()).setRadius(0);
             
-            this.gridpane_main.setDisable(false);
+            this.borderpane_main.setDisable(false);
         }
     }
     
     public void on_click_exit(Event event) throws InterruptedException {
-        System.out.println("Exit");
-        
         if(this.menu_hora){
-            this.borderpane_main.setVisible(false);
+            this.borderpane_overlay.setVisible(false);
             
-            ((GaussianBlur) this.gridpane_main.getEffect()).setRadius(0);
+            ((GaussianBlur) this.borderpane_main.getEffect()).setRadius(0);
             
-            this.gridpane_main.setDisable(false);
+            this.borderpane_main.setDisable(false);
         }
     }
     
@@ -304,100 +257,43 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
             event.consume();
     }
     
-}
-
-class CacheThread extends Thread{
-    
-    public boolean open;
-    
-    public int max_dies = 7;
-    private boolean next;
-    
-    private int dia;
-    private LocalDate date;
-    
-    // // Auxiliar
-    private boolean valid = true;
-    private Image[] default_court = new Image[Estat.numero_pistes];
-    
-    public CacheThread(boolean next){
-        this.next = next;
+    public void test__10(Event event){
+        event.consume();
         
-        Arrays.fill(default_court, Hora.images.get(0));
-    }
-    public CacheThread(boolean next, int max_dies){
-        this.next = next;
-        this.max_dies = max_dies;
+        Estat.setDate(Estat.getDate().minusDays(10));
         
-        Arrays.fill(default_court, Hora.images.get(0));
+        System.out.println("Dia: " + Estat.getDate().toString());
+        
+        this.refresh();
     }
     
-    @Override
-    public void run(){
-        System.out.println("CacheThread.run()");
+    public void test__1(Event event){
+        event.consume();
         
-        this.open = true;
-        this.dia = 0;
+        Estat.setDate(Estat.getBeforeDate());
         
-        if(this.next){
-            this.date = (Estat.getNextDate().compareTo(FXMLPaddleReservaController.max_day) > 0) ? 
-                    Estat.getNextDate() : FXMLPaddleReservaController.max_day.plusDays(1);
-        } else {
-            this.date = (Estat.getBeforeDate().compareTo(FXMLPaddleReservaController.min_day) < 0) ? 
-                    Estat.getBeforeDate() : FXMLPaddleReservaController.min_day.minusDays(1);
-        }
+        System.out.println("Dia: " + Estat.getDate().toString());
         
-        HashMap<LocalTime, Image[]> courts = new HashMap<LocalTime, Image[]>();
-        
-        while(this.open && dia < max_dies){
-            this.valid = true;
-           
-            if(!FXMLPaddleReservaController.cache.containsKey(this.date)){
-                courts.clear();
-
-                for(Booking reserva : FXMLPaddleReservaController.test_booking){//Estat.club.getForDayBookings(this.date)){
-                    Image[] court = courts.get(reserva.getFromTime());
-                    if(court == null){
-                        court = default_court.clone();
-                        courts.put(reserva.getFromTime(), court);
-                    }
-
-                    court[Estat.court_index.get(reserva.getCourt())] 
-                            = Hora.images.get(
-                                    (reserva.getMember() == Estat.getMember()) ? 2 : 1);
-
-                    if(!this.open) return;
-                }
-
-                if(this.valid)
-                    FXMLPaddleReservaController.cache.put(this.date, courts);
-
-                System.out.println("Cache carregada " + this.date.toString());
-            }
-            
-            if(this.valid){
-                if(this.next){
-                    FXMLPaddleReservaController.max_day = this.date;
-
-                    this.date = this.date.plusDays(1);
-                } else {
-                    FXMLPaddleReservaController.min_day = this.date;
-
-                    this.date = this.date.minusDays(1);
-                }
-
-                this.dia++;
-            }
-        }
-        
-        this.open = false;
+        this.refresh();
     }
     
-    public void setDate(LocalDate new_date){
-        this.valid = false;
+    public void test_1(Event event){
+        event.consume();
         
-        this.dia = 0;
+        Estat.setDate(Estat.getNextDate());
         
-        this.date = new_date;
+        System.out.println("Dia: " + Estat.getDate().toString());
+        
+        this.refresh();
+    }
+    
+    public void test_10(Event event){
+        event.consume();
+        
+        Estat.setDate(Estat.getDate().plusDays(10));
+        
+        System.out.println("Dia: " + Estat.getDate().toString());
+        
+        this.refresh();
     }
 }

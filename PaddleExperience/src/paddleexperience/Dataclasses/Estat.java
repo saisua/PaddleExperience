@@ -13,6 +13,9 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 
+// JavaFX imports
+import javafx.scene.image.Image;
+
 // Internal imports
 import model.Member;
 import DBAcess.ClubDBAccess;
@@ -33,6 +36,9 @@ public final class Estat {
     private static FXMLSidebarController sidebar;
     private static LocalTime time = LocalTime.NOON;
     private static LocalDate date;
+    
+    // Hores
+    public static HashMap<String, Hora> hores = new HashMap<String, Hora>();
     
     // Variables límit
     public static final int partides_duracio = club.getClubBookingDuration();

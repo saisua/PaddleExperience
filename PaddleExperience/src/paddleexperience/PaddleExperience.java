@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 
 // Internal imports
 import paddleexperience.Structures.Stoppable;
+import paddleexperience.Structures.Cache;
 
 /**
  *
@@ -35,7 +36,7 @@ public class PaddleExperience extends Application {
     
     // Loader
     private static final HashMap<String, Parent> root = new HashMap<String, Parent>();
-    private static final HashMap<String, Object> controllers = new HashMap<String, Object>();
+    private static final HashMap<String, Stoppable> controllers = new HashMap<String, Stoppable>();
     private static String back_root, prev_root;
     
     // Auxiliar
@@ -43,6 +44,8 @@ public class PaddleExperience extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        startAll();
+        
         // Initial scene
         back_root = "FXMLPaddleExperience.fxml";
         prev_root = back_root;
@@ -54,7 +57,8 @@ public class PaddleExperience extends Application {
         Parent initial_root = null;
         
         for(File file : new File("./src/paddleexperience/").listFiles())
-            if (file.isFile() && file.getName().endsWith(".fxml")){
+            if (file.isFile() && file.getName().endsWith(".fxml") 
+                    && !root.containsKey(file.getName())){
                 
                 System.out.println(file.getName());
                 
@@ -82,13 +86,20 @@ public class PaddleExperience extends Application {
     public void stop() throws InterruptedException{
         if(controllers.get(back_root) == null) return;
         
-        Stoppable controller = (Stoppable) controllers.get(back_root);
+        Stoppable controller = controllers.get(back_root);
         
         if(controller == null) return;
         
         controller.stop();
         
+        Cache.stop();
+        
         System.exit(0);
+    }
+    
+    // Executar static functions abans d'iniciar el programa
+    static void startAll(){
+        Cache.start();
     }
     
     /**
@@ -104,8 +115,8 @@ public class PaddleExperience extends Application {
     public static void setParent(Event event, String sceneName) throws InterruptedException{
         ((Node) event.getSource()).getScene().setRoot(root.get(sceneName));
         
-        ((Stoppable) controllers.get(back_root)).stop();
-        ((Stoppable) controllers.get(sceneName)).refresh();
+        controllers.get(back_root).stop();
+        controllers.get(sceneName).refresh();
         
         prev_root = back_root;
         back_root = sceneName;
@@ -118,8 +129,8 @@ public class PaddleExperience extends Application {
     public static void back(Event event) throws InterruptedException{
         ((Node) event.getSource()).getScene().setRoot(root.get(prev_root));
         
-        ((Stoppable) controllers.get(back_root)).stop();
-        ((Stoppable) controllers.get(prev_root)).refresh();
+        controllers.get(back_root).stop();
+        controllers.get(prev_root).refresh();
         
         // Swap prev_root, back_root
             String aux = prev_root;
@@ -128,11 +139,11 @@ public class PaddleExperience extends Application {
     }
     
     public static void stop(String sceneName) throws InterruptedException{
-        ((Stoppable) controllers.get(back_root)).stop();
+        controllers.get(sceneName).stop();
     }
     
     public static void refresh(String sceneName){
-        ((Stoppable) controllers.get(back_root)).refresh();
+        controllers.get(sceneName).refresh();
     }
     
     
@@ -140,11 +151,12 @@ public class PaddleExperience extends Application {
     
     public static Parent getParent() throws IOException{
         if(controllers.containsKey(back_root))
-            ((Stoppable) controllers.get(back_root)).refresh();
+            controllers.get(back_root).refresh();
         else {
-            Parent p = FXMLLoader.load(static_class.getResource(back_root));
-            root.put(back_root, p);
-            controllers.put(back_root, p);
+            FXMLLoader loader = new FXMLLoader(static_class.getResource(back_root));
+            root.put(back_root, loader.load());
+            controllers.put(back_root, loader.getController());
+            //controllers.get(back_root).refresh();
         }
         
         return root.get(back_root);
@@ -152,11 +164,12 @@ public class PaddleExperience extends Application {
     
     public static Parent getParent(String sceneName) throws IOException{
         if(controllers.containsKey(sceneName))
-            ((Stoppable) controllers.get(sceneName)).refresh();
+            controllers.get(sceneName).refresh();
         else {
-            Parent p = FXMLLoader.load(static_class.getResource(sceneName));
-            root.put(sceneName, p);
-            controllers.put(sceneName, p);
+            FXMLLoader loader = new FXMLLoader(static_class.getResource(sceneName));
+            root.put(sceneName, loader.load());
+            controllers.put(sceneName, loader.getController());
+            //controllers.get(sceneName).refresh();
         }
         
         return root.get(sceneName);

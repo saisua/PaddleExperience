@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -61,16 +62,31 @@
             </VBox>
             <AnchorPane GridPane.columnIndex="1">
                <children>
-                  <Text fx:id="text_data" layoutX="-8.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="19/01/19" wrappingWidth="156.7294921875" AnchorPane.leftAnchor="-8.0">
+                  <Text fx:id="text_data" layoutX="131.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F" textAlignment="RIGHT" underline="true" wrappingWidth="197.7294921875" AnchorPane.rightAnchor="0.2705078125">
                      <font>
                         <Font size="25.0" />
                      </font>
                   </Text>
-                  <Text fx:id="text_hora" layoutX="264.0" layoutY="38.564453125" strokeType="OUTSIDE" strokeWidth="0.0" text="19:00" textAlignment="RIGHT" underline="true" wrappingWidth="58.7294921875" AnchorPane.rightAnchor="6.2705078125">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
+                  <HBox layoutY="20.0" prefHeight="100.0" prefWidth="165.0">
+                     <children>
+                        <Text fx:id="text_hora" strokeType="OUTSIDE" strokeWidth="0.0" text="19:00" wrappingWidth="89.7294921875">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="35.0" />
+                           </HBox.margin>
+                        </Text>
+                        <ImageView fx:id="imageview_rellotge" fitHeight="30.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../camera_digital_camera_photography-b_5.jpg" />
+                           </image>
+                           <HBox.margin>
+                              <Insets top="35.0" />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
             <GridPane fx:id="gridpane_imageview_court" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -105,14 +121,6 @@
                   </ImageView>
                </children>
             </GridPane>
-            <ImageView fx:id="imageview_rellotge" fitHeight="30.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
-               <image>
-                  <Image url="@../../../camera_digital_camera_photography-b_5.jpg" />
-               </image>
-               <GridPane.margin>
-                  <Insets bottom="20.0" />
-               </GridPane.margin>
-            </ImageView>
          </children>
       </GridPane>
    </children>
