@@ -28,6 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -58,23 +59,22 @@ public class FXMLPaddleExperienceController implements Initializable, Stoppable 
     private Button button_registrar;
     @FXML
     private Button button_pistes;
-    @FXML
     private Tooltip tooltip_text_benvinguda = new Tooltip("Benvingut/da en diversos llenguatges");
 
     // Llista benvingut en diversos llenguatges
     static final LinkedList WELCOME = new LinkedList<String>(Arrays.asList(
-            "欢迎光临", // Chino mandarín
+            //"欢迎光临", // Chino mandarín
             "Bienvenido", "Bienvenida", // Español
             "Welcome", // Inglés
             "स्वागत", "सवागत हैं", // Hindú
             "স্বাগতম", // Bengalí
             "Bem-vindo", "Bem-vinda", // Portugués
             "Добро пожаловать", // Ruso
-            "ようこそ", // Japonés
+            //"ようこそ", // Japonés
             "ਜੀ ਆਇਆ ਨੂੰ।", // Punjavi
             "सुस्वागतम", // Marathi
             "Hoş geldin", // Turco
-            "환영합니다", // Koreano
+            //"환영합니다", // Koreano
             "Bienvenue", // French
             "Willkommen", // Alemán
             "Hoan nghênh", // Vietnamí
@@ -85,7 +85,7 @@ public class FXMLPaddleExperienceController implements Initializable, Stoppable 
             "પધારો", // Gujarati
             "خوش آمدید", // Persian
             "आईं ना", // Bhojpuri
-            "歡迎", // Hakka
+            //"歡迎", // Hakka
             "Sannu da zuwa", // Hausa
             "Benvingut", "Benvinguda" // Catalán
     ));
@@ -108,21 +108,48 @@ public class FXMLPaddleExperienceController implements Initializable, Stoppable 
         System.out.println("Welcome Stoped Successfully");
     }
 
-    public void refresh(){
+    public void refresh() {
         System.out.println("Welcome Refreshed");
     }
-    
+
     // // Manejadors d'events
+    @FXML
     public void on_click_login(Event event) throws InterruptedException, IOException {
         PaddleExperience.setParent(event, "FXMLPaddleLogin.fxml");
     }
-    
+
+    @FXML
     public void on_click_registre(Event event) throws InterruptedException, IOException {
         PaddleExperience.setParent(event, "FXMLRegistro.fxml");
     }
 
+    @FXML
     public void on_click_pistes(Event event) throws InterruptedException, IOException {
         PaddleExperience.setParent(event, "FXMLPaddleReserva.fxml");
+    }
+
+    //Canvia el color del boto login al passar el mouse per damunt
+    @FXML
+    private void paintButLogin(MouseEvent event) {
+        button_login.setStyle("-fx-background-color:#78909c;-fx-text-fill:#FAFAFA;-fx-opacity:0.5;");
+    }
+
+    @FXML
+    private void defaultButColor(MouseEvent event) {
+        button_login.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA");
+    }
+
+    //Canvia el color dels textos dels botons registrat i veure pistes
+    @FXML
+    private void defaultTextButton(MouseEvent event) {
+        Button anyBtn = (Button) event.getSource();
+        anyBtn.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA");
+    }
+
+    @FXML
+    private void fillTextButon(MouseEvent event) {
+        Button anyBtn = (Button) event.getSource();
+        anyBtn.setStyle("-fx-background-color:transparent;-fx-text-fill:#78909c");
     }
 }
 
@@ -150,7 +177,7 @@ class OpacityThread extends Thread {
         Collections.shuffle(FXMLPaddleExperienceController.WELCOME);
 
         this.text_benvinguda.setText((String) this.WELCOME_ITERATOR.next());
-        
+
         Tooltip.install(this.text_benvinguda, this.tooltip_text_benvinguda);
     }
 
