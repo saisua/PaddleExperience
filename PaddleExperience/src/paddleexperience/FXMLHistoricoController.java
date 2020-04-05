@@ -6,11 +6,15 @@
 package paddleexperience;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,8 +22,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Booking;
+import model.Court;
 import model.Member;
 import paddleexperience.Dataclasses.Estat;
+import paddleexperience.Dataclasses.Hora;
 import paddleexperience.Dataclasses.UserBooking;
 import paddleexperience.Structures.Stoppable;
 
@@ -64,13 +70,19 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
 
     // Modificar esta variable mentre els threads estan treballant
     // pot comportar problemes
-    ArrayList<Booking> __user_bookings;
+    // Definit per a testing, borrar despres
+    ArrayList<Booking> __user_bookings = new ArrayList<Booking>(){{
+        // LocalDateTime bookingDate, LocalDate madeForDay, LocalTime fromHour, boolean paid, Court court, Member member
+        // Member(String name, String surname, String telephon, String login, String password, String creditCard, String svc, Image image)
+    }};
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.println("Historico initializing...");
+        
         this.tablecolumn_dia_proxim.setCellValueFactory(new PropertyValueFactory<>("dia"));
         this.tablecolumn_hora_inici_proxim.setCellValueFactory(new PropertyValueFactory<>("horaInici"));
         this.tablecolumn_hora_fi_proxim.setCellValueFactory(new PropertyValueFactory<>("horaFi"));
@@ -82,6 +94,39 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
         this.tablecolumn_hora_inici_jugades.setCellValueFactory(new PropertyValueFactory<>("horaInici"));
         this.tablecolumn_hora_fi_jugades.setCellValueFactory(new PropertyValueFactory<>("horaFi"));
         this.tablecolumn_pista_jugades.setCellValueFactory(new PropertyValueFactory<>("pista"));
+        
+        this.tableView_Proximes.setSortPolicy(table_view -> {
+                Comparator<UserBooking> comparator = (booking1, booking2)
+                        -> this.tablecolumn_dia_proxim.getSortType() == TableColumn.SortType.ASCENDING
+                                ? booking1.compareTo(booking2) : booking2.compareTo(booking1); //columns are sorted: sort accordingly
+                FXCollections.sort(this.tableView_Proximes.getItems(), comparator);
+                return true;
+        });;
+        
+        this.tableView_Ultimes.setSortPolicy(table_view -> {
+                Comparator<UserBooking> comparator = (booking1, booking2)
+                        -> this.tablecolumn_dia_jugades.getSortType() == TableColumn.SortType.ASCENDING
+                                ? booking1.compareTo(booking2) : booking2.compareTo(booking1); //columns are sorted: sort accordingly
+                FXCollections.sort(this.tableView_Ultimes.getItems(), comparator);
+                return true;
+        });;
+        
+        // TESTS
+        
+        __user_bookings.add(new Booking(LocalDateTime.now(), LocalDate.now().minusDays(1),
+                            LocalTime.of(17, 30), true, new Court("Pista4"),
+                            new Member("ESP", "AÑA", "", "1", "2", "3", "4", null)));
+        __user_bookings.add(new Booking(LocalDateTime.now(), LocalDate.now().plusDays(1),
+                            LocalTime.of(10, 30), true, new Court("Pista1"),
+                            new Member("ESP", "AÑA", "", "1", "2", "3", "4", null)));
+        __user_bookings.add(new Booking(LocalDateTime.now(), LocalDate.now().plusDays(1),
+                            LocalTime.of(9, 0), false, new Court("Pista1"),
+                            new Member("ESP", "AÑA", "", "1", "2", "3", "4", null)));
+        __user_bookings.add(new Booking(LocalDateTime.now(), LocalDate.now().minusDays(1),
+                            LocalTime.of(10, 30), true, new Court("Pista4"),
+                            new Member("ESP", "AÑA", "", "1", "2", "3", "4", null)));
+        
+        // END TESTS
         
         System.out.println("Historico initialized");
     }
@@ -121,19 +166,14 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
             }
         } catch (InterruptedException err) { return; }
         
-        System.out.println(Estat.club.existsLogin(Estat.getMemberLogin()));
-        
-        this.__user_bookings = Estat.club.getUserBookings(Estat.getMemberLogin());
-        System.out.println("0");
+        //this.__user_bookings = Estat.club.getUserBookings(Estat.getMemberLogin());
+        System.out.println(this.__jugades_count); System.out.println(this.__proximes_count);
         int total_bookings = (this.__jugades_count + this.__proximes_count);
-        System.out.println("1");
         
         if(this.__user_bookings.size() > total_bookings){
             this.thread_per_jugar = new ReservaThread(this, false, total_bookings);
             this.thread_per_jugar.start();
         }
-        
-        System.out.println("2");
         
         this.thread_ja_jugades = new ReservaThread(this, true, 0);
         this.thread_ja_jugades.start();
@@ -179,8 +219,10 @@ class ReservaThread extends Thread{
             LocalDateTime hora_fi = hora_inici.plusMinutes(Estat.partides_duracio);
             
             // Si una de les proximes partides ja ha passat, mou-la a ultimes
-            if(hora_fi.compareTo(LocalDateTime.now()) < 0)
+            if(hora_fi.compareTo(LocalDateTime.now()) < 0){
                 this.swapItem(this.index, hora_inici);
+                System.out.println("Booking mogut!");
+            }
             else
                 break;
         }
@@ -193,12 +235,21 @@ class ReservaThread extends Thread{
             if(!this.open) return;
             
             Booking to_book = booking_iter.next();
-            LocalDateTime hora_fi = to_book.getBookingDate().plusMinutes(Estat.partides_duracio);
+            LocalDateTime hora_fi = LocalDateTime.of(
+                    to_book.getMadeForDay(),
+                    to_book.getFromTime()
+                    ).plusMinutes(Estat.partides_duracio);
             
-            if(hora_fi.compareTo(LocalDateTime.now()) > 0)
+            if(hora_fi.compareTo(LocalDateTime.now()) > 0){
                 this.addItemProximes(new UserBooking(to_book), hora_fi);
-            else
+                
+                System.out.println("Proxim Booking afegit!");
+            }
+            else{
                 this.addItemJugades(new UserBooking(to_book), to_book.getBookingDate());
+            
+                System.out.println("Anterior Booking afegit!");
+            }
         }
         
         this.open = false;
@@ -214,10 +265,11 @@ class ReservaThread extends Thread{
         // i probablement la base de dades vinga ja ordenada
         for(ListIterator<UserBooking> iter = this.controller.tableView_Proximes.getItems()
                         .listIterator(proximes_size);
-                        iter.hasPrevious() && iter.previous().compareTo(hora_comparar) > 0;
+                        iter.hasPrevious() && iter.previous().compareTo(hora_comparar) < 0;
                         proximes_size--);
         
         this.controller.tableView_Proximes.getItems().add(proximes_size, to_book);
+        this.controller.__proximes_count++;
     }
     
     @SuppressWarnings("empty-statement")
