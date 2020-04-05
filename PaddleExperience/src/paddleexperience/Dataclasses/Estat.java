@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 // Internal imports
 import model.Member;
 import DBAcess.ClubDBAccess;
+import java.util.Arrays;
 import model.Court;
 import paddleexperience.FXMLSidebarController;
 
@@ -30,12 +31,6 @@ public final class Estat {
     // Instancia de ClubDBAccess per poder accedir a la mateixa instància
     // amb mètodes estàtics desde tot el projecte
     public static final ClubDBAccess club = ClubDBAccess.getSingletonClubDBAccess();
-    
-    // Guardar informació d'estat
-    private static Member member;
-    private static FXMLSidebarController sidebar;
-    private static LocalTime time = LocalTime.NOON;
-    private static LocalDate date;
     
     // Hores
     public static HashMap<String, Hora> hores = new HashMap<String, Hora>();
@@ -50,11 +45,28 @@ public final class Estat {
     public static final LocalTime time_final = time_inici.plus(partides_duracio*(partides_dia-1), 
                                                                 ChronoUnit.MINUTES);
     
+    // Guardar informació d'estat
+    private static Member member;
+    private static String member_login;
+    private static FXMLSidebarController sidebar;
+    private static LocalTime time = time_inici;
+    private static LocalDate date;
+    
     // Auxiliars
     public static final HashMap<Court, Integer> court_index = new HashMap<Court, Integer>(){{
             for(int court_num = 0; court_num < club.getCourts().size(); court_num++) 
                     put(club.getCourts().get(court_num), court_num);
             }};
+    
+    public static void start(){
+        for(int partida = 0; partida < Estat.partides_dia; partida++){
+            // Hora falta des-comentar
+            Hora hora = new Hora(Estat.time_inici.plusMinutes(Estat.partides_duracio*partida),
+                    Arrays.asList(0,0,0,0));
+            
+            Estat.hores.put(hora.getTimeStr(), hora);
+        }
+    }
     
     // // STATE METHODS
     
@@ -79,6 +91,9 @@ public final class Estat {
     
     public static Member getMember(){
         return member;
+    }
+    public static String getMemberLogin(){
+        return member_login;
     }
     
     public static LocalDate getDate(){
@@ -135,6 +150,7 @@ public final class Estat {
     
     public static void setMember(Member member_set){
         member = member_set;
+        member_login = member_set.getLogin();
     }
     
     public static void setDate(LocalDate new_date){

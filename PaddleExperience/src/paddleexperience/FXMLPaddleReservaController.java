@@ -107,15 +107,8 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
         this.tablecolumn_courts.setCellValueFactory(new PropertyValueFactory<>("courts"));
         this.tablecolumn_reservat.setCellValueFactory(new PropertyValueFactory<>("reservat"));
         
-        for(int partida = 0; partida < Estat.partides_dia; partida++){
-            // Hora falta des-comentar
-            Hora hora = new Hora(Estat.time_inici.plusMinutes(Estat.partides_duracio*partida),
-                    Arrays.asList(0,0,0,0));
-            
+        for(Hora hora : Estat.hores.values())
             this.tableview_horari.getItems().add(hora);
-            
-            Estat.hores.put(hora.getTimeStr(), hora);
-        }
         
         /*
         this.tablecolumn_hora.setComparator((Object hora1, Object hora2) -> {

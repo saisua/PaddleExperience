@@ -54,7 +54,7 @@ public final class Hora{
                 "#37474F"), new CornerRadii(1), null));
     
     // // Auxiliar
-    private ObservableList<Node> courts_images = this.courts.getChildren();
+    private ImageView courts_images[] = new ImageView[Estat.numero_pistes];
     
     public Hora(LocalTime hora, List<Integer> courts_state){
         this.time = hora;
@@ -69,14 +69,11 @@ public final class Hora{
         Text h = new Text(this.time_str);
         h.setVisible(false); 
         
-        new ImageView(this.images.get(0));
-        
-        this.courts_images.add(new ImageView(this.images.get(0)));
-        
-        for(int court : courts_state)
-            this.courts_images.add(new ImageView(this.images.get(court)));
+        for(int court_num = 0; court_num < courts_state.size(); court_num++)
+            this.courts_images[court_num] = 
+                    new ImageView(this.images.get(courts_state.get(court_num)));
 
-        this.courts.getChildren().setAll(this.courts_images);
+        this.courts.getChildren().addAll(this.courts_images);
         
         // Definició de comportaments
         text_hora.setStyle("-fx-fill:  #FAFAFA;"
@@ -98,8 +95,7 @@ public final class Hora{
     
     
     public void updateCourt(int index, int state){
-        ((ImageView) this.courts_images.get(index))
-                .setImage(this.images.get(state));
+        this.courts_images[index].setImage(this.images.get(state));
     }
     
     public void updateCourts(List<Integer> courts_state){
@@ -112,22 +108,22 @@ public final class Hora{
     public void updateCourts(Integer[] courts_state){
         int index = 0;
         
-        for(Node court : this.courts_images)
-            ((ImageView) court).setImage(this.images.get(courts_state[index++]));
+        for(ImageView court : this.courts_images)
+            court.setImage(this.images.get(courts_state[index++]));
     }
     
     public void updateCourtsImages(List<Image> courts_state){
         Iterator states = courts_state.iterator();
         
-        for(Node court : this.courts_images)
-            ((ImageView) court).setImage((Image) states.next());
+        for(ImageView court : this.courts_images)
+            court.setImage((Image) states.next());
     }
     
     public void updateCourtsImages(Image[] courts_state){
         int index = 0;
         
-        for(Node court : this.courts_images)
-            ((ImageView) court).setImage(courts_state[index++]);
+        for(ImageView court : this.courts_images)
+            court.setImage(courts_state[index++]);
     }
     
     
@@ -164,5 +160,9 @@ public final class Hora{
     
     public String getTimeStr(){
         return time_str;
+    }
+    
+    public ImageView[] getCourtImages(){
+        return this.courts_images;
     }
 }

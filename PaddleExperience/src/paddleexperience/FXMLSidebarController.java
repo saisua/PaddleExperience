@@ -37,6 +37,9 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     private Button btn_reserva;
     @FXML
     private Button btn_historico;
+    
+    
+    private Stoppable sub_menu_controller;
 
     public void FXMLSidebarController(){
         Estat.setSidebar(this);
@@ -60,6 +63,9 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     // S'executa cada vegada que es tanca l'escena
     @Override
     public void stop() throws InterruptedException{
+        if(this.sub_menu_controller != null) 
+            this.sub_menu_controller.stop();
+        
         System.out.println("Sidebar stopped");
     }
     
@@ -97,6 +103,7 @@ public class FXMLSidebarController implements Initializable, Stoppable {
         //Parent root = null;
         //try {
         Parent root = PaddleExperience.getParent(ui + ".fxml");
+        this.sub_menu_controller = PaddleExperience.getController(ui + ".fxml");
         //} catch (IOException e) {
         //    Logger.getLogger(FXMLSidebarController.class.getName()).log(Level.SEVERE, null, e);
         //}
