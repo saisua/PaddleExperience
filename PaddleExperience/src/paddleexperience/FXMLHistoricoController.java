@@ -71,10 +71,7 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
     // Modificar esta variable mentre els threads estan treballant
     // pot comportar problemes
     // Definit per a testing, borrar despres
-    ArrayList<Booking> __user_bookings = new ArrayList<Booking>(){{
-        // LocalDateTime bookingDate, LocalDate madeForDay, LocalTime fromHour, boolean paid, Court court, Member member
-        // Member(String name, String surname, String telephon, String login, String password, String creditCard, String svc, Image image)
-    }};
+    ArrayList<Booking> __user_bookings;
     
     /**
      * Initializes the controller class.
@@ -113,18 +110,18 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
         
         // TESTS
         
-        __user_bookings.add(new Booking(LocalDateTime.now(), LocalDate.now().minusDays(1),
+        Estat.club.getBookings().add(new Booking(LocalDateTime.now(), LocalDate.now().minusDays(1),
                             LocalTime.of(17, 30), true, new Court("Pista4"),
-                            new Member("ESP", "AÑA", "", "1", "2", "3", "4", null)));
-        __user_bookings.add(new Booking(LocalDateTime.now(), LocalDate.now().plusDays(1),
+                            Estat.club.getMemberByCredentials("Login1", "Password1")));
+        Estat.club.getBookings().add(new Booking(LocalDateTime.now(), LocalDate.now().plusDays(1),
                             LocalTime.of(10, 30), true, new Court("Pista1"),
-                            new Member("ESP", "AÑA", "", "1", "2", "3", "4", null)));
-        __user_bookings.add(new Booking(LocalDateTime.now(), LocalDate.now().plusDays(1),
+                            Estat.club.getMemberByCredentials("Login1", "Password1")));
+        Estat.club.getBookings().add(new Booking(LocalDateTime.now(), LocalDate.now().plusDays(1),
                             LocalTime.of(9, 0), false, new Court("Pista1"),
-                            new Member("ESP", "AÑA", "", "1", "2", "3", "4", null)));
-        __user_bookings.add(new Booking(LocalDateTime.now(), LocalDate.now().minusDays(1),
+                            Estat.club.getMemberByCredentials("Login1", "Password1")));
+        Estat.club.getBookings().add(new Booking(LocalDateTime.now(), LocalDate.now().minusDays(1),
                             LocalTime.of(10, 30), true, new Court("Pista4"),
-                            new Member("ESP", "AÑA", "", "1", "2", "3", "4", null)));
+                            Estat.club.getMemberByCredentials("Login1", "Password1")));
         
         // END TESTS
         
@@ -166,7 +163,7 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
             }
         } catch (InterruptedException err) { return; }
         
-        //this.__user_bookings = Estat.club.getUserBookings(Estat.getMemberLogin());
+        this.__user_bookings = Estat.club.getUserBookings(Estat.getMemberLogin());
         System.out.println(this.__jugades_count); System.out.println(this.__proximes_count);
         int total_bookings = (this.__jugades_count + this.__proximes_count);
         
