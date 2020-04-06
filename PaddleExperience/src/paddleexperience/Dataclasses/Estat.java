@@ -24,7 +24,8 @@ import model.Court;
 import paddleexperience.FXMLSidebarController;
 
 /**
- *
+ * Esta classe deuria ser un fitxer encriptat
+ * 
  * @author saisua
  */
 public final class Estat {
@@ -149,6 +150,7 @@ public final class Estat {
     // // SETTERS
     
     public static void setMember(Member member_set){
+        System.out.println("Logged in as "+member_set.getLogin());
         member = member_set;
         member_login = member_set.getLogin();
     }

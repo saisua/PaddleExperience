@@ -6,6 +6,7 @@
 package paddleexperience.Dataclasses;
 
 import java.time.LocalDateTime;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import model.Booking;
@@ -42,6 +43,7 @@ public class UserBooking {
                                         .plusMinutes(Estat.partides_duracio).toString()));
         this.pista.getChildren().add(new Text(data.getCourt().getName()));
         this.pagada.getChildren().add(new Text(data.getPaid() ? "Sí" : "No"));
+        this.cancelar.getChildren().add(new Button("Cancelar"));
     }
     
     public int compareTo(UserBooking a_comparar){

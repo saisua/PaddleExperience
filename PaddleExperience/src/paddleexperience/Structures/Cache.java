@@ -104,7 +104,7 @@ public class Cache {
             // Fem un recorregut lineal del bookings del dia, i apuntem
             // quines pistes están ocupades.
             // El resultat es guarda dins de courts
-            for(Booking reserva : test_booking.get(Estat.getDate())){//Estat.club.getForDayBookings(Estat.getDate())){
+            for(Booking reserva : Estat.club.getForDayBookings(Estat.getDate())){
                 // Agafem el array si ja n'hem guardat
                 Image[] court = courts.get(reserva.getFromTime());
                 
@@ -179,7 +179,7 @@ class CacheThread extends Thread{
             if(!Cache.cache.containsKey(this.date)){
                 courts.clear();
                 
-                for(Booking reserva : FXMLPaddleReservaController.test_booking.get(this.date)){//Estat.club.getForDayBookings(this.date)){
+                for(Booking reserva : Estat.club.getForDayBookings(this.date)){
                     Image[] court = courts.get(reserva.getFromTime());
                     if(court == null){
                         court = Cache.default_court.clone();
