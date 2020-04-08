@@ -23,9 +23,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 import javafx.util.Callback;
 
@@ -35,9 +37,9 @@ import javafx.util.Callback;
  */
 public final class Hora{
     public static final HashMap<Integer, Image> images = new HashMap<Integer, Image>(){{
-       put(0, new Image("file:src/paddleexperience/Images/pistaGris.png"));
-       put(1, new Image("file:src/paddleexperience/Images/pistaRoig.png"));
-       put(2, new Image("file:src/paddleexperience/Images/pistaVerd.png"));
+       put(0, new Image("file:src/paddleexperience/Images/PistaGris.png"));
+       put(1, new Image("file:src/paddleexperience/Images/PistaRoig.png"));
+       put(2, new Image("file:src/paddleexperience/Images/PistaVerd.png"));
     }};
     
     private LocalTime time;
@@ -69,11 +71,24 @@ public final class Hora{
         Text h = new Text(this.time_str);
         h.setVisible(false); 
         
-        for(int court_num = 0; court_num < courts_state.size(); court_num++)
-            this.courts_images[court_num] = 
-                    new ImageView(this.images.get(courts_state.get(court_num)));
+        for(int court_num = 0; court_num < courts_state.size(); court_num++){
+            ImageView image = new ImageView(this.images.get(courts_state.get(court_num)));
+            
+            image.rotateProperty().set(90);
+            image.setFitHeight(50);
+            
+            image.setPreserveRatio(true);
+            
+            this.courts_images[court_num] = image;
+        }
 
-        this.courts.getChildren().addAll(this.courts_images);
+        AnchorPane anchor = new AnchorPane();
+        HBox hbox_images = new HBox();
+        
+        hbox_images.getChildren().addAll(this.courts_images);
+        anchor.getChildren().add(hbox_images);
+        
+        this.courts.getChildren().add(anchor);
         
         // Definició de comportaments
         text_hora.setStyle("-fx-fill:  #FAFAFA;"
