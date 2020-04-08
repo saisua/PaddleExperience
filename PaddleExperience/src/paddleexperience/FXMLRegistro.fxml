@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="860.0" style="-fx-background-color: #263238;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLRegistroController">
+<AnchorPane id="fons" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="860.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLRegistroController">
     <children>
         <GridPane prefHeight="586.0" prefWidth="756.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
@@ -28,9 +28,9 @@
                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="25.0" vgrow="ALWAYS" />
             </rowConstraints>
             <children>
-                <AnchorPane prefHeight="510.0" prefWidth="717.0" style="-fx-background-color: #37474F; -fx-border-color: #78909C; -fx-border-radius: 3; -fx-effect: dropshadow( gaussian, rgba(28,28,28), 10, 0.3, 0.0, 0.0 );" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
+                <AnchorPane id="fons_Flotant" prefHeight="510.0" prefWidth="717.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
                     <children>
-                        <Button layoutX="1.0" layoutY="-2.0" mnemonicParsing="false" onMouseClicked="#on_click_enrere" opacity="0.8" prefHeight="57.0" prefWidth="76.0" style="-fx-background-color: transparent;" text="←" textFill="#fafafa" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Button id="button_Enrere" layoutX="1.0" layoutY="-2.0" mnemonicParsing="false" onMouseClicked="#on_click_enrere" opacity="0.8" prefHeight="57.0" prefWidth="76.0" text="←" textFill="#fafafa" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <font>
                                 <Font name="Ubuntu" size="28.0" />
                             </font>
@@ -38,34 +38,34 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <JFXTextField fx:id="textfield_nom" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="87.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#comprovaPositiu" prefHeight="35.0" prefWidth="280.0" promptText="Nom" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="87.0">
+                        <JFXTextField fx:id="textfield_nom" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="87.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#comprovaPositiu" prefHeight="35.0" prefWidth="280.0" promptText="Nom" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="87.0">
                             <font>
                                 <Font name="Ubuntu" size="16.0" />
                             </font>
                         </JFXTextField>
-                        <JFXTextField fx:id="textfield_cognom" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="152.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#comprovaPositiu" prefHeight="35.0" prefWidth="280.0" promptText="Cognom" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="152.0">
+                        <JFXTextField fx:id="textfield_cognom" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="152.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#comprovaPositiu" prefHeight="35.0" prefWidth="280.0" promptText="Cognom" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="152.0">
                             <font>
                                 <Font name="Ubuntu" size="16.0" />
                             </font>
                         </JFXTextField>
-                        <JFXTextField fx:id="textfield_usuari" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="217.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#on_keyTyped_usuari" prefHeight="35.0" prefWidth="280.0" promptText="Usuari" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="217.0">
+                        <JFXTextField fx:id="textfield_usuari" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="217.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#on_keyTyped_usuari" prefHeight="35.0" prefWidth="280.0" promptText="Usuari" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="217.0">
                             <font>
                                 <Font name="Ubuntu" size="16.0" />
                             </font>
                         </JFXTextField>
-                        <JFXTextField fx:id="textfield_telefon" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="282.0" maxWidth="280.0" minWidth="280.0" onKeyTyped="#on_click_telefon" prefHeight="35.0" prefWidth="280.0" promptText="Telèfon" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="282.0">
+                        <JFXTextField fx:id="textfield_telefon" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="282.0" maxWidth="280.0" minWidth="280.0" onKeyTyped="#on_click_telefon" prefHeight="35.0" prefWidth="280.0" promptText="Telèfon" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="282.0">
                             <font>
                                 <Font name="Ubuntu" size="16.0" />
                             </font>
                         </JFXTextField>
                   <HBox layoutX="67.0" layoutY="348.0" spacing="10.0" AnchorPane.leftAnchor="66.0" AnchorPane.rightAnchor="66.0">
                      <children>
-                              <JFXPasswordField fx:id="textfield_contrasena" focusColor="#78909c" labelFloat="true" maxWidth="300.0" minWidth="280.0" onKeyReleased="#on_keyTyped_contrasena" prefHeight="35.0" prefWidth="280.0" promptText="Contrasenya" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa">
+                              <JFXPasswordField fx:id="textfield_contrasena" focusColor="#78909c" labelFloat="true" maxWidth="300.0" minWidth="280.0" onKeyReleased="#on_keyTyped_contrasena" prefHeight="35.0" prefWidth="280.0" promptText="Contrasenya" unFocusColor="#fafafa">
                                   <font>
                                       <Font name="Ubuntu" size="16.0" />
                                   </font>
                               </JFXPasswordField>
-                              <JFXPasswordField fx:id="textfield_ConfContrasena" focusColor="#78909c" labelFloat="true" maxWidth="280.0" minWidth="200.0" onKeyReleased="#on_keyTyped_comprova" prefHeight="35.0" prefWidth="280.0" promptText="Confirmar contrasenya" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa">
+                              <JFXPasswordField fx:id="textfield_ConfContrasena" focusColor="#78909c" labelFloat="true" maxWidth="280.0" minWidth="200.0" onKeyReleased="#on_keyTyped_comprova" prefHeight="35.0" prefWidth="280.0" promptText="Confirmar contrasenya" unFocusColor="#fafafa">
                                   <font>
                                       <Font name="Ubuntu" size="16.0" />
                                   </font>
@@ -74,12 +74,12 @@
                   </HBox>
                   <HBox layoutX="67.0" layoutY="418.0" spacing="10.0" AnchorPane.leftAnchor="67.0" AnchorPane.rightAnchor="67.0">
                      <children>
-                              <JFXTextField fx:id="textfield_targeta" focusColor="#78909c" labelFloat="true" maxWidth="376.0" minWidth="315.0" onKeyTyped="#on_click_targeta" prefHeight="35.0" prefWidth="376.0" promptText="Tarjeta de crèdit (Opcional)" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa">
+                              <JFXTextField fx:id="textfield_targeta" focusColor="#78909c" labelFloat="true" maxWidth="376.0" minWidth="315.0" onKeyTyped="#on_click_targeta" prefHeight="35.0" prefWidth="376.0" promptText="Tarjeta de crèdit (Opcional)" unFocusColor="#fafafa">
                                   <font>
                                       <Font name="Ubuntu" size="16.0" />
                                   </font>
                               </JFXTextField>
-                              <JFXTextField fx:id="textfield_svc" focusColor="#78909c" labelFloat="true" maxWidth="181.0" minWidth="110.0" onKeyTyped="#on_click_svc" prefHeight="35.0" prefWidth="181.0" promptText="SVC" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa">
+                              <JFXTextField fx:id="textfield_svc" focusColor="#78909c" labelFloat="true" maxWidth="181.0" minWidth="110.0" onKeyTyped="#on_click_svc" prefHeight="35.0" prefWidth="181.0" promptText="SVC" unFocusColor="#fafafa">
                                   <font>
                                       <Font name="Ubuntu" size="16.0" />
                                   </font>
@@ -94,7 +94,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                         </ImageView>
-                  <Button fx:id="button_continua" disable="true" layoutX="600.0" layoutY="527.0" mnemonicParsing="false" onMouseClicked="#on_click_continuar" opacity="0.2" prefHeight="43.0" prefWidth="98.0" style="-fx-background-radius: 2; -fx-background-color: #263238;" text="Continuar" textAlignment="CENTER" textFill="#fafafa" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                  <Button id="button_Continuar" fx:id="button_continua" disable="true" layoutX="600.0" layoutY="527.0" mnemonicParsing="false" onMouseClicked="#on_click_continuar" opacity="0.2" prefHeight="43.0" prefWidth="98.0" text="Continuar" textAlignment="CENTER" textFill="#fafafa" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <font>
                         <Font name="Ubuntu" size="15.0" />
                      </font>
