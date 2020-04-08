@@ -34,6 +34,7 @@ import javafx.scene.paint.Paint;
 // Java imports
 import paddleexperience.Structures.Stoppable;
 import paddleexperience.Dataclasses.Estat;
+import paddleexperience.Dataclasses.Hora;
 
 /**
  * FXML Controller class
@@ -108,12 +109,9 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
 
             for(int court_num = 0; court_num < courts.size(); court_num++){
                 System.out.println(courts.size());
-                /*
-                Image image = (Estat.hores.get(hora_actual).getCourtImages()[court_num]).getImage();
-                ((ImageView) courts.get(court_num)).setImage(new WritableImage(
-                        image.getPixelReader(), 0, ((int) (image.getHeight() - image.getWidth())) / 2,
-                        (int) image.getWidth(), (int) image.getWidth()));
-                */
+                
+                ((ImageView) courts.get(court_num)).setImage(((ImageView) 
+                        Estat.hores.get(hora_actual).getCourtImages()[court_num]).getImage());
             }
         }
         

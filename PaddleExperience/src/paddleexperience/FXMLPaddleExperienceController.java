@@ -98,7 +98,7 @@ public class FXMLPaddleExperienceController implements Initializable, Stoppable 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.thread = new OpacityThread(this.text_benvinguda, this.tooltip_text_benvinguda);
+        this.thread = new OpacityThread(this.text_benvinguda, this.tooltip_text_benvinguda, true);
         this.thread.start();
     }
 
@@ -109,6 +109,11 @@ public class FXMLPaddleExperienceController implements Initializable, Stoppable 
     }
 
     public void refresh() {
+        if(this.thread == null || !this.thread.isAlive()){
+            this.thread = new OpacityThread(this.text_benvinguda, this.tooltip_text_benvinguda, false);
+            this.thread.start();
+        }
+        
         System.out.println("Welcome Refreshed");
     }
 
@@ -128,6 +133,29 @@ public class FXMLPaddleExperienceController implements Initializable, Stoppable 
         PaddleExperience.setParent(event, "FXMLPaddleReserva.fxml");
     }
 
+    //Canvia el color del boto login al passar el mouse per damunt
+    @FXML
+    private void paintButLogin(MouseEvent event) {
+        button_login.setStyle("-fx-background-color:#78909c;-fx-text-fill:#FAFAFA;-fx-opacity:0.5;");
+    }
+
+    @FXML
+    private void defaultButColor(MouseEvent event) {
+        button_login.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA");
+    }
+
+    //Canvia el color dels textos dels botons registrat i veure pistes
+    @FXML
+    private void defaultTextButton(MouseEvent event) {
+        Button anyBtn = (Button) event.getSource();
+        anyBtn.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA");
+    }
+
+    @FXML
+    private void fillTextButon(MouseEvent event) {
+        Button anyBtn = (Button) event.getSource();
+        anyBtn.setStyle("-fx-background-color:transparent;-fx-text-fill:#78909c");
+    }
 }
 
 class OpacityThread extends Thread {
@@ -143,37 +171,40 @@ class OpacityThread extends Thread {
     // // Variables auxiliars
     private static final double OPACITY_PERC_ds = Math.pow(10, (Math.floor((Math.log10(FADE)) - 1))) / FADE;
 
-    private boolean opacity_up = false;
+    private static boolean opacity_up = false;
     // Iterador per a accés més veloç
     private Iterator WELCOME_ITERATOR = FXMLPaddleExperienceController.WELCOME.iterator();
 
-    public OpacityThread(Text text_benvinguda, Tooltip tooltip) {
+    public OpacityThread(Text text_benvinguda, Tooltip tooltip, 
+                    boolean first) {
         this.text_benvinguda = text_benvinguda;
         this.tooltip_text_benvinguda = tooltip;
 
-        Collections.shuffle(FXMLPaddleExperienceController.WELCOME);
+        if(first){
+            Collections.shuffle(FXMLPaddleExperienceController.WELCOME);
 
-        this.text_benvinguda.setText((String) this.WELCOME_ITERATOR.next());
+            this.text_benvinguda.setText((String) this.WELCOME_ITERATOR.next());
 
-        Tooltip.install(this.text_benvinguda, this.tooltip_text_benvinguda);
+            Tooltip.install(this.text_benvinguda, this.tooltip_text_benvinguda);
+        }
     }
 
     // Run method changes opacity of text_benvinguda over time
     @Override
     public void run() {
         while (this.open) {
-            if (this.opacity_up) {
+            if (opacity_up) {
                 this.text_benvinguda.setOpacity(this.text_benvinguda.getOpacity() + OPACITY_PERC_ds);
 
                 if (this.text_benvinguda.getOpacity() >= 1) {
-                    this.opacity_up = false;
+                    opacity_up = false;
                 }
 
             } else {
                 this.text_benvinguda.setOpacity(this.text_benvinguda.getOpacity() - OPACITY_PERC_ds);
 
                 if (this.text_benvinguda.getOpacity() <= 0) {
-                    this.opacity_up = true;
+                    opacity_up = true;
                     this.new_text_benvinguda();
                 }
             }
