@@ -128,29 +128,6 @@ public class FXMLPaddleExperienceController implements Initializable, Stoppable 
         PaddleExperience.setParent(event, "FXMLPaddleReserva.fxml");
     }
 
-    //Canvia el color del boto login al passar el mouse per damunt
-    @FXML
-    private void paintButLogin(MouseEvent event) {
-        button_login.setStyle("-fx-background-color:#78909c;-fx-text-fill:#FAFAFA;-fx-opacity:0.5;");
-    }
-
-    @FXML
-    private void defaultButColor(MouseEvent event) {
-        button_login.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA");
-    }
-
-    //Canvia el color dels textos dels botons registrat i veure pistes
-    @FXML
-    private void defaultTextButton(MouseEvent event) {
-        Button anyBtn = (Button) event.getSource();
-        anyBtn.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA");
-    }
-
-    @FXML
-    private void fillTextButon(MouseEvent event) {
-        Button anyBtn = (Button) event.getSource();
-        anyBtn.setStyle("-fx-background-color:transparent;-fx-text-fill:#78909c");
-    }
 }
 
 class OpacityThread extends Thread {

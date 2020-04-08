@@ -1,6 +1,75 @@
+/*Estil general*/
+
+#fons {
+    -fx-background-color: #263238;
+}
+
+#fons_Flotant {
+    -fx-background-color:  #37474F;
+    -fx-background-radius: 3;
+    -fx-border-color: #78909C;
+    -fx-border-radius: 3;
+    -fx-effect:  dropshadow( gaussian, rgba(28,28,28), 10, 0.3, 0.0, 0.0 );
+    -fx-opacity: 0.75;
+}
+
+
+
+/*Estil botons*/
+
+.button {
+    -fx-font: "Ubuntu Light"; /*SOLUCIONAR LIGHT-MEDIUM*/
+    -fx-text-alignment: center;
+}
+
+#button_IniciSessio {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FAFAFA;
+    -fx-font-weight: light;
+}
+
+#button_IniciSessio:hover {
+    -fx-background-color:#78909c;
+    -fx-text-fill:#FDFDFD;
+    -fx-opacity:0.5;
+}
+
+#button_TextBenvinguda {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FAFAFA;
+}
+
+#button_TextBenvinguda:hover {
+    -fx-text-fill:#78909C;
+}
+
+#button_Continuar {
+    -fx-background-radius: 2;
+    -fx-background-color: #263238;
+    -fx-text-fill: #FAFAFA;
+    -fx-text-alignment: center;
+}
+
+#button_Enrere {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FAFAFA;
+    -fx-text-alignment: center;
+}
+
+/*Estil text-field*/
+.jfx-text-field {
+    -fx-text-fill: #FAFAFA;
+}
+
+
+
+
+
+
+/*Estil table-view*/
 .table-view .filler,
 .table-view{
-   -fx-background-color: #37474F;
+    -fx-background-color: #37474F;
 }
 
 .table-cell {
@@ -12,25 +81,25 @@
     -fx-alignment: CENTER;
 }
 
-.table-row-cell .text{  
-    -fx-font-size: 20em;  
-    -fx-fill: #FAFAFA;  
+.table-row-cell .text{
+    -fx-font-size: 20em;
+    -fx-fill: #FAFAFA;
     -fx-text-alignment: center;
-}  
+}
 
-.table-view .column-header{       
-    -fx-background-color: transparent;    /* made transparent */  
-    -fx-size: 45.0px;  
-    -fx-min-height: 45.0px;    
-    -fx-cursor: hand;  
-}  
-.table-view .column-header .label {  
-    -fx-font-size: 1.083333em;  
-    -fx-font-weight: bold;    
-    -fx-text-fill: white;  
-    -fx-alignment: center-left;  
-    -fx-padding: 5.0 5.0 5.0 5.0;  
-}  
+.table-view .column-header{
+    -fx-background-color: transparent;    /* made transparent */
+    -fx-size: 45.0px;
+    -fx-min-height: 45.0px;
+    -fx-cursor: hand;
+}
+.table-view .column-header .label {
+    -fx-font-size: 1.083333em;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-padding: 5.0 5.0 5.0 5.0;
+}
 
 .scroll-bar:vertical .track{
     -fx-background-color : #37474F;
@@ -47,15 +116,15 @@
 
 }
 
- .scroll-bar .increment-arrow,
- .scroll-bar .decrement-arrow{
-    -fx-shape : " ";    
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow{
+    -fx-shape : " ";
     -fx-padding :0.15em 0.0;
 }
 
- .scroll-bar:vertical .increment-arrow,
- .scroll-bar:vertical .decrement-arrow{
-    -fx-shape : " ";    
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";
     -fx-padding :0.0 0.15em;
 }
 

@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="450.0" prefWidth="678.0" style="-fx-background-color: #263238;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLPaddleLoginController">
+<AnchorPane id="fons" fx:id="rootAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="450.0" prefWidth="678.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLPaddleLoginController">
    <children>
       <ImageView fx:id="imgTrofeu" blendMode="MULTIPLY" fitHeight="576.0" fitWidth="372.0" opacity="0.6" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <image>
@@ -28,10 +28,10 @@
             <RowConstraints minHeight="10.0" vgrow="NEVER" />
          </rowConstraints>
          <children>
-            <AnchorPane opacity="0.75" prefHeight="401.0" prefWidth="361.0" style="-fx-background-color: #37474F; -fx-background-radius: 3; -fx-border-color: #78909C; -fx-border-radius: 3; -fx-effect: dropshadow( gaussian, rgba(28,28,28), 10, 0.3, 0.0, 0.0 );" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
+            <AnchorPane id="fons_Flotant" opacity="0.75" prefHeight="401.0" prefWidth="361.0" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
                <children>
                   <Text fx:id="text_requeriments_contrasena" fill="#3c3c3c" layoutX="16.0" layoutY="267.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Easter egg #2" wrappingWidth="334.05799865722656" />
-                  <Button fx:id="button_continua" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" disable="true" layoutX="12.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#on_click_continua" opacity="0.2" prefHeight="39.0" prefWidth="341.0" style="-fx-background-radius: 2; -fx-background-color: #263238; -fx-text-fill: #FAFAFA;" text="Continuar" textAlignment="CENTER" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0">
+                  <Button id="button_Continuar" fx:id="button_continua" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" disable="true" layoutX="12.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#on_click_continua" opacity="0.2" prefHeight="39.0" prefWidth="341.0" text="Continuar" textAlignment="CENTER" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0">
                      <font>
                         <Font name="Ubuntu" size="15.0" />
                      </font>
@@ -39,7 +39,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button alignment="CENTER" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#on_click_enrere" opacity="0.85" prefHeight="20.0" prefWidth="76.0" style="-fx-background-color: transparent; -fx-text-fill: #FAFAFA;" text="←">
+                  <Button id="button_Enrere" alignment="CENTER" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#on_click_enrere" opacity="0.85" prefHeight="20.0" prefWidth="76.0" text="←">
                      <font>
                         <Font name="Ubuntu" size="28.0" />
                      </font>
@@ -57,17 +57,17 @@
                         <Font name="Ubuntu" size="13.0" />
                      </font></Text>
                   <Text fx:id="text_error_contrasena" fill="#3c3c3c" layoutX="28.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #FF5722;" text="La contrasenya no és vàlida" visible="false" />
-                  <JFXTextField fx:id="textfield_usuari" focusColor="#78909c" labelFloat="true" layoutX="102.0" layoutY="147.0" promptText="Usuari" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0">
+                  <JFXTextField fx:id="textfield_usuari" focusColor="#78909c" labelFloat="true" layoutX="102.0" layoutY="147.0" promptText="Usuari" unFocusColor="#fafafa" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0">
                      <font>
                         <Font name="Ubuntu" size="17.0" />
                      </font>
                   </JFXTextField>
-                  <JFXPasswordField fx:id="textfield_contrasena" focusColor="#78909c" labelFloat="true" layoutX="105.0" layoutY="228.0" onKeyPressed="#on_enter_continua" onKeyTyped="#on_keyTyped_contrasena" promptText="Contrasenya" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0">
+                  <JFXPasswordField fx:id="textfield_contrasena" focusColor="#78909c" labelFloat="true" layoutX="105.0" layoutY="228.0" onKeyPressed="#on_enter_continua" onKeyTyped="#on_keyTyped_contrasena" promptText="Contrasenya" unFocusColor="#fafafa" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0">
                      <font>
                         <Font name="Ubuntu" size="17.0" />
                      </font>
                   </JFXPasswordField>
-                  <Text layoutX="101.0" layoutY="383.0" onMouseClicked="#on_click_registrar" opacity="0.8" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #Fafafa;" text="No tens compte? Registrat" underline="true">
+                  <Text id="button_TextBenvinguda" layoutX="89.0" layoutY="383.0" onMouseClicked="#on_click_registrar" opacity="0.8" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #Fafafa;" text="No tens compte? Registrat" underline="true">
                      <font>
                         <Font name="Ubuntu Light" size="16.0" />
                      </font>
