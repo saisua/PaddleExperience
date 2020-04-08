@@ -7,8 +7,8 @@ package paddleexperience.Dataclasses;
 
 import java.time.LocalDateTime;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import model.Booking;
 /**
  *
@@ -16,12 +16,12 @@ import model.Booking;
  */
 public class UserBooking {
     
-    private AnchorPane dia;
-    private AnchorPane hora_inici;
-    private AnchorPane hora_fi;
-    private AnchorPane pista;
-    private AnchorPane pagada;
-    private AnchorPane cancelar;
+    private TextFlow dia;
+    private TextFlow hora_inici;
+    private TextFlow hora_fi;
+    private TextFlow pista;
+    private TextFlow pagada;
+    private TextFlow cancelar;
     
     
     // Auxiliar
@@ -30,12 +30,12 @@ public class UserBooking {
     public UserBooking(Booking data){
         this.datetime = data.getBookingDate();
         
-        this.dia = new AnchorPane();
-        this.hora_inici = new AnchorPane();
-        this.hora_fi = new AnchorPane();
-        this.pista = new AnchorPane();
-        this.pagada = new AnchorPane();
-        this.cancelar = new AnchorPane();
+        this.dia = new TextFlow();
+        this.hora_inici = new TextFlow();
+        this.hora_fi = new TextFlow();
+        this.pista = new TextFlow();
+        this.pagada = new TextFlow();
+        this.cancelar = new TextFlow();
         
         this.dia.getChildren().add(new Text(data.getMadeForDay().toString()));
         this.hora_inici.getChildren().add(new Text(data.getFromTime().toString()));
@@ -59,22 +59,22 @@ public class UserBooking {
         return this.datetime;
     }
     
-    public AnchorPane getDia(){
+    public TextFlow getDia(){
         return this.dia;
     }
-    public AnchorPane getHoraInici(){
+    public TextFlow getHoraInici(){
         return this.hora_inici;
     }
-    public AnchorPane getHoraFi(){
+    public TextFlow getHoraFi(){
         return this.hora_fi;
     }
-    public AnchorPane getPista(){
+    public TextFlow getPista(){
         return this.pista;
     }
-    public AnchorPane getPagada(){
+    public TextFlow getPagada(){
         return this.pagada;
     }
-    public AnchorPane getCancelar(){
+    public TextFlow getCancelar(){
         return this.cancelar;
     }
     
