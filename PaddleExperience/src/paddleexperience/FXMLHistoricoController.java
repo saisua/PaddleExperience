@@ -12,8 +12,11 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -70,8 +73,7 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
 
     // Modificar esta variable mentre els threads estan treballant
     // pot comportar problemes
-    // Definit per a testing, borrar despres
-    ArrayList<Booking> __user_bookings;
+    List<Booking> __user_bookings;
     
     /**
      * Initializes the controller class.
@@ -110,6 +112,7 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
         
         // TESTS
         
+        /*
         Estat.club.getBookings().add(new Booking(LocalDateTime.now(), LocalDate.now().minusDays(1),
                             LocalTime.of(17, 30), true, new Court("Pista4"),
                             Estat.club.getMemberByCredentials("Login1", "Password1")));
@@ -122,7 +125,8 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
         Estat.club.getBookings().add(new Booking(LocalDateTime.now(), LocalDate.now().minusDays(1),
                             LocalTime.of(10, 30), true, new Court("Pista4"),
                             Estat.club.getMemberByCredentials("Login1", "Password1")));
-        
+        */
+
         // END TESTS
         
         System.out.println("Historico initialized");
@@ -163,7 +167,17 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
             }
         } catch (InterruptedException err) { return; }
         
-        this.__user_bookings = Estat.club.getUserBookings(Estat.getMemberLogin());
+        System.out.println(Estat.club.existsLogin(Estat.getMemberLogin()));
+        // true
+        System.out.println(Estat.getMember().getLogin());
+        System.out.println();
+        
+        this.__user_bookings = ((ArrayList) Estat.club.getBookings().stream()
+                    .filter(booking -> (
+                            booking.getMember() != null &&
+                            booking.getMember().getLogin().equals(Estat.getMemberLogin())))
+                    .collect(Collectors.toList()));
+ 
         System.out.println(this.__jugades_count); System.out.println(this.__proximes_count);
         int total_bookings = (this.__jugades_count + this.__proximes_count);
         
