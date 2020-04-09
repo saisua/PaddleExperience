@@ -27,6 +27,8 @@ import model.Member;
  * @author saisua
  */
 public class Cache {
+    private static final int MAX_CACHE_SIZE = 31;
+    
     public static HashMap<LocalDate, HashMap<LocalTime, Image[]>> cache = new HashMap<LocalDate, HashMap<LocalTime, Image[]>>(){};
     
     public static LocalDate max_day = Estat.getBeforeDate();
@@ -75,26 +77,8 @@ public class Cache {
         // si l'usuari decideix veure una data que no está en caché, la
         // caché ja existent es considera inútil i es neteja
         if(login_dif || Estat.getDate().compareTo(Cache.max_day) > 0 || Estat.getDate().compareTo(min_day) < 0){
-            // Es neteja la caché
-            cache.clear();
-            
-            // Si el fil de caché ja estava obert no es torna
-            // a obrir, sino que s'actualitza el dia de búsqueda
-            if(thread_avant.isAlive())
-                thread_avant.setDate(Estat.getDate().plusDays(1));
-            else {
-                thread_avant = new CacheThread(true);
-                thread_avant.start();
-            }
-
-            // Si el fil de caché ja estava obert no es torna
-            // a obrir, sino que s'actualitza el dia de búsqueda
-            if(thread_arrere.isAlive())
-                thread_arrere.setDate(Estat.getDate().minusDays(1));
-            else{
-                thread_arrere = new CacheThread(false);
-                thread_arrere.start();
-            }
+            // Es neteja la caché si supera el tamany màxim 
+            if(cache.size() > MAX_CACHE_SIZE) cache.clear();
         
             // Esta variable guarda la caché de un dia representat
             // per un array de enters, que agafen el sentit que la
@@ -120,10 +104,55 @@ public class Cache {
             }
             cache.put(Estat.getDate(), courts);
             
+            // Si el fil de caché ja estava obert no es torna
+            // a obrir, sino que s'actualitza el dia de búsqueda
+            if(thread_avant.isAlive())
+                thread_avant.setDate(Estat.getDate().plusDays(1));
+            else {
+                thread_avant = new CacheThread(true);
+                thread_avant.start();
+            }
+
+            // Si el fil de caché ja estava obert no es torna
+            // a obrir, sino que s'actualitza el dia de búsqueda
+            if(thread_arrere.isAlive())
+                thread_arrere.setDate(Estat.getDate().minusDays(1));
+            else{
+                thread_arrere = new CacheThread(false);
+                thread_arrere.start();
+            }
+            
             return courts;
         } 
         else {
             // else el dia que volem carregar està en la caché, per tant el carreguem
+            
+            // Si estem en l'últim dia carregat en caché, reactivem
+            // el fil que carrega cap a davant
+            if(max_day.compareTo(Estat.getDate().plusDays(1)) < 0){
+                // Si el fil de caché ja estava obert no es torna
+                // a obrir, sino que s'actualitza el dia de búsqueda
+                if(thread_avant.isAlive())
+                    thread_avant.setDate(Estat.getDate().plusDays(1));
+                else {
+                    thread_avant = new CacheThread(true);
+                    thread_avant.start();
+                }
+            }
+
+            // En canvi, si estem al principi del caché i l'anterior dia
+            // no està carregat, reactivem el fil. El else es basa en 
+            // la suposició de que els fils van a carregar mínim un dia.
+            else if(min_day.compareTo(Estat.getDate().minusDays(1)) > 0){
+                // Si el fil de caché ja estava obert no es torna
+                // a obrir, sino que s'actualitza el dia de búsqueda
+                if(thread_arrere.isAlive())
+                    thread_arrere.setDate(Estat.getDate().minusDays(1));
+                else{
+                    thread_arrere = new CacheThread(false);
+                    thread_arrere.start();
+                }
+            }
             
             // agafem el array que representa el dia. Si no està dins del
             // HashMap vol dir que quan es va carregar el caché no n'hi havia
@@ -191,6 +220,7 @@ class CacheThread extends Thread{
                                     (reserva.getMember() == Estat.getMember()) ? 2 : 1);
 
                     if(!this.open) return;
+                    if(!this.valid) break;
                 }
 
                 if(this.valid)
@@ -214,8 +244,8 @@ class CacheThread extends Thread{
             }
         }
         
-        Thread.currentThread().interrupt();
         this.open = false;
+        Thread.currentThread().interrupt();
     }
     
     public void setDate(LocalDate new_date){

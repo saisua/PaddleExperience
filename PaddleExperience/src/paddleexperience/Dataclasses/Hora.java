@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
@@ -79,16 +80,17 @@ public final class Hora{
             
             image.setPreserveRatio(true);
             
+            //System.out.println(image.isResizable());
+            // false
+            
             this.courts_images[court_num] = image;
         }
-
-        AnchorPane anchor = new AnchorPane();
         HBox hbox_images = new HBox();
         
         hbox_images.getChildren().addAll(this.courts_images);
-        anchor.getChildren().add(hbox_images);
+        hbox_images.setPadding(new Insets(32, 0, 0, 0));
         
-        this.courts.getChildren().add(anchor);
+        this.courts.getChildren().add(hbox_images);
         
         // Definició de comportaments
         text_hora.setStyle("-fx-fill:  #FAFAFA;"

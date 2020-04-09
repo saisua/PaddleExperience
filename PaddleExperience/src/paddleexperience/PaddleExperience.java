@@ -105,7 +105,6 @@ public class PaddleExperience extends Application {
     
     // Executar static functions abans d'iniciar el programa
     static void startAll(){
-        Hora.start();
         Cache.start();
         Estat.start();
     }
