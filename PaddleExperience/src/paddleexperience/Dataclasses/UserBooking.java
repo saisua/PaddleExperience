@@ -85,17 +85,17 @@ public class UserBooking {
         
         FXMLHistoricoController.__proximes_count--;
         
-        HashMap<LocalTime, Pair<Image[], Boolean>> day_cache = Cache.cache.get(Estat.getDate());
+        HashMap<LocalTime, Pair<Image[], Boolean>> day_cache = Cache.cache.get(this.booking.getMadeForDay());
         Pair<Image[], Boolean> actual_cache = null;
         
         if(day_cache == null)
             Cache.cache.put(Estat.getDate(), new HashMap<LocalTime, Pair<Image[], Boolean>>());
         else 
-            actual_cache = day_cache.get(Estat.getTime());
+            actual_cache = day_cache.get(this.booking.getFromTime());
         
         if(actual_cache == null){
             actual_cache = new Pair(Cache.default_court.clone(), true);
-            Cache.cache.get(Estat.getDate()).put(Estat.getTime(), actual_cache);
+            Cache.cache.get(this.booking.getMadeForDay()).put(this.booking.getFromTime(), actual_cache);
         }
         
         actual_cache.first[Estat.court_index.get(this.booking.getCourt())] = Hora.images.get(1);
