@@ -25,6 +25,7 @@ import javafx.scene.text.TextFlow;
 import model.Member;
 import DBAcess.ClubDBAccess;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
@@ -40,6 +41,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Booking;
 import paddleexperience.PaddleExperience;
 import paddleexperience.Structures.PasswordChecker;
 import paddleexperience.Dataclasses.Estat;
@@ -174,6 +176,10 @@ public class FXMLPaddleLoginController implements Initializable, Stoppable {
 
         if (login_result != null) {
             Estat.setMember(login_result);
+            
+            Estat.club.getBookings().add(new Booking(LocalDateTime.now(), Estat.getDate().plusDays(1), 
+                    Estat.getTime(),
+                false, Estat.court_by_index.get(2), Estat.getMember()));
 
             PaddleExperience.setParent(event, "FXMLSidebar.fxml");
             return;

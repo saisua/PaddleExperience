@@ -107,15 +107,12 @@ public class Cache {
                 }
 
                 // Actualitzem l'estat del array
-                if(te_reserva){
-                    court.first[Estat.court_index.get(reserva.getCourt())] 
-                            = Hora.images.get(2);
-
+                if(te_reserva)
                     courts.get(reserva.getFromTime()).setSecond(true);
-                } else {
-                    court.first[Estat.court_index.get(reserva.getCourt())] 
-                            = Hora.images.get(1);
-                }
+
+                court.first[Estat.court_index.get(reserva.getCourt())] 
+                        = Hora.images.get(1);
+                
             }
             cache.put(Estat.getDate(), courts);
             
@@ -223,7 +220,9 @@ class CacheThread extends Thread{
             if(!Cache.cache.containsKey(this.date)){
                 courts.clear();
                 
-                for(Booking reserva : Estat.club.getForDayBookings(this.date)){
+                ArrayList<Booking> non_concurrent_iterator = Estat.club.getForDayBookings(this.date);
+                
+                for(Booking reserva : non_concurrent_iterator){
                     Pair<Image[], Boolean> court = courts.get(reserva.getFromTime());
                     
                     boolean te_reserva = Estat.getMember() != null &&
@@ -234,15 +233,12 @@ class CacheThread extends Thread{
                         courts.put(reserva.getFromTime(), court);
                     }
 
-                    if(te_reserva){
-                        court.first[Estat.court_index.get(reserva.getCourt())] 
-                                = Hora.images.get(2);
-                        
+                    if(te_reserva)
                         courts.get(reserva.getFromTime()).setSecond(true);
-                    } else {
-                        court.first[Estat.court_index.get(reserva.getCourt())] 
-                                = Hora.images.get(1);
-                    }
+                    
+                    court.first[Estat.court_index.get(reserva.getCourt())] 
+                            = Hora.images.get(1);
+                    
 
                     if(!this.open) return;
                     if(!this.valid) break;

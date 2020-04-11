@@ -52,11 +52,17 @@ public final class Estat {
     private static FXMLSidebarController sidebar;
     private static LocalTime time = time_inici;
     private static LocalDate date;
+    private static Court selected_court;
     
     // Auxiliars
     public static final HashMap<Court, Integer> court_index = new HashMap<Court, Integer>(){{
             for(int court_num = 0; court_num < club.getCourts().size(); court_num++) 
                     put(club.getCourts().get(court_num), court_num);
+            }};
+    
+    public static final HashMap<Integer, Court> court_by_index = new HashMap<Integer, Court>(){{
+            for(int court_num = 0; court_num < club.getCourts().size(); court_num++) 
+                    put(court_num, club.getCourts().get(court_num));
             }};
     
     public static void start(){
@@ -147,6 +153,10 @@ public final class Estat {
         return sidebar;
     }
     
+    public static Court getSelectedCourt(){
+        return selected_court;
+    }
+    
     // // SETTERS
     
     public static void setMember(Member member_set){
@@ -165,5 +175,9 @@ public final class Estat {
     
     public static void setSidebar(FXMLSidebarController new_sidebar){
         sidebar = new_sidebar;
+    }
+    
+    public static void setSelectedCourt(Court new_selected_court){
+        selected_court = new_selected_court;
     }
 }

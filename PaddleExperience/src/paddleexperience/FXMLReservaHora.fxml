@@ -4,6 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -115,25 +116,37 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fitHeight="125.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="125.0" fitWidth="165.0" onMouseClicked="#on_click_pista" onMouseEntered="#on_hover_enter_pista" onMouseExited="#on_hover_exit_pista" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Images/Clock.png" />
                      </image>
+                     <effect>
+                        <DropShadow color="WHITE" />
+                     </effect>
                   </ImageView>
-                  <ImageView fitHeight="125.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                  <ImageView fitHeight="125.0" fitWidth="165.0" onMouseClicked="#on_click_pista" onMouseEntered="#on_hover_enter_pista" onMouseExited="#on_hover_exit_pista" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                      <image>
                         <Image url="@Images/PistaRoig.png" />
                      </image>
+                     <effect>
+                        <DropShadow color="WHITE" />
+                     </effect>
                   </ImageView>
-                  <ImageView fitHeight="125.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                  <ImageView fitHeight="125.0" fitWidth="165.0" onMouseClicked="#on_click_pista" onMouseEntered="#on_hover_enter_pista" onMouseExited="#on_hover_exit_pista" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                      <image>
                         <Image url="@Images/PistaRoig.png" />
                      </image>
+                     <effect>
+                        <DropShadow color="WHITE" />
+                     </effect>
                   </ImageView>
-                  <ImageView fitHeight="125.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <ImageView fitHeight="125.0" fitWidth="165.0" onMouseClicked="#on_click_pista" onMouseEntered="#on_hover_enter_pista" onMouseExited="#on_hover_exit_pista" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <image>
                         <Image url="@Images/PistaRoig.png" />
                      </image>
+                     <effect>
+                        <DropShadow color="WHITE" />
+                     </effect>
                   </ImageView>
                </children>
             </GridPane>

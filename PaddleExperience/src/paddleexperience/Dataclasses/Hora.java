@@ -41,9 +41,9 @@ import paddleexperience.Dataclasses.Pair;
  */
 public final class Hora{
     public static final HashMap<Integer, Image> images = new HashMap<Integer, Image>(){{
-       put(0, new Image("file:src/paddleexperience/Images/PistaGris.png"));
-       put(1, new Image("file:src/paddleexperience/Images/PistaRoig.png"));
-       put(2, new Image("file:src/paddleexperience/Images/PistaVerd.png"));
+       put(0, new Image("file:src/paddleexperience/Images/PistaGris.png")); // lliure
+       put(1, new Image("file:src/paddleexperience/Images/PistaRoig.png")); // ocupada
+       put(2, new Image("file:src/paddleexperience/Images/PistaVerd.png")); // seleccionada
     }};
     
     private LocalTime time;
@@ -194,5 +194,14 @@ public final class Hora{
     
     public ImageView[] getCourtImages(){
         return this.courts_images;
+    }
+    
+    public boolean getTeReserva(){
+        return this.te_reserva;
+    }
+    
+    // // SETTERS
+    public void __setTeReserva(boolean new_reserva){
+        this.te_reserva = new_reserva;
     }
 }
