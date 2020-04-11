@@ -65,11 +65,11 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
     private TableColumn tablecolumn_pista_jugades;
     
     // Sols deurien ser modificades per els threads corresponents
-    int __proximes_count = 0;
+    public static int __proximes_count = 0;
     int __jugades_count = 0;
     
-    private ReservaThread thread_per_jugar;
-    private ReservaThread thread_ja_jugades;
+    public static ReservaThread __thread_per_jugar;
+    public static ReservaThread __thread_ja_jugades;
 
     // Modificar esta variable mentre els threads estan treballant
     // pot comportar problemes
@@ -135,16 +135,16 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
     // S'executa cada vegada que es tanca l'escena
     @Override
     public void stop() throws InterruptedException {
-        if(this.thread_per_jugar != null && this.thread_per_jugar.isAlive()){
-            this.thread_per_jugar.open = false;
+        if(this.__thread_per_jugar != null && this.__thread_per_jugar.isAlive()){
+            this.__thread_per_jugar.open = false;
             
-            this.thread_per_jugar.join(3000);
+            this.__thread_per_jugar.join(3000);
         }
         
-        if(this.thread_ja_jugades != null && this.thread_ja_jugades.isAlive()){
-            this.thread_ja_jugades.open = false;
+        if(this.__thread_ja_jugades != null && this.__thread_ja_jugades.isAlive()){
+            this.__thread_ja_jugades.open = false;
             
-            this.thread_ja_jugades.join(3000);
+            this.__thread_ja_jugades.join(3000);
         }
         
         System.out.println("Historico stopped");
@@ -156,14 +156,14 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
         if(Estat.getMember() == null) return;
         
         try{
-            if(this.thread_per_jugar != null && this.thread_per_jugar.isAlive()){
-                this.thread_per_jugar.open = false;
-                this.thread_per_jugar.join(1000);
+            if(this.__thread_per_jugar != null && this.__thread_per_jugar.isAlive()){
+                this.__thread_per_jugar.open = false;
+                this.__thread_per_jugar.join(1000);
             }
 
-            if(this.thread_ja_jugades != null && this.thread_ja_jugades.isAlive()){
-                this.thread_ja_jugades.open = false;
-                this.thread_ja_jugades.join(1000);
+            if(this.__thread_ja_jugades != null && this.__thread_ja_jugades.isAlive()){
+                this.__thread_ja_jugades.open = false;
+                this.__thread_ja_jugades.join(1000);
             }
         } catch (InterruptedException err) { return; }
         
@@ -182,12 +182,12 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
         int total_bookings = (this.__jugades_count + this.__proximes_count);
         
         if(this.__user_bookings.size() > total_bookings){
-            this.thread_per_jugar = new ReservaThread(this, false, total_bookings);
-            this.thread_per_jugar.start();
+            this.__thread_per_jugar = new ReservaThread(this, false, total_bookings);
+            this.__thread_per_jugar.start();
         }
         
-        this.thread_ja_jugades = new ReservaThread(this, true, 0);
-        this.thread_ja_jugades.start();
+        this.__thread_ja_jugades = new ReservaThread(this, true, 0);
+        this.__thread_ja_jugades.start();
             
         System.out.println("Historico refreshed");
     }
@@ -252,12 +252,14 @@ class ReservaThread extends Thread{
                     ).plusMinutes(Estat.partides_duracio);
             
             if(hora_fi.compareTo(LocalDateTime.now()) > 0){
-                this.addItemProximes(new UserBooking(to_book), hora_fi);
+                this.addItemProximes(new UserBooking(to_book, this.controller.tableView_Proximes), 
+                                    hora_fi);
                 
                 System.out.println("Proxim Booking afegit!");
             }
             else{
-                this.addItemJugades(new UserBooking(to_book), to_book.getBookingDate());
+                this.addItemJugades(new UserBooking(to_book, this.controller.tableView_Ultimes), 
+                                    to_book.getBookingDate());
             
                 System.out.println("Anterior Booking afegit!");
             }

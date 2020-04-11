@@ -72,9 +72,10 @@ public class Cache {
         // a la imatge corresponent
         HashMap<LocalTime, Pair<Image[], Boolean>> courts;
         
+        boolean login_dif;
         // Es mira si el usuari ha canviat de login
-        boolean login_dif = was_logged_in != Estat.getMember();
-        was_logged_in = Estat.getMember();
+        if(login_dif = was_logged_in != Estat.getMember())
+            was_logged_in = Estat.getMember();
         
         // Si l'usuari ha canviat de login (o entrat o eixit), tant com
         // si l'usuari decideix veure una data que no está en caché, la
@@ -94,7 +95,7 @@ public class Cache {
             // El resultat es guarda dins de courts
             for(ListIterator<Booking> iter = Estat.club.getForDayBookings(Estat.getDate()).listIterator();
                         iter.hasNext();){
-                    Booking reserva = iter.next();
+                Booking reserva = iter.next();
                 // Agafem el array si ja n'hem guardat
                 Pair<Image[], Boolean> court = courts.get(reserva.getFromTime());
                 
@@ -119,20 +120,20 @@ public class Cache {
             
             // Si el fil de caché ja estava obert no es torna
             // a obrir, sino que s'actualitza el dia de búsqueda
-            if(thread_avant.isAlive())
-                thread_avant.setDate(Estat.getDate().plusDays(1));
+            if(thread_avant.isAlive());
+                //thread_avant.setDate(Estat.getDate().plusDays(1));
             else {
-                thread_avant = new CacheThread(true);
-                thread_avant.start();
+                //thread_avant = new CacheThread(true);
+                //thread_avant.start();
             }
 
             // Si el fil de caché ja estava obert no es torna
             // a obrir, sino que s'actualitza el dia de búsqueda
-            if(thread_arrere.isAlive())
-                thread_arrere.setDate(Estat.getDate().minusDays(1));
+            if(thread_arrere.isAlive());
+                //thread_arrere.setDate(Estat.getDate().minusDays(1));
             else{
-                thread_arrere = new CacheThread(false);
-                thread_arrere.start();
+                //thread_arrere = new CacheThread(false);
+                //thread_arrere.start();
             }
             
             return courts;
@@ -145,11 +146,11 @@ public class Cache {
             if(max_day.compareTo(Estat.getDate().plusDays(1)) < 0){
                 // Si el fil de caché ja estava obert no es torna
                 // a obrir, sino que s'actualitza el dia de búsqueda
-                if(thread_avant.isAlive())
-                    thread_avant.setDate(Estat.getDate().plusDays(1));
+                if(thread_avant.isAlive());
+                    //thread_avant.setDate(Estat.getDate().plusDays(1));
                 else {
-                    thread_avant = new CacheThread(true);
-                    thread_avant.start();
+                    //thread_avant = new CacheThread(true);
+                    //thread_avant.start();
                 }
             }
 
@@ -159,11 +160,11 @@ public class Cache {
             else if(min_day.compareTo(Estat.getDate().minusDays(1)) > 0){
                 // Si el fil de caché ja estava obert no es torna
                 // a obrir, sino que s'actualitza el dia de búsqueda
-                if(thread_arrere.isAlive())
-                    thread_arrere.setDate(Estat.getDate().minusDays(1));
+                if(thread_arrere.isAlive());
+                    //thread_arrere.setDate(Estat.getDate().minusDays(1));
                 else{
-                    thread_arrere = new CacheThread(false);
-                    thread_arrere.start();
+                    //thread_arrere = new CacheThread(false);
+                    //thread_arrere.start();
                 }
             }
             

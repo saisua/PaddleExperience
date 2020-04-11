@@ -116,13 +116,6 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
             this.tableview_horari.getItems().add(hora);
         }
 
-        /*
-        this.tablecolumn_hora.setComparator((Object hora1, Object hora2) -> {
-            return (this.tablecolumn_hora.getSortType() == SortType.ASCENDING)
-                ? ((Hora) hora1).compareTo(((Hora) hora2)) :
-                    ((Hora) hora2).compareTo(((Hora) hora1));
-        });
-         */
         this.tableview_horari.setSortPolicy(table_view -> {
             Comparator<Hora> comparator = (hora1, hora2)
                     -> this.tablecolumn_hora.getSortType() == SortType.ASCENDING
@@ -131,34 +124,6 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
             return true;
         });;
 
-        //Booking(LocalDateTime bookingDate, LocalDate madeForDay,
-        //    LocalTime fromHour, boolean paid, Court court, Member member)
-        Booking new_booking = new Booking(LocalDateTime.now(), Estat.getDate(),
-                Estat.getInitialTime(),
-                true, Estat.club.getCourts().get(1), Estat.getMember());
-
-        LocalDate date = Estat.getDate().minusDays(8);
-        for (int dia = 0; dia < 33; dia++) {
-            System.out.println("Added test bookings for " + date.toString());
-            test_booking.put(date, new ArrayList<Booking>());
-
-            for (int partida = 0; partida < Estat.partides_dia; partida++) {
-                test_booking.get(date).add(new Booking(LocalDateTime.now(), Estat.getDate(),
-                        Estat.getInitialTime().plusMinutes(
-                                Estat.partides_duracio * partida),
-                        true, Estat.club.getCourts().get(0), Estat.getMember()));
-            }
-            date = date.plusDays(1);
-        }
-
-        // No funciona perque el xml no està en el directori
-        // que toca (vore pdf)
-        Estat.club.getBookings().add(new_booking);
-
-        test_booking.get(Estat.getDate()).add(new_booking);
-
-        //System.out.println("Test Booking at " + new_booking.getFromTime().toString());
-        // End tests
         this.borderpane_main.setEffect(new GaussianBlur(0));
 
         this.tableview_horari.getStylesheets().add("file:src/paddleexperience/CSS/PaddleReserva.css");
@@ -193,14 +158,27 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
 
         HashMap<LocalTime, Pair<Image[], Boolean>> dia = Cache.get();
 
+        int is_past_day = Estat.getDate().compareTo(LocalDate.now());
+        
         // Fem un recorregut per totes les hores, modificant els arxius de
-        // Hora hora per els carregats en courts
+        // Hora hora per els carregats en courts (n^2) 
         for (Hora hora : Estat.hores.values()) {
             //System.out.println("Hora "+hora.getTimeStr());
 
-            hora.updateCourtsPair(((Pair<Image[], Boolean>)
-                    dia.getOrDefault(hora.getTime(), new Pair(Cache.default_court, false))));
+            hora.updateCourtsPair(dia.getOrDefault(hora.getTime(), new Pair(Cache.default_court.clone(), false)));
+            
+            //System.out.println(dia.getOrDefault(hora.getTime(), new Pair(Cache.default_court.clone(), false)).first.toString());
+            
+            // Activem o desactivem les hores corresponents
+            // En base a si ja han passat o no
+            if(is_past_day > 0){
+                hora.enable();
+            } else if(is_past_day < 0)
+                hora.disable();
+            else if(hora.compareTo(LocalTime.now()) < 0)
+                hora.disable();
         }
+       
 
         if (this.scrollbar == null) {
             this.scrollbar = ((ScrollBar) this.tableview_horari.lookup(".scroll-bar:vertical"));

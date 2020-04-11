@@ -7,6 +7,9 @@ package paddleexperience.Dataclasses;
 
 /**
  *
+ * Jo deixe per aci caure que el Pair de javafx és
+ * pitjor que el de C++ i que java no m'agrada
+ * 
  * @author saisua
  */
 public class Pair<F, S> {

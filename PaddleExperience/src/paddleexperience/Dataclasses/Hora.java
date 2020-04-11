@@ -112,8 +112,24 @@ public final class Hora{
         this.reservat.onMouseExitedProperty().set((Event ev) -> this.on_hover_exit(ev));
     }
     
+    public void disable(){
+        this.hora.setDisable(true);
+        this.courts.setDisable(true);
+        this.reservat.setDisable(true);
+    }
+    
+    public void enable(){
+        this.hora.setDisable(false);
+        this.courts.setDisable(false);
+        this.reservat.setDisable(false);
+    }
+    
     public int compareTo(Hora a_comparar){
         return this.time.compareTo(a_comparar.getTime());
+    }
+    
+    public int compareTo(LocalTime a_comparar){
+        return this.time.compareTo(a_comparar);
     }
     
     

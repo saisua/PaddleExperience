@@ -123,13 +123,13 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
             this.vbox_Rhora.setVisible(true);
         }
         
-        System.out.println(Estat.hores.get(this.hora_actual).getCourtImages().length);
+        //System.out.println(Estat.hores.get(this.hora_actual).getCourtImages().length);
         
         if(Estat.hores.get(this.hora_actual).getCourtImages().length > 0){
             ObservableList<Node> courts = this.gridpane_imageview_court.getChildren();
 
             for(int court_num = 0; court_num < courts.size(); court_num++){
-                System.out.println(courts.size());
+                //System.out.println(courts.size());
                 
                 ((ImageView) courts.get(court_num)).setImage(((ImageView) 
                         Estat.hores.get(this.hora_actual).getCourtImages()[court_num]).getImage());
@@ -270,6 +270,10 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
         this.button_reserva.setDisable(false);
     }
     
+    // Esta funció té una carrega computacional prou gran per
+    // a ser provocada per un event. Pot ser arrel de problemes
+    // de eficiència. El creixement de la funció depén únicament
+    // de FXMLPaddleReservaController.refresh()
     public void on_click_reservar(Event _e){
         // LocalDateTime bookingDate, LocalDate madeForDay, LocalTime fromHour, boolean paid, Court court, Member member
         Estat.club.getBookings().add(new Booking(LocalDateTime.now(), Estat.getDate(), Estat.getTime(),
@@ -291,11 +295,17 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
         
         Pair<Image[], Boolean> actual_cache = Cache.cache.get(Estat.getDate()).get(Estat.getTime());
         
+        if(actual_cache == null){
+            actual_cache = new Pair(Cache.default_court.clone(), true);
+            Cache.cache.get(Estat.getDate()).put(Estat.getTime(), actual_cache);
+        }
+        
         actual_cache.first[this.selected_index] = ocupied_image;
-        actual_cache.setSecond(true);
         
         this.selected_image = null;
         this.prev_image = null;
+        
+        PaddleExperience.refresh("FXMLPaddleReserva.fxml");
     }
     
 }
