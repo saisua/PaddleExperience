@@ -10,6 +10,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 
@@ -293,7 +294,13 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
                 .setImage(ocupied_image);
         actual_hora.__setTeReserva(true);
         
-        Pair<Image[], Boolean> actual_cache = Cache.cache.get(Estat.getDate()).get(Estat.getTime());
+        HashMap<LocalTime, Pair<Image[], Boolean>> day_cache = Cache.cache.get(Estat.getDate());
+        Pair<Image[], Boolean> actual_cache = null;
+        
+        if(day_cache == null)
+            Cache.cache.put(Estat.getDate(), new HashMap<LocalTime, Pair<Image[], Boolean>>());
+        else 
+            actual_cache = day_cache.get(Estat.getTime());
         
         if(actual_cache == null){
             actual_cache = new Pair(Cache.default_court.clone(), true);
