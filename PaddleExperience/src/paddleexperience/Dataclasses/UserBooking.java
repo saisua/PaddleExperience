@@ -89,7 +89,7 @@ public class UserBooking {
         Pair<Image[], Boolean> actual_cache = null;
         
         if(day_cache == null)
-            Cache.cache.put(Estat.getDate(), new HashMap<LocalTime, Pair<Image[], Boolean>>());
+            Cache.cache.put(this.booking.getMadeForDay(), new HashMap<LocalTime, Pair<Image[], Boolean>>());
         else 
             actual_cache = day_cache.get(this.booking.getFromTime());
         
