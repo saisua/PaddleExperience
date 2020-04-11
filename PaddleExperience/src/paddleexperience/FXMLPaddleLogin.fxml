@@ -62,7 +62,7 @@
                         <Font name="Ubuntu" size="17.0" />
                      </font>
                   </JFXTextField>
-                  <JFXPasswordField fx:id="textfield_contrasena" focusColor="#78909c" labelFloat="true" layoutX="105.0" layoutY="228.0" onKeyPressed="#on_enter_continua" onKeyTyped="#on_keyTyped_contrasena" promptText="Contrasenya" unFocusColor="#fafafa" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0">
+                  <JFXPasswordField fx:id="textfield_contrasena" focusColor="#78909c" labelFloat="true" layoutX="105.0" layoutY="228.0" onKeyPressed="#on_enter_continua" onKeyTyped="#on_keyTyped_contrasena" promptText="Contrasenya" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0">
                      <font>
                         <Font name="Ubuntu" size="17.0" />
                      </font>

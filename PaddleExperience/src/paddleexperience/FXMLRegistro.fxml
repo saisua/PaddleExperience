@@ -60,12 +60,12 @@
                         </JFXTextField>
                   <HBox layoutX="67.0" layoutY="348.0" spacing="10.0" AnchorPane.leftAnchor="66.0" AnchorPane.rightAnchor="66.0">
                      <children>
-                              <JFXPasswordField fx:id="textfield_contrasena" focusColor="#78909c" labelFloat="true" maxWidth="300.0" minWidth="280.0" onKeyReleased="#on_keyTyped_contrasena" prefHeight="35.0" prefWidth="280.0" promptText="Contrasenya" unFocusColor="#fafafa">
+                              <JFXPasswordField fx:id="textfield_contrasena" focusColor="#78909c" labelFloat="true" maxWidth="300.0" minWidth="280.0" onKeyReleased="#on_keyTyped_contrasena" prefHeight="35.0" prefWidth="280.0" promptText="Contrasenya" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa">
                                   <font>
                                       <Font name="Ubuntu" size="16.0" />
                                   </font>
                               </JFXPasswordField>
-                              <JFXPasswordField fx:id="textfield_ConfContrasena" focusColor="#78909c" labelFloat="true" maxWidth="280.0" minWidth="200.0" onKeyReleased="#on_keyTyped_comprova" prefHeight="35.0" prefWidth="280.0" promptText="Confirmar contrasenya" unFocusColor="#fafafa">
+                              <JFXPasswordField fx:id="textfield_ConfContrasena" focusColor="#78909c" labelFloat="true" maxWidth="280.0" minWidth="200.0" onKeyReleased="#on_keyTyped_comprova" prefHeight="35.0" prefWidth="280.0" promptText="Confirmar contrasenya" style="-fx-text-fill: #fafafa;" unFocusColor="#fafafa">
                                   <font>
                                       <Font name="Ubuntu" size="16.0" />
                                   </font>
