@@ -11,6 +11,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.ListIterator;
 import javafx.collections.ObservableList;
 
 // JavaFX imports
@@ -87,13 +88,13 @@ public class Cache {
             // classe Hora li done. Actualment, Hora.imatges
             courts = new HashMap<LocalTime, Pair<Image[], Boolean>>();
 
-            ArrayList<Booking> non_concurrent_iteration = Estat.club.getForDayBookings(Estat.getDate());
-            
             // Fem un recorregut lineal del bookings del dia, i apuntem
             // quines pistes están ocupades, així com quines estàn ocupades
             // pel membre que ha fet login
             // El resultat es guarda dins de courts
-            for(Booking reserva : non_concurrent_iteration){
+            for(ListIterator<Booking> iter = Estat.club.getForDayBookings(Estat.getDate()).listIterator();
+                        iter.hasNext();){
+                    Booking reserva = iter.next();
                 // Agafem el array si ja n'hem guardat
                 Pair<Image[], Boolean> court = courts.get(reserva.getFromTime());
                 
@@ -220,9 +221,10 @@ class CacheThread extends Thread{
             if(!Cache.cache.containsKey(this.date)){
                 courts.clear();
                 
-                ArrayList<Booking> non_concurrent_iterator = Estat.club.getForDayBookings(this.date);
-                
-                for(Booking reserva : non_concurrent_iterator){
+                for(ListIterator<Booking> iter = Estat.club.getForDayBookings(this.date).listIterator();
+                        iter.hasNext();){
+                    Booking reserva = iter.next();
+                    
                     Pair<Image[], Boolean> court = courts.get(reserva.getFromTime());
                     
                     boolean te_reserva = Estat.getMember() != null &&
