@@ -11,12 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Iterator;
-import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.control.TableCell;
-import javafx.scene.image.Image;
 
 // JavaFX imports
 import javafx.scene.layout.Pane;
@@ -31,6 +25,15 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 import javafx.util.Callback;
+import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.TableCell;
+import javafx.scene.image.Image;
+
+// Internal imports
+import paddleexperience.Dataclasses.Pair;
 
 /**
  *
@@ -58,6 +61,7 @@ public final class Hora{
     
     // // Auxiliar
     private ImageView courts_images[] = new ImageView[Estat.numero_pistes];
+    private boolean te_reserva = false;
     
     public Hora(LocalTime hora, List<Integer> courts_state){
         this.time = hora;
@@ -91,6 +95,8 @@ public final class Hora{
         hbox_images.setPadding(new Insets(32, 0, 0, 0));
         
         this.courts.getChildren().add(hbox_images);
+        
+        this.reservat.getChildren().add(new Text("No"));
         
         // Definició de comportaments
         text_hora.setStyle("-fx-fill:  #FAFAFA;"
@@ -141,6 +147,13 @@ public final class Hora{
         
         for(ImageView court : this.courts_images)
             court.setImage(courts_state[index++]);
+    }
+    
+    public void updateCourtsPair(Pair<Image[], Boolean> courts_state){
+        this.te_reserva = courts_state.second;
+        ((Text) this.reservat.getChildren().get(0)).setText((courts_state.second) ? "Si" : "No");
+        
+        this.updateCourtsImages(courts_state.first);
     }
     
     

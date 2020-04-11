@@ -20,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.event.Event;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.effect.Bloom;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
@@ -64,6 +65,12 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
     private VBox vbox_Rhora;
     @FXML
     private VBox vbox_Lhora;
+    @FXML
+    private VBox vbox_no_login;
+    @FXML
+    private Text text_reserva;
+    @FXML
+    private Button button_reserva;
     
     
     /**
@@ -115,6 +122,19 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
             }
         }
         
+        if(Estat.getMember() == null){
+            this.vbox_no_login.setVisible(true);
+            this.text_reserva.setVisible(false);
+            this.button_reserva.setVisible(false);
+        } else {
+            this.vbox_no_login.setVisible(false);
+            this.text_reserva.setVisible(true);
+            this.button_reserva.setVisible(true);
+            
+            this.text_reserva.setText("Ninguna pista seleccionada");
+            this.button_reserva.setDisable(true);
+        }
+        
         System.out.println("ReservaHora refreshed");
     }   
     
@@ -160,6 +180,22 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
                 "#789090"), new CornerRadii(1), null)));
         
         ((Bloom) this.imageview_Rfletxa.getEffect()).setThreshold(1);
+    }
+    
+    public void on_click_login(Event event) throws InterruptedException {
+        PaddleExperience.setParent(event, "FXMLPaddleLogin.fxml");
+    }
+    
+    public void on_click_registrar(Event event) throws InterruptedException {
+        PaddleExperience.setParent(event, "FXMLRegistro.fxml");
+    }
+    
+    public void on_click_pista(Event event){
+        
+    }
+    
+    public void on_click_reservar(Event _e){
+        
     }
     
 }
