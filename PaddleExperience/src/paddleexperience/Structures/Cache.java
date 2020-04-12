@@ -20,7 +20,7 @@ import javafx.scene.image.Image;
 // Internal imports
 import paddleexperience.Dataclasses.Estat;
 import paddleexperience.Dataclasses.Hora;
-import paddleexperience.Dataclasses.Pair;
+import paddleexperience.Dataclasses.Triplet;
 import paddleexperience.FXMLPaddleReservaController;
 import model.Booking;
 import model.Member;
@@ -32,7 +32,7 @@ import model.Member;
 public class Cache {
     private static final int MAX_CACHE_SIZE = 31;
     
-    public static HashMap<LocalDate, HashMap<LocalTime, Pair<Image[], Boolean>>> cache = new HashMap<LocalDate, HashMap<LocalTime, Pair<Image[], Boolean>>>(){};
+    public static HashMap<LocalDate, HashMap<LocalTime, Triplet<Image[], Member[], Boolean>>> cache = new HashMap<LocalDate, HashMap<LocalTime, Triplet<Image[], Member[], Boolean>>>(){};
     
     public static LocalDate max_day = Estat.getBeforeDate();
     public static LocalDate min_day = Estat.getNextDate();
@@ -66,11 +66,11 @@ public class Cache {
     
     public static void clear(){ cache.clear(); }
     
-    public static HashMap<LocalTime, Pair<Image[], Boolean>> get(){
+    public static HashMap<LocalTime, Triplet<Image[], Member[], Boolean>> get(){
         // Hashmap on guarde una representació del dia LocalTime
         // com a un array d'enters que posteriorment es tradueïx
         // a la imatge corresponent
-        HashMap<LocalTime, Pair<Image[], Boolean>> courts;
+        HashMap<LocalTime, Triplet<Image[], Member[], Boolean>> courts;
         
         boolean login_dif;
         // Es mira si el usuari ha canviat de login
@@ -87,7 +87,7 @@ public class Cache {
             // Esta variable guarda la caché de un dia representat
             // per un array de enters, que agafen el sentit que la
             // classe Hora li done. Actualment, Hora.imatges
-            courts = new HashMap<LocalTime, Pair<Image[], Boolean>>();
+            courts = new HashMap<LocalTime, Triplet<Image[], Member[], Boolean>>();
 
             // Fem un recorregut lineal del bookings del dia, i apuntem
             // quines pistes están ocupades, així com quines estàn ocupades
@@ -97,20 +97,24 @@ public class Cache {
                         iter.hasNext();){
                 Booking reserva = iter.next();
                 // Agafem el array si ja n'hem guardat
-                Pair<Image[], Boolean> court = courts.get(reserva.getFromTime());
+                Triplet<Image[], Member[], Boolean> court = courts.get(reserva.getFromTime());
                 
                 boolean te_reserva = Estat.getMember() != null &&
                                     reserva.getMember() == Estat.getMember();
                 
                 // si no n'hem guardat encara, clonem default_court
                 if(court == null){
-                    court = new Pair(default_court.clone(), te_reserva);
+                    court = new Triplet(default_court.clone(), new Member[Estat.numero_pistes], te_reserva);
                     courts.put(reserva.getFromTime(), court);
                 }
+                
+                int court_index = Estat.court_index.get(reserva.getCourt());
 
-                // Actualitzem l'estat del array
-                if(te_reserva)
-                    courts.get(reserva.getFromTime()).setSecond(true);
+                // Actualitzem l'estat del triplet
+                if(te_reserva){
+                    ((Member[]) courts.get(reserva.getFromTime()).setThird(true)
+                            .second)[court_index] = reserva.getMember();
+                }
 
                 court.first[Estat.court_index.get(reserva.getCourt())] 
                         = Hora.images.get(1);
@@ -172,7 +176,7 @@ public class Cache {
             // HashMap vol dir que quan es va carregar el caché no n'hi havia
             // ningun booking, per tant agafem un HashMap buit
             System.out.println("Dia ja en cache");
-            return cache.getOrDefault(Estat.getDate(), new HashMap<LocalTime, Pair<Image[], Boolean>>());
+            return cache.getOrDefault(Estat.getDate(), new HashMap<LocalTime, Triplet<Image[], Member[], Boolean>>());
         }
     }
     
@@ -214,7 +218,7 @@ class CacheThread extends Thread{
                     Estat.getDate().minusDays(1) : Cache.min_day.minusDays(1);
         }
         
-        HashMap<LocalTime, Pair<Image[], Boolean>> courts = new HashMap<LocalTime, Pair<Image[], Boolean>>();
+        HashMap<LocalTime, Triplet<Image[], Member[], Boolean>> courts = new HashMap<LocalTime, Triplet<Image[], Member[], Boolean>>();
         
         while(this.open && dia < max_dies){
             this.valid = true;
@@ -226,20 +230,23 @@ class CacheThread extends Thread{
                         iter.hasNext();){
                     Booking reserva = iter.next();
                     
-                    Pair<Image[], Boolean> court = courts.get(reserva.getFromTime());
+                    Triplet<Image[], Member[], Boolean> court = courts.get(reserva.getFromTime());
                     
                     boolean te_reserva = Estat.getMember() != null &&
                                     reserva.getMember() == Estat.getMember();
                     
                     if(court == null){
-                        court = new Pair(Cache.default_court.clone(), te_reserva);
+                        court = new Triplet(Cache.default_court.clone(), new Member[Estat.numero_pistes], te_reserva);
                         courts.put(reserva.getFromTime(), court);
                     }
 
-                    if(te_reserva)
-                        courts.get(reserva.getFromTime()).setSecond(true);
+                    int court_index = Estat.court_index.get(reserva.getCourt());
                     
-                    court.first[Estat.court_index.get(reserva.getCourt())] 
+                    if(te_reserva)
+                        ((Member[]) courts.get(reserva.getFromTime()).setThird(true).second)
+                                [court_index] = reserva.getMember();
+                    
+                    court.first[court_index] 
                             = Hora.images.get(1);
                     
 
