@@ -32,9 +32,10 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
+import model.Member;
 
 // Internal imports
-import paddleexperience.Dataclasses.Pair;
+import paddleexperience.Dataclasses.Triplet;
 
 /**
  *
@@ -63,6 +64,7 @@ public final class Hora{
     // // Auxiliar
     private ImageView courts_images[] = new ImageView[Estat.numero_pistes];
     private boolean te_reserva = false;
+    private Member members[] = new Member[Estat.numero_pistes];
     
     public Hora(LocalTime hora, List<Integer> courts_state){
         this.time = hora;
@@ -168,9 +170,11 @@ public final class Hora{
             court.setImage(courts_state[index++]);
     }
     
-    public void updateCourtsPair(Pair<Image[], Boolean> courts_state){
-        this.te_reserva = courts_state.second;
-        ((Text) this.reservat.getChildren().get(0)).setText((courts_state.second) ? "Si" : "No");
+    public void updateCourtsTriplet(Triplet<Image[], Member[], Boolean> courts_state){
+        this.te_reserva = courts_state.third;
+        ((Text) this.reservat.getChildren().get(0)).setText((courts_state.third) ? "Si" : "No");
+        
+        this.members = courts_state.second;
         
         this.updateCourtsImages(courts_state.first);
     }
@@ -217,6 +221,10 @@ public final class Hora{
     
     public boolean getTeReserva(){
         return this.te_reserva;
+    }
+    
+    public Member[] getMembers(){
+        return this.members;
     }
     
     // // SETTERS
