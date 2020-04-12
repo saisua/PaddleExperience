@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import model.Booking;
+import model.Member;
 import paddleexperience.FXMLHistoricoController;
 import paddleexperience.PaddleExperience;
 import paddleexperience.Structures.Cache;
@@ -85,20 +86,22 @@ public class UserBooking {
         
         FXMLHistoricoController.__proximes_count--;
         
-        HashMap<LocalTime, Pair<Image[], Boolean>> day_cache = Cache.cache.get(this.booking.getMadeForDay());
-        Pair<Image[], Boolean> actual_cache = null;
+        HashMap<LocalTime, Triplet<Image[], Member[], Boolean>> day_cache = Cache.cache.get(this.booking.getMadeForDay());
+        Triplet<Image[], Member[], Boolean> actual_cache = null;
         
         if(day_cache == null)
-            Cache.cache.put(this.booking.getMadeForDay(), new HashMap<LocalTime, Pair<Image[], Boolean>>());
+            Cache.cache.put(this.booking.getMadeForDay(), new HashMap<LocalTime, Triplet<Image[], Member[], Boolean>>());
         else 
             actual_cache = day_cache.get(this.booking.getFromTime());
         
         if(actual_cache == null){
-            actual_cache = new Pair(Cache.default_court.clone(), true);
+            actual_cache = new Triplet(Cache.default_court.clone(), new Member[Estat.numero_pistes], true);
             Cache.cache.get(this.booking.getMadeForDay()).put(this.booking.getFromTime(), actual_cache);
         }
         
         actual_cache.first[Estat.court_index.get(this.booking.getCourt())] = Hora.images.get(1);
+        
+        Estat.save();
     }
     
     // // GETTERS
