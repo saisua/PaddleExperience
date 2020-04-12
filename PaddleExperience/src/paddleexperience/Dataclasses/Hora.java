@@ -6,6 +6,7 @@
 package paddleexperience.Dataclasses;
 
 // Java imports
+import static java.lang.Thread.sleep;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,10 +90,10 @@ public final class Hora{
             
             this.courts_images[court_num] = image;
         }
+        
         HBox hbox_images = new HBox();
         
         hbox_images.getChildren().addAll(this.courts_images);
-        hbox_images.setPadding(new Insets(32, 0, 0, 0));
         
         this.courts.getChildren().add(hbox_images);
         
@@ -102,7 +103,9 @@ public final class Hora{
         text_hora.setStyle("-fx-fill:  #FAFAFA;"
                 + "-fx-font-size: 20;");
         this.hora.setStyle("-fx-text-alignment: center;");
-                
+
+        this.courts.setBackground(background_not_selected);
+        this.courts.setStyle("-fx-padding: 100 0 0 0;");
         
         this.hora.onMouseEnteredProperty().set((Event ev) -> this.on_hover_enter(ev));
         this.hora.onMouseExitedProperty().set((Event ev) -> this.on_hover_exit(ev));
