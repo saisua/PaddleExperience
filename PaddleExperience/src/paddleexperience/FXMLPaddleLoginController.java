@@ -176,11 +176,12 @@ public class FXMLPaddleLoginController implements Initializable, Stoppable {
 
         if (login_result != null) {
             Estat.setMember(login_result);
-            
-            Estat.club.getBookings().add(new Booking(LocalDateTime.now(), Estat.getDate().plusDays(1), 
-                    Estat.getTime(),
-                false, Estat.court_by_index.get(2), Estat.getMember()));
 
+            Estat.club.getBookings().add(new Booking(LocalDateTime.now(), Estat.getDate().plusDays(1),
+                    Estat.getTime(),
+                    false, Estat.court_by_index.get(2), Estat.getMember()));
+
+            PaddleExperience.refresh("FXMLHome.fxml");
             PaddleExperience.setParent(event, "FXMLSidebar.fxml");
             return;
         } else {

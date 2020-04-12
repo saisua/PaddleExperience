@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane id="fons_Flotant" maxHeight="400.0" maxWidth="600.0" prefHeight="400.0" prefWidth="600.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLReservaHoraController">
+<AnchorPane id="fons_Flotant" maxHeight="400.0" maxWidth="600.0" prefHeight="400.0" prefWidth="600.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLReservaHoraController">
    <children>
       <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -31,7 +31,7 @@
           <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox id="button_Enrere" fx:id="vbox_Lhora" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_click_befHora" onMouseEntered="#on_Lhora_horver_enter" onMouseExited="#on_Lhora_horver_exit" prefHeight="92.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <VBox id="button_Enrere" fx:id="vbox_Lhora" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_click_befHora" prefHeight="92.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <children>
                   <ImageView fx:id="imageview_Lfletxa" fitHeight="74.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -54,7 +54,7 @@
                   </Text>
                </children>
             </VBox>
-            <VBox id="button_Enrere" fx:id="vbox_Rhora" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_click_nextHora" onMouseEntered="#on_Rhora_horver_enter" onMouseExited="#on_Rhora_horver_exit" prefHeight="92.0" prefWidth="144.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <VBox id="button_Enrere" fx:id="vbox_Rhora" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_click_nextHora" prefHeight="92.0" prefWidth="144.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <children>
                   <ImageView fx:id="imageview_Rfletxa" fitHeight="74.0" fitWidth="76.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                      <image>

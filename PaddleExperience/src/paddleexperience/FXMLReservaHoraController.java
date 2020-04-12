@@ -79,65 +79,65 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
     private Text text_reserva;
     @FXML
     private Button button_reserva;
-    
+
     // Auxiliar
     private String hora_actual;
     private boolean te_reserva = false;
-    
+
     private int selected_index;
     private ImageView selected_image;
     private Image prev_image;
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("ReservaHora init");
-        
+
         this.refresh();
-    }    
-    
+    }
+
     @Override
     public void stop() throws InterruptedException {
         System.out.println("ReservaHora stopped");
-    }    
-    
+    }
+
     @Override
     public void refresh() {
         this.hora_actual = Estat.getTime().toString();
-        
+
         this.text_hora.setText(this.hora_actual);
         this.text_data.setText(Estat.getDate().toString());
-        
+
         LocalTime to_show = Estat.getBeforeTime();
-        if(to_show == null) this.vbox_Lhora.setVisible(false);
-        else {
+        if (to_show == null) {
+            this.vbox_Lhora.setVisible(false);
+        } else {
             this.text_Lhora.setText(to_show.toString());
             this.vbox_Lhora.setVisible(true);
         }
-        
+
         to_show = Estat.getNextTime();
-        if(to_show == null) this.vbox_Rhora.setVisible(false);
-        else {
+        if (to_show == null) {
+            this.vbox_Rhora.setVisible(false);
+        } else {
             this.text_Rhora.setText(to_show.toString());
             this.vbox_Rhora.setVisible(true);
         }
-        
+
         //System.out.println(Estat.hores.get(this.hora_actual).getCourtImages().length);
-        
-        if(Estat.hores.get(this.hora_actual).getCourtImages().length > 0){
+        if (Estat.hores.get(this.hora_actual).getCourtImages().length > 0) {
             ObservableList<Node> courts = this.gridpane_imageview_court.getChildren();
 
-            for(int court_num = 0; court_num < courts.size(); court_num++){
+            for (int court_num = 0; court_num < courts.size(); court_num++) {
                 //System.out.println(courts.size());
-                
-                ((ImageView) courts.get(court_num)).setImage(((ImageView) 
-                        Estat.hores.get(this.hora_actual).getCourtImages()[court_num]).getImage());
+
+                ((ImageView) courts.get(court_num)).setImage(((ImageView) Estat.hores.get(this.hora_actual).getCourtImages()[court_num]).getImage());
             }
         }
-        
-        if(Estat.getMember() == null){
+
+        if (Estat.getMember() == null) {
             this.vbox_no_login.setVisible(true);
             this.text_reserva.setVisible(false);
             this.button_reserva.setVisible(false);
@@ -145,174 +145,180 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
             this.vbox_no_login.setVisible(false);
             this.text_reserva.setVisible(true);
             this.button_reserva.setVisible(true);
-            
+
             this.te_reserva = Estat.hores.get(this.hora_actual).getTeReserva();
-            
-            this.text_reserva.setText((te_reserva) ? "Ja tens una hora reservada":"Ninguna pista seleccionada");
+
+            this.text_reserva.setText((te_reserva) ? "Ja tens una hora reservada" : "Ninguna pista seleccionada");
             this.button_reserva.setDisable(true);
-            
+
             Estat.setSelectedCourt(null);
         }
-        
-        for(Node court : this.gridpane_imageview_court.getChildren()){
+
+        for (Node court : this.gridpane_imageview_court.getChildren()) {
             ((DropShadow) court.getEffect()).setHeight(0);
             ((DropShadow) court.getEffect()).setWidth(0);
         }
-        
+
         System.out.println("ReservaHora refreshed");
-    }   
-    
-    public void on_click_nextHora(Event event){    
+    }
+
+    public void on_click_nextHora(Event event) {
         event.consume();
-        
+
         Estat.setTime(Estat.getNextTime());
-        
+
         this.refresh();
     }
-    
-    public void on_click_befHora(Event event){ 
+
+    public void on_click_befHora(Event event) {
         event.consume();
-        
+
         Estat.setTime(Estat.getBeforeTime());
-        
+
         this.refresh();
     }
-    
-    public void on_Lhora_horver_enter(Event _e){
+
+    /*public void on_Lhora_horver_enter(Event _e){
         this.vbox_Lhora.setBackground(new Background(new BackgroundFill(Paint.valueOf(
                 "#678080"), new CornerRadii(1), null)));
-        
+
         ((Bloom) this.imageview_Lfletxa.getEffect()).setThreshold(0);
     }
-    
+
     public void on_Rhora_horver_enter(Event _e){
         this.vbox_Rhora.setBackground(new Background(new BackgroundFill(Paint.valueOf(
                 "#678080"), new CornerRadii(1), null)));
-        
+
         ((Bloom) this.imageview_Rfletxa.getEffect()).setThreshold(0);
     }
-    
+
     public void on_Lhora_horver_exit(Event _e){
         this.vbox_Lhora.setBackground(new Background(new BackgroundFill(Paint.valueOf(
                 "#789090"), new CornerRadii(1), null)));
-        
+
         ((Bloom) this.imageview_Lfletxa.getEffect()).setThreshold(1);
     }
-    
+
     public void on_Rhora_horver_exit(Event _e){
         this.vbox_Rhora.setBackground(new Background(new BackgroundFill(Paint.valueOf(
                 "#789090"), new CornerRadii(1), null)));
-        
+
         ((Bloom) this.imageview_Rfletxa.getEffect()).setThreshold(1);
-    }
-    
+    }*/
     public void on_click_login(Event event) throws InterruptedException {
         PaddleExperience.setParent(event, "FXMLPaddleLogin.fxml");
     }
-    
+
     public void on_click_registrar(Event event) throws InterruptedException {
         PaddleExperience.setParent(event, "FXMLRegistro.fxml");
     }
-    
-    public void on_hover_enter_pista(Event event){
-        if(Estat.getMember() == null || Estat.hores.get(this.hora_actual).getTeReserva() != false ||
-                ((ImageView) event.getSource()).getImage() != Hora.images.get(0))
+
+    public void on_hover_enter_pista(Event event) {
+        if (Estat.getMember() == null || Estat.hores.get(this.hora_actual).getTeReserva() != false
+                || ((ImageView) event.getSource()).getImage() != Hora.images.get(0)) {
             return;
-        
+        }
+
         ((DropShadow) ((Node) event.getSource()).getEffect()).setHeight(20);
         ((DropShadow) ((Node) event.getSource()).getEffect()).setWidth(20);
     }
-    
-    public void on_hover_exit_pista(Event event){
+
+    public void on_hover_exit_pista(Event event) {
         ((DropShadow) ((Node) event.getSource()).getEffect()).setHeight(0);
         ((DropShadow) ((Node) event.getSource()).getEffect()).setWidth(0);
     }
-    
-    public void on_click_pista(MouseEvent event){
-        if(Estat.getMember() == null || this.te_reserva != false)
+
+    public void on_click_pista(MouseEvent event) {
+        if (Estat.getMember() == null || this.te_reserva != false) {
             return;
-        
+        }
+
         // Aci ho separe perque en la majoria de casos (El click és valid)
         // puc fer ús de la variable
-        ImageView event_source =  ((ImageView) event.getSource());
-        
-        if(event_source.getImage() != Hora.images.get(0))
+        ImageView event_source = ((ImageView) event.getSource());
+
+        if (event_source.getImage() != Hora.images.get(0)) {
             return;
-        
+        }
+
         int indexX = 0;
         int indexY = 0;
 
         // LA PUTA HOSTIA NO EM PUC CREURE QUE AÇO TORNE PUTO
         // NULL SI EL INDEX ES 0 QUE INCONSISTENT ES JAVA HOSTIA
         // per: Ausias
-        try{
+        try {
             indexX = GridPane.getColumnIndex((Node) event.getSource());
-        } catch (NullPointerException fuckJava) { ; }
-        
-        try{
+        } catch (NullPointerException fuckJava) {;
+        }
+
+        try {
             indexY = GridPane.getRowIndex((Node) event.getSource());
-        } catch (NullPointerException fuckJava) { ; }
-        
-        this.selected_index = indexX + 2*indexY;
-        
+        } catch (NullPointerException fuckJava) {;
+        }
+
+        this.selected_index = indexX + 2 * indexY;
+
         Court court = Estat.court_by_index.get(this.selected_index); // 2*y
-        
+
         Estat.setSelectedCourt(court);
         this.text_reserva.setText(court.getName());
-        
-        if(this.selected_image != null)
+
+        if (this.selected_image != null) {
             this.selected_image.setImage(this.prev_image);
-        
+        }
+
         this.selected_image = event_source;
         this.prev_image = this.selected_image.getImage();
-        
+
         this.selected_image.setImage(Hora.images.get(2));
-        
+
         this.button_reserva.setDisable(false);
     }
-    
+
     // Esta funció té una carrega computacional prou gran per
     // a ser provocada per un event. Pot ser arrel de problemes
     // de eficiència. El creixement de la funció depén únicament
     // de FXMLPaddleReservaController.refresh()
-    public void on_click_reservar(Event _e){
+    public void on_click_reservar(Event _e) {
         // LocalDateTime bookingDate, LocalDate madeForDay, LocalTime fromHour, boolean paid, Court court, Member member
         Estat.club.getBookings().add(new Booking(LocalDateTime.now(), Estat.getDate(), Estat.getTime(),
                 false, Estat.getSelectedCourt(), Estat.getMember()));
-        
+
         this.te_reserva = true;
-        
+
         this.text_reserva.setText("Ja tens una hora reservada");
-        
+
         Image ocupied_image = Hora.images.get(1);
-        
+
         this.selected_image.setImage(ocupied_image);
-        
+
         Hora actual_hora = Estat.hores.get(this.hora_actual);
-        
+
         actual_hora.getCourtImages()[this.selected_index]
                 .setImage(ocupied_image);
         actual_hora.__setTeReserva(true);
-        
+
         HashMap<LocalTime, Pair<Image[], Boolean>> day_cache = Cache.cache.get(Estat.getDate());
         Pair<Image[], Boolean> actual_cache = null;
-        
-        if(day_cache == null)
+
+        if (day_cache == null) {
             Cache.cache.put(Estat.getDate(), new HashMap<LocalTime, Pair<Image[], Boolean>>());
-        else 
+        } else {
             actual_cache = day_cache.get(Estat.getTime());
-        
-        if(actual_cache == null){
+        }
+
+        if (actual_cache == null) {
             actual_cache = new Pair(Cache.default_court.clone(), true);
             Cache.cache.get(Estat.getDate()).put(Estat.getTime(), actual_cache);
         }
-        
+
         actual_cache.first[this.selected_index] = ocupied_image;
-        
+
         this.selected_image = null;
         this.prev_image = null;
-        
+
         PaddleExperience.refresh("FXMLPaddleReserva.fxml");
     }
-    
+
 }

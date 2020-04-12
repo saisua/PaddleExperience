@@ -9,11 +9,14 @@ import DBAcess.ClubDBAccess;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import model.Booking;
 import paddleexperience.Dataclasses.Estat;
@@ -41,19 +44,25 @@ public class FXMLHomeController implements Initializable, Stoppable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        if (Estat.getMember() != null) {
+            imPerfil.setImage((Image) Estat.getMember().getImage());
+            Circle circle = new Circle(73);
+            circle.setCenterX(imPerfil.getX() + (imPerfil.getFitWidth() / 2));
+            circle.setCenterY(imPerfil.getY() + (imPerfil.getFitHeight() / 2));
+            imPerfil.setClip(circle);
+
+        }
     }
-    
+
     // S'executa cada vegada que es tanca l'escena
     @Override
-    public void stop() throws InterruptedException{
+    public void stop() throws InterruptedException {
         System.out.println("Home closed");
     }
-    
-    
+
     // S'executa cada vegada que es carrega l'escena
     @Override
-    public void refresh(){
+    public void refresh() {
         ClubDBAccess clubDBAccess;
         clubDBAccess = Estat.club;
         ArrayList<Booking> listaReservas = clubDBAccess.getBookings();
@@ -63,10 +72,19 @@ public class FXMLHomeController implements Initializable, Stoppable {
         //COMPLETAR
         //Pone el texto de la proxima y la última partida en caso de que haya
         if (proximaReserva >= 0) {
-            proxPartida.setText(listaReservas.get(proximaReserva).getMadeForDay().toString());
+            String dataProx = listaReservas.get(proximaReserva).getMadeForDay().format(DateTimeFormatter.BASIC_ISO_DATE);
+            proxPartida.setText(dataProx);
         }
         if (ultimaReserva >= 0) {
             ultPartida.setText(listaReservas.get(ultimaReserva).getMadeForDay().toString());
+        }
+
+        if (Estat.getMember() != null) {
+            Circle circle = new Circle(73);
+            circle.setCenterX(imPerfil.getX() + (imPerfil.getFitWidth() / 2));
+            circle.setCenterY(imPerfil.getY() + (imPerfil.getFitHeight() / 2));
+            imPerfil.setClip(circle);
+            imPerfil.setImage((Image) Estat.getMember().getImage());
         }
     }
 
