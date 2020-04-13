@@ -34,7 +34,7 @@ import paddleexperience.Structures.Cache;
 public class PaddleExperience extends Application {
 
     private static final int minHeight = 550;
-    private static final int minWidth = 670;
+    private static final int minWidth = 800;
 
     // Loader
     private static final HashMap<String, Parent> root = new HashMap<String, Parent>();

@@ -37,47 +37,48 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     private Button btn_reserva;
     @FXML
     private Button btn_historico;
-    
-    
+
     private Stoppable sub_menu_controller;
 
-    public void FXMLSidebarController(){
+    public void FXMLSidebarController() {
         Estat.setSidebar(this);
     }
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        btn_home.setStyle("-fx-background-color:#78909C;");
+        btn_home.setStyle("-fx-background-color:#78909C;-fx-background-radius:0;");
         btn_reserva.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_historico.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
-        
-        try{
+
+        try {
             loadUI("FXMLHome");
-        } catch (IOException err){}
+        } catch (IOException err) {
+        }
     }
-    
+
     // S'executa cada vegada que es tanca l'escena
     @Override
-    public void stop() throws InterruptedException{
-        if(this.sub_menu_controller != null) 
+    public void stop() throws InterruptedException {
+        if (this.sub_menu_controller != null) {
             this.sub_menu_controller.stop();
-        
+        }
+
         System.out.println("Sidebar stopped");
     }
-    
+
     // S'executa cada vegada que es carrega l'escena
     @Override
-    public void refresh(){
+    public void refresh() {
         System.out.println("Sidebar refreshed");
     }
 
     @FXML
     private void goHome(MouseEvent event) throws IOException {
-        btn_home.setStyle("-fx-background-color:#78909C;");
+        btn_home.setStyle("-fx-background-color:#78909C;-fx-background-radius:0;");
         btn_reserva.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_historico.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         loadUI("FXMLHome");
@@ -86,7 +87,7 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     @FXML
     private void goReserva(MouseEvent event) throws IOException {
         btn_home.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
-        btn_reserva.setStyle("-fx-background-color:#78909C;");
+        btn_reserva.setStyle("-fx-background-color:#78909C;-fx-background-radius:0;");
         btn_historico.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         loadUI("FXMLPaddleReserva");
     }
@@ -95,7 +96,7 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     private void goHistorial(MouseEvent event) throws IOException {
         btn_home.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_reserva.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
-        btn_historico.setStyle("-fx-background-color:#78909C;");
+        btn_historico.setStyle("-fx-background-color:#78909C;-fx-background-radius:0;");
         loadUI("FXMLHistorico");
     }
 

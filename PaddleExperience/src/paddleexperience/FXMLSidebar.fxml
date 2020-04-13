@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="718.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLSidebarController">
+<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="718.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLSidebarController">
     <left>
         <VBox prefHeight="485.0" prefWidth="211.0" style="-fx-background-color: #37474F;" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btn_home" mnemonicParsing="false" onMouseClicked="#goHome" prefHeight="60.0" prefWidth="224.0" style="-fx-background-color: transparent; -fx-text-fill: #FAFAFAFA;" text="Home">
+                <Button id="button_SideBar" fx:id="btn_home" mnemonicParsing="false" onMouseClicked="#goHome" prefHeight="60.0" prefWidth="224.0" style="-fx-background-color: transparent; -fx-text-fill: #FAFAFAFA; -fx-background-radius: 0;" text="Home">
                     <VBox.margin>
                         <Insets />
                     </VBox.margin>
                <font>
                   <Font name="Ubuntu" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </Button>
-                <Button fx:id="btn_reserva" mnemonicParsing="false" onMouseClicked="#goReserva" prefHeight="60.0" prefWidth="239.0" style="-fx-background-color: transparent; -fx-text-fill: #FAFAFAFA;" text="Nueva reserva">
+                <Button id="button_SideBar" fx:id="btn_reserva" mnemonicParsing="false" onMouseClicked="#goReserva" prefHeight="60.0" prefWidth="239.0" style="-fx-background-color: transparent; -fx-text-fill: #FAFAFAFA; -fx-background-radius: 0;" text="Nueva reserva">
                     <VBox.margin>
                         <Insets />
                     </VBox.margin>
                <font>
                   <Font name="Ubuntu" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </Button>
-                <Button fx:id="btn_historico" mnemonicParsing="false" onMouseClicked="#goHistorial" prefHeight="60.0" prefWidth="240.0" style="-fx-background-color: transparent; -fx-text-fill: #FAFAFAFA;" text="Reservas y cancelaciones">
+                <Button id="button_SideBar" fx:id="btn_historico" mnemonicParsing="false" onMouseClicked="#goHistorial" prefHeight="60.0" prefWidth="240.0" style="-fx-background-color: transparent; -fx-text-fill: #FAFAFAFA; -fx-background-radius: 0;" text="Reservas y cancelaciones">
                     <VBox.margin>
                         <Insets />
                     </VBox.margin>
                <font>
                   <Font name="Ubuntu" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </Button>
             </children>
         </VBox>
