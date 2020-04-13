@@ -56,17 +56,24 @@ public final class Hora{
     private final TextFlow reservat = new TextFlow();
     
     // Estètic
-    private static final Background background_selected = new Background(new BackgroundFill(Paint.valueOf(
+    private static final Background background_selected_enabled = new Background(new BackgroundFill(Paint.valueOf(
                 "#388E3C"), new CornerRadii(1), null));
+    private static final Background background_selected_disabled = new Background(new BackgroundFill(Paint.valueOf(
+                "#DD2C00"), new CornerRadii(1), null));
     private static final Background background_not_selected = new Background(new BackgroundFill(Paint.valueOf(
                 "#37474F"), new CornerRadii(1), null));
+    
     
     // // Auxiliar
     private ImageView courts_images[] = new ImageView[Estat.numero_pistes];
     private boolean te_reserva = false;
     private Member members[] = new Member[Estat.numero_pistes];
     
+    private boolean enabled;
+    
     public Hora(LocalTime hora, List<Integer> courts_state){
+        this.enabled = true;
+        
         this.time = hora;
         this.time_str = hora.toString();
         
@@ -118,15 +125,11 @@ public final class Hora{
     }
     
     public void disable(){
-        this.hora.setDisable(true);
-        this.courts.setDisable(true);
-        this.reservat.setDisable(true);
+        this.enabled = false;
     }
     
     public void enable(){
-        this.hora.setDisable(false);
-        this.courts.setDisable(false);
-        this.reservat.setDisable(false);
+        this.enabled = true;
     }
     
     public int compareTo(Hora a_comparar){
@@ -181,9 +184,15 @@ public final class Hora{
     
     
     public void on_hover_enter(Event event){
-        this.hora.setBackground(background_selected);
-        this.courts.setBackground(background_selected);
-        this.reservat.setBackground(background_selected);
+        if(this.enabled){
+            this.hora.setBackground(background_selected_enabled);
+            this.courts.setBackground(background_selected_enabled);
+            this.reservat.setBackground(background_selected_enabled);
+        } else {
+            this.hora.setBackground(background_selected_disabled);
+            this.courts.setBackground(background_selected_disabled);
+            this.reservat.setBackground(background_selected_disabled);
+        }
     }
     
     public void on_hover_exit(Event event){
