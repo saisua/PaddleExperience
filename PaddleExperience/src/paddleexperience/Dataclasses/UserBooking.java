@@ -43,12 +43,14 @@ public class UserBooking {
 
     // Auxiliar
     private LocalDateTime datetime;
+    private LocalDateTime match_start;
 
     public UserBooking(Booking data, TableView table) {
         this.booking = data;
         this.table = table;
 
         this.datetime = data.getBookingDate();
+        this.match_start = LocalDateTime.of(data.getMadeForDay(), data.getFromTime());
 
         Button cancel = new Button("Cancelar");
         cancel.setStyle("-fx-backgound-color:transprent");
@@ -72,7 +74,8 @@ public class UserBooking {
                 .plusMinutes(Estat.partides_duracio).toString()));
         this.pista.getChildren().add(new Text(data.getCourt().getName()));
         this.pagada.getChildren().add(new Text(data.getPaid() ? "Sí" : "No"));
-        this.cancelar.getChildren().add(cancel);
+        if(this.match_start.plusDays(1).compareTo(LocalDateTime.now()) < 0)
+            this.cancelar.getChildren().add(cancel);
     }
 
     public int compareTo(UserBooking a_comparar) {
@@ -84,6 +87,12 @@ public class UserBooking {
     }
 
     public void on_click_cancel(Event event) throws InterruptedException {
+        if(this.match_start.plusDays(1).compareTo(LocalDateTime.now()) > 0){
+            this.cancelar.setVisible(false);
+            return;
+        }
+            
+        
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
         alert.setTitle("Confirmació");
