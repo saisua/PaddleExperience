@@ -53,11 +53,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 import javafx.util.Callback;
+import paddleexperience.Dataclasses.Triplet;
 
 // Interal imports
 import paddleexperience.PaddleExperience;
 import paddleexperience.Dataclasses.Hora;
-import paddleexperience.Dataclasses.Pair;
 import paddleexperience.Structures.Stoppable;
 import paddleexperience.Structures.Cache;
 import model.Booking;
@@ -175,7 +175,7 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
         }
 
         //this.text_data.setText(Estat.getDate().toString());
-        HashMap<LocalTime, Pair<Image[], Boolean>> dia = Cache.get();
+        HashMap<LocalTime, Triplet<Image[], Member[], Boolean>> dia = Cache.get();
 
         int is_past_day = Estat.getDate().compareTo(LocalDate.now());
 
@@ -184,9 +184,9 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
         for (Hora hora : Estat.hores.values()) {
             //System.out.println("Hora "+hora.getTimeStr());
 
-            hora.updateCourtsPair(dia.getOrDefault(hora.getTime(), new Pair(Cache.default_court.clone(), false)));
+            hora.updateCourtsTriplet(dia.getOrDefault(hora.getTime(),
+                    new Triplet(Cache.default_court.clone(), new Member[Estat.numero_pistes], false)));
 
-            //System.out.println(dia.getOrDefault(hora.getTime(), new Pair(Cache.default_court.clone(), false)).first.toString());
             // Activem o desactivem les hores corresponents
             // En base a si ja han passat o no
             if (is_past_day > 0) {

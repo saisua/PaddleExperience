@@ -42,13 +42,14 @@ import javafx.scene.paint.Paint;
 import javafx.stage.StageStyle;
 import model.Booking;
 import model.Court;
+import model.Member;
 
 // Java imports
 import paddleexperience.Structures.Stoppable;
 import paddleexperience.Dataclasses.Estat;
 import paddleexperience.Dataclasses.Hora;
-import paddleexperience.Dataclasses.Pair;
 import paddleexperience.Structures.Cache;
+import paddleexperience.Dataclasses.Triplet;
 
 /**
  * FXML Controller class
@@ -292,17 +293,17 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
                     .setImage(ocupied_image);
             actual_hora.__setTeReserva(true);
 
-            HashMap<LocalTime, Pair<Image[], Boolean>> day_cache = Cache.cache.get(Estat.getDate());
-            Pair<Image[], Boolean> actual_cache = null;
+            HashMap<LocalTime, Triplet<Image[], Member[], Boolean>> day_cache = Cache.cache.get(Estat.getDate());
+            Triplet<Image[], Member[], Boolean> actual_cache = null;
 
             if (day_cache == null) {
-                Cache.cache.put(Estat.getDate(), new HashMap<LocalTime, Pair<Image[], Boolean>>());
+                Cache.cache.put(Estat.getDate(), new HashMap<LocalTime, Triplet<Image[], Member[], Boolean>>());
             } else {
                 actual_cache = day_cache.get(Estat.getTime());
             }
 
             if (actual_cache == null) {
-                actual_cache = new Pair(Cache.default_court.clone(), true);
+                actual_cache = new Triplet(Cache.default_court.clone(), new Member[Estat.numero_pistes], true);
                 Cache.cache.get(Estat.getDate()).put(Estat.getTime(), actual_cache);
             }
 
@@ -314,6 +315,8 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
             PaddleExperience.refresh("FXMLPaddleReserva.fxml");
             PaddleExperience.refresh("FXMLHome.fxml");
             PaddleExperience.refresh("FXMLHistorico.fxml");
+
+            Estat.save();
         }
     }
 

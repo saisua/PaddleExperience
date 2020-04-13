@@ -6,6 +6,7 @@
 package paddleexperience.Dataclasses;
 
 // Java imports
+import static java.lang.Thread.sleep;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +32,10 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
+import model.Member;
 
 // Internal imports
-import paddleexperience.Dataclasses.Pair;
+import paddleexperience.Dataclasses.Triplet;
 
 /**
  *
@@ -62,6 +64,7 @@ public final class Hora{
     // // Auxiliar
     private ImageView courts_images[] = new ImageView[Estat.numero_pistes];
     private boolean te_reserva = false;
+    private Member members[] = new Member[Estat.numero_pistes];
     
     public Hora(LocalTime hora, List<Integer> courts_state){
         this.time = hora;
@@ -89,10 +92,10 @@ public final class Hora{
             
             this.courts_images[court_num] = image;
         }
+        
         HBox hbox_images = new HBox();
         
         hbox_images.getChildren().addAll(this.courts_images);
-        hbox_images.setPadding(new Insets(32, 0, 0, 0));
         
         this.courts.getChildren().add(hbox_images);
         
@@ -102,7 +105,9 @@ public final class Hora{
         text_hora.setStyle("-fx-fill:  #FAFAFA;"
                 + "-fx-font-size: 20;");
         this.hora.setStyle("-fx-text-alignment: center;");
-                
+
+        this.courts.setBackground(background_not_selected);
+        this.courts.setStyle("-fx-padding: 100 0 0 0;");
         
         this.hora.onMouseEnteredProperty().set((Event ev) -> this.on_hover_enter(ev));
         this.hora.onMouseExitedProperty().set((Event ev) -> this.on_hover_exit(ev));
@@ -165,9 +170,11 @@ public final class Hora{
             court.setImage(courts_state[index++]);
     }
     
-    public void updateCourtsPair(Pair<Image[], Boolean> courts_state){
-        this.te_reserva = courts_state.second;
-        ((Text) this.reservat.getChildren().get(0)).setText((courts_state.second) ? "Si" : "No");
+    public void updateCourtsTriplet(Triplet<Image[], Member[], Boolean> courts_state){
+        this.te_reserva = courts_state.third;
+        ((Text) this.reservat.getChildren().get(0)).setText((courts_state.third) ? "Si" : "No");
+        
+        this.members = courts_state.second;
         
         this.updateCourtsImages(courts_state.first);
     }
@@ -214,6 +221,10 @@ public final class Hora{
     
     public boolean getTeReserva(){
         return this.te_reserva;
+    }
+    
+    public Member[] getMembers(){
+        return this.members;
     }
     
     // // SETTERS
