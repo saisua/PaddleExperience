@@ -95,6 +95,8 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
     private int selected_index;
     private ImageView selected_image;
     private Image prev_image;
+    
+    private boolean reservable = false;
 
     /**
      * Initializes the controller class.
@@ -158,6 +160,8 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
             this.vbox_no_login.setVisible(true);
             this.text_reserva.setVisible(false);
             this.button_reserva.setVisible(false);
+            
+            this.reservable = false;
         } else { 
             this.vbox_no_login.setVisible(false);
             this.text_reserva.setVisible(true);
@@ -174,8 +178,13 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
 
                 this.text_reserva.setText((te_reserva) ? "Ja tens una hora reservada" : 
                         "Ninguna pista seleccionada");
-            } else 
+                
+                this.reservable = true;
+            } else {
                 this.text_reserva.setText("Ja ha passat el temps de reserva");
+            
+                this.reservable = false;
+            }
             
         }
 
@@ -212,7 +221,7 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
     }
 
     public void on_hover_enter_pista(Event event) {
-        if (Estat.getMember() == null || Estat.hores.get(this.hora_actual).getTeReserva() != false
+        if (!this.reservable || Estat.hores.get(this.hora_actual).getTeReserva() != false
                     || ((ImageView) event.getSource()).getImage() != Hora.images.get(0)) 
             return;
         
@@ -227,7 +236,7 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
     }
 
     public void on_click_pista(MouseEvent event) {
-        if (Estat.getMember() == null || this.te_reserva != false) {
+        if (!this.reservable || this.te_reserva != false) {
             return;
         }
 
