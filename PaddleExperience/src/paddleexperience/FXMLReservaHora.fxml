@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -17,23 +18,23 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane id="fons_Flotant" maxHeight="400.0" maxWidth="600.0" prefHeight="400.0" prefWidth="600.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLReservaHoraController">
+<AnchorPane id="fons_Flotant" maxHeight="450.0" maxWidth="600.0" prefHeight="450.0" prefWidth="600.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLReservaHoraController">
    <children>
-      <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="450.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
           <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="75.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.0" minWidth="10.0" prefWidth="402.0" />
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="75.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="242.0" minHeight="10.0" prefHeight="235.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="70.0" vgrow="NEVER" />
+          <RowConstraints maxHeight="296.0" minHeight="10.0" prefHeight="287.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="91.0" valignment="CENTER" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <VBox id="button_Enrere" fx:id="vbox_Lhora" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_click_befHora" prefHeight="92.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <children>
-                  <ImageView fx:id="imageview_Lfletxa" fitHeight="74.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="move_Hora" fx:id="imageview_Lfletxa" fitHeight="74.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Images/arrowleft.png" />
                      </image>
@@ -47,16 +48,19 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Text id="text" fx:id="text_Lhora" strokeType="OUTSIDE" strokeWidth="0.0" text="18:00">
+                  <Text id="text_Info" fx:id="text_Lhora" strokeType="OUTSIDE" strokeWidth="0.0" text="18:00">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
                   </Text>
                </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </VBox>
             <VBox id="button_Enrere" fx:id="vbox_Rhora" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_click_nextHora" prefHeight="92.0" prefWidth="144.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <children>
-                  <ImageView fx:id="imageview_Rfletxa" fitHeight="74.0" fitWidth="76.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="move_Hora" fx:id="imageview_Rfletxa" fitHeight="74.0" fitWidth="76.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Images/arrowleft.png" />
                      </image>
@@ -70,23 +74,26 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Text id="text" fx:id="text_Rhora" strokeType="OUTSIDE" strokeWidth="0.0" text="20:00">
+                  <Text id="text_Info" fx:id="text_Rhora" strokeType="OUTSIDE" strokeWidth="0.0" text="20:00">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
                   </Text>
                </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </VBox>
             <AnchorPane GridPane.columnIndex="1">
                <children>
-                  <Text id="text" fx:id="text_data" layoutX="131.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F" textAlignment="RIGHT" underline="true" wrappingWidth="197.7294921875" AnchorPane.rightAnchor="0.2705078125">
+                  <Text id="text_Info" fx:id="text_data" layoutX="131.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F" textAlignment="RIGHT" underline="true" wrappingWidth="197.7294921875" AnchorPane.rightAnchor="0.2705078125">
                      <font>
                         <Font size="25.0" />
                      </font>
                   </Text>
                   <HBox layoutY="20.0" prefHeight="100.0" prefWidth="165.0">
                      <children>
-                        <Text id="text" fx:id="text_hora" strokeType="OUTSIDE" strokeWidth="0.0" text="19:00" wrappingWidth="64.7294921875">
+                        <Text id="text_Info" fx:id="text_hora" strokeType="OUTSIDE" strokeWidth="0.0" text="19:00" wrappingWidth="64.7294921875">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -104,6 +111,7 @@
                         </ImageView>
                      </children>
                   </HBox>
+                  <DatePicker fx:id="date_Picker" layoutX="107.0" layoutY="54.0" />
                </children>
             </AnchorPane>
             <GridPane fx:id="gridpane_imageview_court" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -123,6 +131,9 @@
                      <effect>
                         <DropShadow color="WHITE" />
                      </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                   <ImageView fitHeight="125.0" fitWidth="165.0" onMouseClicked="#on_click_pista" onMouseEntered="#on_hover_enter_pista" onMouseExited="#on_hover_exit_pista" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                      <image>
@@ -131,6 +142,9 @@
                      <effect>
                         <DropShadow color="WHITE" />
                      </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                   <ImageView fitHeight="125.0" fitWidth="165.0" onMouseClicked="#on_click_pista" onMouseEntered="#on_hover_enter_pista" onMouseExited="#on_hover_exit_pista" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                      <image>
@@ -139,6 +153,9 @@
                      <effect>
                         <DropShadow color="WHITE" />
                      </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                   <ImageView fitHeight="125.0" fitWidth="165.0" onMouseClicked="#on_click_pista" onMouseEntered="#on_hover_enter_pista" onMouseExited="#on_hover_exit_pista" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <image>
@@ -147,24 +164,30 @@
                      <effect>
                         <DropShadow color="WHITE" />
                      </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                </children>
             </GridPane>
-            <VBox fx:id="vbox_no_login" maxWidth="-Infinity" prefHeight="78.0" prefWidth="330.0" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <VBox fx:id="vbox_no_login" alignment="CENTER" maxWidth="-Infinity" prefHeight="80.0" prefWidth="330.0" spacing="5.0" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <children>
                   <TextFlow prefHeight="45.0" prefWidth="310.0" textAlignment="CENTER">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No pots reservar si no tens un compte" textAlignment="CENTER">
+                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" text="No pots reservar si no tens un compte" textAlignment="CENTER">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="Ubuntu Light" size="16.0" />
                            </font>
                         </Text>
                      </children>
                   </TextFlow>
                   <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#on_click_login" text="Inicia sessió" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="o" textAlignment="CENTER">
+                        <Button id="button_Continuar" mnemonicParsing="false" onMouseClicked="#on_click_login" text="Inicia sessió">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="o" textAlignment="CENTER" visible="false">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -172,13 +195,22 @@
                               <Insets top="8.0" />
                            </HBox.margin>
                         </Text>
-                        <Button mnemonicParsing="false" onMouseClicked="#on_click_registrar" text="Registra't" />
+                        <Button id="button_Continuar" mnemonicParsing="false" onMouseClicked="#on_click_registrar" text="Registra't">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
                      </children>
                   </HBox>
                </children>
             </VBox>
-            <Button fx:id="button_reserva" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#on_click_reservar" prefHeight="26.0" prefWidth="174.0" text="Reserva la pista" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <Text fx:id="text_reserva" strokeType="OUTSIDE" strokeWidth="0.0" text="Easter egg #5 potser?" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+            <Button fx:id="button_reserva" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#on_click_reservar" prefHeight="26.0" prefWidth="174.0" text="Reserva la pista" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <GridPane.margin>
+                  <Insets bottom="15.0" />
+               </GridPane.margin></Button>
+            <Text id="text_Info" fx:id="text_reserva" strokeType="OUTSIDE" strokeWidth="0.0" text="Easter egg #5 potser?" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BASELINE" />
          </children>
       </GridPane>
    </children>

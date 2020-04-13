@@ -45,6 +45,8 @@ import javafx.event.Event;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
 import javafx.collections.ObservableList;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableColumn.SortType;
 import javafx.scene.image.ImageView;
@@ -97,6 +99,8 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
     };
     @FXML
     private GridPane gridpane_OverBlur;
+    @FXML
+    private DatePicker date_Picker;
 
     /**
      * Initializes the controller class.
@@ -126,9 +130,8 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
 
         this.borderpane_main.setEffect(new GaussianBlur(0));
 
-        this.tableview_horari.getStylesheets().add("file:src/paddleexperience/CSS/PaddleReserva.css");
-        this.tableview_horari.applyCss();
-
+        //this.tableview_horari.getStylesheets().add("file:src/paddleexperience/CSS/PaddleReserva.css");
+        //this.tableview_horari.applyCss();
         this.scrollbar = ((ScrollBar) this.tableview_horari.lookup(".scroll-bar:vertical"));
 
         try {
@@ -136,6 +139,23 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
             this.borderpane_overlay.setVisible(false);
         } catch (IOException err) {
         }
+
+        //Posa dia i deshabilita dies anteriors a l'actual
+        date_Picker.setValue(LocalDate.now());
+        date_Picker.setDayCellFactory((DatePicker picker) -> {
+            return new DateCell() {
+                @Override
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    LocalDate today = LocalDate.now();
+                    setDisable(empty || date.compareTo(today) < 0);
+                }
+            };
+        });
+        date_Picker.valueProperty().addListener((ov, oldVal, newVal) -> {
+            Estat.setDate(newVal);
+            this.refresh();
+        });
 
         System.out.println("Reserva initialized");
     }
@@ -154,40 +174,38 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
             this.button_enrere.setVisible(false);
         }
 
-        this.text_data.setText(Estat.getDate().toString());
-
+        //this.text_data.setText(Estat.getDate().toString());
         HashMap<LocalTime, Pair<Image[], Boolean>> dia = Cache.get();
 
         int is_past_day = Estat.getDate().compareTo(LocalDate.now());
-        
+
         // Fem un recorregut per totes les hores, modificant els arxius de
-        // Hora hora per els carregats en courts (n^2) 
+        // Hora hora per els carregats en courts (n^2)
         for (Hora hora : Estat.hores.values()) {
             //System.out.println("Hora "+hora.getTimeStr());
 
             hora.updateCourtsPair(dia.getOrDefault(hora.getTime(), new Pair(Cache.default_court.clone(), false)));
-            
+
             //System.out.println(dia.getOrDefault(hora.getTime(), new Pair(Cache.default_court.clone(), false)).first.toString());
-            
             // Activem o desactivem les hores corresponents
             // En base a si ja han passat o no
-            if(is_past_day > 0){
+            if (is_past_day > 0) {
                 hora.enable();
-            } else if(is_past_day < 0)
+            } else if (is_past_day < 0) {
                 hora.disable();
-            else if(hora.compareTo(LocalTime.now()) < 0)
+            } else if (hora.compareTo(LocalTime.now()) < 0) {
                 hora.disable();
+            }
         }
-       
 
         if (this.scrollbar == null) {
             this.scrollbar = ((ScrollBar) this.tableview_horari.lookup(".scroll-bar:vertical"));
         } else {
             this.scrollbar.setValue(0);
         }
-        
+
         // Desactivar overlay si està actiu
-        if(this.menu_hora){
+        if (this.menu_hora) {
             this.borderpane_main.setDisable(false);
 
             ((GaussianBlur) this.borderpane_main.getEffect()).setRadius(0);
@@ -198,7 +216,7 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
 
             this.menu_hora = false;
         }
-            
+
         System.out.println("Reserva Refreshed");
     }
 
@@ -212,19 +230,18 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
     @FXML
     public void on_click_horari(Event event) {
         if (TextFlow.class.isInstance(event.getTarget())) {
-            Estat.setTime(Estat.time_inici.plusMinutes(Estat.partides_duracio * ((TableCell) ((TextFlow) 
-                    event.getTarget()).getParent()).getTableRow().getIndex()));
+            Estat.setTime(Estat.time_inici.plusMinutes(Estat.partides_duracio * ((TableCell) ((TextFlow) event.getTarget()).getParent()).getTableRow().getIndex()));
 
-        } else if (ImageView.class.isInstance(event.getTarget())){
-            Estat.setTime(Estat.time_inici.plusMinutes(Estat.partides_duracio * ((TableCell) ((TextFlow) ((HBox) ((ImageView) 
-                    event.getTarget()).getParent()).getParent()).getParent()).getTableRow().getIndex()));
-            
-        } else if (HBox.class.isInstance(event.getTarget())){
-            Estat.setTime(Estat.time_inici.plusMinutes(Estat.partides_duracio * ((TableCell) ((TextFlow) ((HBox)  
-                    event.getTarget()).getParent()).getParent()).getTableRow().getIndex()));
-            
-        } else { return; }
-        
+        } else if (ImageView.class.isInstance(event.getTarget())) {
+            Estat.setTime(Estat.time_inici.plusMinutes(Estat.partides_duracio * ((TableCell) ((TextFlow) ((HBox) ((ImageView) event.getTarget()).getParent()).getParent()).getParent()).getTableRow().getIndex()));
+
+        } else if (HBox.class.isInstance(event.getTarget())) {
+            Estat.setTime(Estat.time_inici.plusMinutes(Estat.partides_duracio * ((TableCell) ((TextFlow) ((HBox) event.getTarget()).getParent()).getParent()).getTableRow().getIndex()));
+
+        } else {
+            return;
+        }
+
         this.borderpane_main.setDisable(true);
 
         ((GaussianBlur) this.borderpane_main.getEffect()).setRadius(10);
@@ -286,7 +303,7 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
     public void test__1(Event event) {
         event.consume();
 
-        Estat.setDate(Estat.getBeforeDate());
+        Estat.setDate(date_Picker.getValue());
 
         System.out.println("Dia: " + Estat.getDate().toString());
 

@@ -109,11 +109,11 @@ public class FXMLPaddleExperienceController implements Initializable, Stoppable 
     }
 
     public void refresh() {
-        if(this.thread == null || !this.thread.isAlive()){
+        if (this.thread == null || !this.thread.isAlive()) {
             this.thread = new OpacityThread(this.text_benvinguda, this.tooltip_text_benvinguda, false);
             this.thread.start();
         }
-        
+
         System.out.println("Welcome Refreshed");
     }
 
@@ -175,12 +175,12 @@ class OpacityThread extends Thread {
     // Iterador per a accés més veloç
     private Iterator WELCOME_ITERATOR = FXMLPaddleExperienceController.WELCOME.iterator();
 
-    public OpacityThread(Text text_benvinguda, Tooltip tooltip, 
-                    boolean first) {
+    public OpacityThread(Text text_benvinguda, Tooltip tooltip,
+            boolean first) {
         this.text_benvinguda = text_benvinguda;
         this.tooltip_text_benvinguda = tooltip;
 
-        if(first){
+        if (first) {
             Collections.shuffle(FXMLPaddleExperienceController.WELCOME);
 
             this.text_benvinguda.setText((String) this.WELCOME_ITERATOR.next());

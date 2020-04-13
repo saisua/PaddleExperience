@@ -9,8 +9,10 @@ package paddleexperience;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 
@@ -22,7 +24,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.event.Event;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -35,15 +39,15 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.stage.StageStyle;
 import model.Booking;
 import model.Court;
-import model.Member;
 
 // Java imports
 import paddleexperience.Structures.Stoppable;
 import paddleexperience.Dataclasses.Estat;
 import paddleexperience.Dataclasses.Hora;
-import paddleexperience.Dataclasses.Triplet;
+import paddleexperience.Dataclasses.Pair;
 import paddleexperience.Structures.Cache;
 
 /**
@@ -179,33 +183,6 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
         this.refresh();
     }
 
-    /*public void on_Lhora_horver_enter(Event _e){
-        this.vbox_Lhora.setBackground(new Background(new BackgroundFill(Paint.valueOf(
-                "#678080"), new CornerRadii(1), null)));
-
-        ((Bloom) this.imageview_Lfletxa.getEffect()).setThreshold(0);
-    }
-
-    public void on_Rhora_horver_enter(Event _e){
-        this.vbox_Rhora.setBackground(new Background(new BackgroundFill(Paint.valueOf(
-                "#678080"), new CornerRadii(1), null)));
-
-        ((Bloom) this.imageview_Rfletxa.getEffect()).setThreshold(0);
-    }
-
-    public void on_Lhora_horver_exit(Event _e){
-        this.vbox_Lhora.setBackground(new Background(new BackgroundFill(Paint.valueOf(
-                "#789090"), new CornerRadii(1), null)));
-
-        ((Bloom) this.imageview_Lfletxa.getEffect()).setThreshold(1);
-    }
-
-    public void on_Rhora_horver_exit(Event _e){
-        this.vbox_Rhora.setBackground(new Background(new BackgroundFill(Paint.valueOf(
-                "#789090"), new CornerRadii(1), null)));
-
-        ((Bloom) this.imageview_Rfletxa.getEffect()).setThreshold(1);
-    }*/
     public void on_click_login(Event event) throws InterruptedException {
         PaddleExperience.setParent(event, "FXMLPaddleLogin.fxml");
     }
@@ -283,45 +260,61 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
     // de FXMLPaddleReservaController.refresh()
     public void on_click_reservar(Event _e) {
         // LocalDateTime bookingDate, LocalDate madeForDay, LocalTime fromHour, boolean paid, Court court, Member member
-        Estat.club.getBookings().add(new Booking(LocalDateTime.now(), Estat.getDate(), Estat.getTime(),
-                false, Estat.getSelectedCourt(), Estat.getMember()));
+        String europeanDatePattern = "dd-MM-yyyy";
+        DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(europeanDatePattern);
+        String pista = Estat.getSelectedCourt().getName();
+        String dia = Estat.getDate().format(europeanDateFormatter);
+        String hora = Estat.getTime().toString();
 
-        this.te_reserva = true;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Confirmació");
+        alert.setContentText("Vols reservar la " + pista + " el dia "
+                + dia + " a les " + hora + "?");
+        alert.initStyle(StageStyle.UTILITY);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
 
-        this.text_reserva.setText("Ja tens una hora reservada");
+            Estat.club.getBookings().add(new Booking(LocalDateTime.now(), Estat.getDate(), Estat.getTime(),
+                    false, Estat.getSelectedCourt(), Estat.getMember()));
 
-        Image ocupied_image = Hora.images.get(1);
+            this.te_reserva = true;
 
-        this.selected_image.setImage(ocupied_image);
+            this.text_reserva.setText("Ja tens una hora reservada");
 
-        Hora actual_hora = Estat.hores.get(this.hora_actual);
+            Image ocupied_image = Hora.images.get(1);
 
-        actual_hora.getCourtImages()[this.selected_index]
-                .setImage(ocupied_image);
-        actual_hora.__setTeReserva(true);
+            this.selected_image.setImage(ocupied_image);
 
-        HashMap<LocalTime, Triplet<Image[], Member[], Boolean>> day_cache = Cache.cache.get(Estat.getDate());
-        Triplet<Image[], Member[], Boolean> actual_cache = null;
+            Hora actual_hora = Estat.hores.get(this.hora_actual);
 
-        if (day_cache == null) {
-            Cache.cache.put(Estat.getDate(), new HashMap<LocalTime, Triplet<Image[], Member[], Boolean>>());
-        } else {
-            actual_cache = day_cache.get(Estat.getTime());
+            actual_hora.getCourtImages()[this.selected_index]
+                    .setImage(ocupied_image);
+            actual_hora.__setTeReserva(true);
+
+            HashMap<LocalTime, Pair<Image[], Boolean>> day_cache = Cache.cache.get(Estat.getDate());
+            Pair<Image[], Boolean> actual_cache = null;
+
+            if (day_cache == null) {
+                Cache.cache.put(Estat.getDate(), new HashMap<LocalTime, Pair<Image[], Boolean>>());
+            } else {
+                actual_cache = day_cache.get(Estat.getTime());
+            }
+
+            if (actual_cache == null) {
+                actual_cache = new Pair(Cache.default_court.clone(), true);
+                Cache.cache.get(Estat.getDate()).put(Estat.getTime(), actual_cache);
+            }
+
+            actual_cache.first[this.selected_index] = ocupied_image;
+
+            this.selected_image = null;
+            this.prev_image = null;
+
+            PaddleExperience.refresh("FXMLPaddleReserva.fxml");
+            PaddleExperience.refresh("FXMLHome.fxml");
+            PaddleExperience.refresh("FXMLHistorico.fxml");
         }
-
-        if (actual_cache == null) {
-            actual_cache = new Triplet(Cache.default_court.clone(), new Member[Estat.numero_pistes], true);
-            Cache.cache.get(Estat.getDate()).put(Estat.getTime(), actual_cache);
-        }
-
-        actual_cache.first[this.selected_index] = ocupied_image;
-
-        this.selected_image = null;
-        this.prev_image = null;
-
-        PaddleExperience.refresh("FXMLPaddleReserva.fxml");
-        
-        Estat.save();
     }
 
 }
