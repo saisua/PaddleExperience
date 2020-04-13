@@ -152,7 +152,7 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
                 
                 Member ocupat = hora.getMembers()[court_num];
                 if(ocupat != null) 
-                    Tooltip.install(grid_image, new Tooltip("Pista reservada per "+ocupat.getName()));
+                    Tooltip.install(grid_image, new Tooltip("Pista reservada per "+ocupat.getLogin()));
             }
         }
 
