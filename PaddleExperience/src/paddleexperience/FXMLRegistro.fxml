@@ -40,17 +40,17 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <JFXTextField id="jfx_Formulari" fx:id="textfield_nom" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="87.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#comprovaPositiu" prefHeight="35.0" prefWidth="280.0" promptText="Nom" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="87.0">
+                        <JFXTextField id="jfx_Formulari" fx:id="textfield_nom" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="87.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#comprovaNom" prefHeight="35.0" prefWidth="280.0" promptText="Nom" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="87.0">
                             <font>
                                 <Font name="Ubuntu" size="16.0" />
                             </font>
                         </JFXTextField>
-                        <JFXTextField id="jfx_Formulari" fx:id="textfield_cognom" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="152.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#comprovaPositiu" prefHeight="35.0" prefWidth="280.0" promptText="Cognom" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="152.0">
+                        <JFXTextField id="jfx_Formulari" fx:id="textfield_cognom" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="152.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#comprovaCognom" prefHeight="35.0" prefWidth="280.0" promptText="Cognom" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="152.0">
                             <font>
                                 <Font name="Ubuntu" size="16.0" />
                             </font>
                         </JFXTextField>
-                        <JFXTextField id="jfx_Formulari" fx:id="textfield_usuari" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="217.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#on_keyTyped_usuari" prefHeight="35.0" prefWidth="280.0" promptText="Usuari" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="217.0">
+                        <JFXTextField id="jfx_Formulari" fx:id="textfield_usuari" focusColor="#78909c" labelFloat="true" layoutX="66.0" layoutY="217.0" maxWidth="280.0" minWidth="280.0" onKeyReleased="#on_keyTyped_usuari" onKeyTyped="#on_keyTyped_usuari" prefHeight="35.0" prefWidth="280.0" promptText="Usuari" unFocusColor="#fafafa" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="217.0">
                             <font>
                                 <Font name="Ubuntu" size="16.0" />
                             </font>
@@ -78,12 +78,12 @@
                      <children>
                         <HBox spacing="10.0">
                            <children>
-                                    <JFXTextField id="jfx_Formulari" fx:id="textfield_targeta" focusColor="#78909c" labelFloat="true" maxWidth="376.0" minWidth="315.0" onKeyTyped="#on_click_targeta" prefHeight="35.0" prefWidth="376.0" promptText="Tarjeta de crèdit (Opcional)" unFocusColor="#fafafa">
+                                    <JFXTextField id="jfx_Formulari" fx:id="textfield_targeta" focusColor="#78909c" labelFloat="true" maxWidth="376.0" minWidth="315.0" onKeyReleased="#on_click_targeta" onKeyTyped="#on_click_targeta" prefHeight="35.0" prefWidth="376.0" promptText="Tarjeta de crèdit (Opcional)" unFocusColor="#fafafa">
                                         <font>
                                             <Font name="Ubuntu" size="16.0" />
                                         </font>
                                     </JFXTextField>
-                                    <JFXTextField id="jfx_Formulari" fx:id="textfield_svc" focusColor="#78909c" labelFloat="true" maxWidth="181.0" minWidth="110.0" onKeyTyped="#on_click_svc" prefHeight="35.0" prefWidth="181.0" promptText="SVC" unFocusColor="#fafafa">
+                                    <JFXTextField id="jfx_Formulari" fx:id="textfield_svc" focusColor="#78909c" labelFloat="true" maxWidth="181.0" minWidth="110.0" onKeyReleased="#on_click_svc" onKeyTyped="#on_click_svc" prefHeight="35.0" prefWidth="181.0" promptText="SVC" unFocusColor="#fafafa">
                                         <font>
                                             <Font name="Ubuntu" size="16.0" />
                                         </font>

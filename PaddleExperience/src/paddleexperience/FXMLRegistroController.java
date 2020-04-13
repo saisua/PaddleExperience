@@ -177,7 +177,7 @@ public class FXMLRegistroController implements Initializable, Stoppable {
                 || numOf > 15) {
             event.consume();
         }
-        isTargeta = numOf == 0 || numOf == 16; //FER QUE APAREGA L'ERROR EN PANTALLA
+        isTargeta = (numOf == 0 || numOf == 16); //FER QUE APAREGA L'ERROR EN PANTALLA
         isGood();
     }
 
@@ -204,7 +204,6 @@ public class FXMLRegistroController implements Initializable, Stoppable {
                 isUsuari = true;
                 this.text_usuari_existent.setVisible(false);
             } else {
-                //FER QUE APAREGA UN TEXT AMB L'ERROR
                 isUsuari = false;
                 System.out.println("Usuari ja existent");
                 this.text_usuari_existent.setVisible(true);
@@ -216,13 +215,18 @@ public class FXMLRegistroController implements Initializable, Stoppable {
     }
 
     @FXML
-    private void comprovaPositiu(KeyEvent event) {
+    private void comprovaCognom(KeyEvent event) {
         JFXTextField source = (JFXTextField) event.getSource();
-        if (source.getId().equals("textfield_nom")) {
-            isNom = source.getText().length() > 0;
-        } else {
-            isCognom = source.getText().length() > 0;
-        }
+        isCognom = source.getText().length() > 0;
+        System.out.println("isCognom es " + isCognom);
+        isGood();
+    }
+
+    @FXML
+    private void comprovaNom(KeyEvent event) {
+        JFXTextField source = (JFXTextField) event.getSource();
+        isNom = source.getText().length() > 0;
+        System.out.println("isCognom es " + isNom);
         isGood();
     }
 
