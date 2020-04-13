@@ -42,14 +42,12 @@ public class UserBooking {
     private TableView table;
 
     // Auxiliar
-    private LocalDateTime datetime;
     private LocalDateTime match_start;
 
     public UserBooking(Booking data, TableView table) {
         this.booking = data;
         this.table = table;
 
-        this.datetime = data.getBookingDate();
         this.match_start = LocalDateTime.of(data.getMadeForDay(), data.getFromTime());
 
         Button cancel = new Button("Cancelar");
@@ -74,20 +72,20 @@ public class UserBooking {
                 .plusMinutes(Estat.partides_duracio).toString()));
         this.pista.getChildren().add(new Text(data.getCourt().getName()));
         this.pagada.getChildren().add(new Text(data.getPaid() ? "Sí" : "No"));
-        if(this.match_start.plusDays(1).compareTo(LocalDateTime.now()) < 0)
+        if(this.match_start.minusDays(1).compareTo(LocalDateTime.now()) > 0)
             this.cancelar.getChildren().add(cancel);
     }
 
     public int compareTo(UserBooking a_comparar) {
-        return this.datetime.compareTo(a_comparar.getDateTime());
+        return this.match_start.compareTo(a_comparar.getDateTime());
     }
 
     public int compareTo(LocalDateTime a_comparar) {
-        return this.datetime.compareTo(a_comparar);
+        return this.match_start.compareTo(a_comparar);
     }
 
     public void on_click_cancel(Event event) throws InterruptedException {
-        if(this.match_start.plusDays(1).compareTo(LocalDateTime.now()) > 0){
+        if(this.match_start.minusDays(1).compareTo(LocalDateTime.now()) < 0){
             this.cancelar.setVisible(false);
             return;
         }
@@ -131,7 +129,7 @@ public class UserBooking {
 
     // // GETTERS
     public LocalDateTime getDateTime() {
-        return this.datetime;
+        return this.match_start;
     }
 
     public TextFlow getDia() {
