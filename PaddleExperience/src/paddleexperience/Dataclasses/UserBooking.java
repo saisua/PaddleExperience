@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -74,6 +75,8 @@ public class UserBooking {
         this.pagada.getChildren().add(new Text(data.getPaid() ? "Sí" : "No"));
         if(this.match_start.minusDays(1).compareTo(LocalDateTime.now()) > 0)
             this.cancelar.getChildren().add(cancel);
+        else
+            Tooltip.install(this.cancelar, new Tooltip("No pots cancelar durant les últimes 24h"));
     }
 
     public int compareTo(UserBooking a_comparar) {
@@ -86,7 +89,9 @@ public class UserBooking {
 
     public void on_click_cancel(Event event) throws InterruptedException {
         if(this.match_start.minusDays(1).compareTo(LocalDateTime.now()) < 0){
-            this.cancelar.setVisible(false);
+            this.cancelar.getChildren().clear();
+            
+            Tooltip.install(this.cancelar, new Tooltip("No pots cancelar durant les últimes 24h"));
             return;
         }
             
