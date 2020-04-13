@@ -113,12 +113,12 @@ public class Cache {
 
                 // Actualitzem l'estat del triplet
                 if(te_reserva){
-                    ((Member[]) courts.get(reserva.getFromTime()).setThird(true)
-                            .second)[court_index] = reserva.getMember();
+                    courts.get(reserva.getFromTime()).setThird(true);
                 }
+                
 
-                court.first[Estat.court_index.get(reserva.getCourt().getName())] 
-                        = Hora.images.get(1);
+                court.first[court_index] = Hora.images.get(1);
+                court.second[court_index] = reserva.getMember();
                 
             }
             cache.put(Estat.getDate(), courts);
@@ -244,11 +244,10 @@ class CacheThread extends Thread{
                     int court_index = Estat.court_index.get(reserva.getCourt().getName());
                     
                     if(te_reserva)
-                        ((Member[]) courts.get(reserva.getFromTime()).setThird(true).second)
-                                [court_index] = reserva.getMember();
+                        courts.get(reserva.getFromTime()).setThird(true);
                     
-                    court.first[court_index] 
-                            = Hora.images.get(1);
+                    court.first[court_index] = Hora.images.get(1);
+                    court.second[court_index] = reserva.getMember();
                     
 
                     if(!this.open) return;
