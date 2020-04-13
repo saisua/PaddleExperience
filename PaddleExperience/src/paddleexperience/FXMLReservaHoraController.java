@@ -7,6 +7,7 @@ package paddleexperience;
 
 // Java imports
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -27,6 +28,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -116,6 +118,7 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
         this.text_hora.setText(this.hora_actual);
         this.text_data.setText(Estat.getDate().toString());
 
+
         LocalTime to_show = Estat.getBeforeTime();
         if (to_show == null) {
             this.vbox_Lhora.setVisible(false);
@@ -131,15 +134,23 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
             this.text_Rhora.setText(to_show.toString());
             this.vbox_Rhora.setVisible(true);
         }
+        
+        Hora hora = Estat.hores.get(this.hora_actual);
 
         //System.out.println(Estat.hores.get(this.hora_actual).getCourtImages().length);
-        if (Estat.hores.get(this.hora_actual).getCourtImages().length > 0) {
+        if (hora.getCourtImages().length > 0) {
             ObservableList<Node> courts = this.gridpane_imageview_court.getChildren();
 
             for (int court_num = 0; court_num < courts.size(); court_num++) {
                 //System.out.println(courts.size());
 
-                ((ImageView) courts.get(court_num)).setImage(((ImageView) Estat.hores.get(this.hora_actual).getCourtImages()[court_num]).getImage());
+                ImageView grid_image = ((ImageView) courts.get(court_num));
+                
+                grid_image.setImage(((ImageView) hora.getCourtImages()[court_num]).getImage());
+                
+                Member ocupat = hora.getMembers()[court_num];
+                if(ocupat != null)
+                    Tooltip.install(grid_image, new Tooltip("Pista reservada per "+ocupat.getName()));
             }
         }
 
@@ -147,17 +158,25 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
             this.vbox_no_login.setVisible(true);
             this.text_reserva.setVisible(false);
             this.button_reserva.setVisible(false);
-        } else {
+        } else { 
             this.vbox_no_login.setVisible(false);
             this.text_reserva.setVisible(true);
             this.button_reserva.setVisible(true);
-
-            this.te_reserva = Estat.hores.get(this.hora_actual).getTeReserva();
-
-            this.text_reserva.setText((te_reserva) ? "Ja tens una hora reservada" : "Ninguna pista seleccionada");
+            
+            
             this.button_reserva.setDisable(true);
 
             Estat.setSelectedCourt(null);
+            
+            if (LocalDateTime.of(Estat.getDate(), Estat.getTime())
+                .compareTo(LocalDateTime.now()) > 0){
+                this.te_reserva = hora.getTeReserva();
+
+                this.text_reserva.setText((te_reserva) ? "Ja tens una hora reservada" : 
+                        "Ninguna pista seleccionada");
+            } else 
+                this.text_reserva.setText("Ja ha passat el temps de reserva");
+            
         }
 
         for (Node court : this.gridpane_imageview_court.getChildren()) {
@@ -194,9 +213,9 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
 
     public void on_hover_enter_pista(Event event) {
         if (Estat.getMember() == null || Estat.hores.get(this.hora_actual).getTeReserva() != false
-                || ((ImageView) event.getSource()).getImage() != Hora.images.get(0)) {
+                    || ((ImageView) event.getSource()).getImage() != Hora.images.get(0)) 
             return;
-        }
+        
 
         ((DropShadow) ((Node) event.getSource()).getEffect()).setHeight(20);
         ((DropShadow) ((Node) event.getSource()).getEffect()).setWidth(20);
@@ -260,6 +279,7 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
     // de eficiència. El creixement de la funció depén únicament
     // de FXMLPaddleReservaController.refresh()
     public void on_click_reservar(Event _e) {
+        
         // LocalDateTime bookingDate, LocalDate madeForDay, LocalTime fromHour, boolean paid, Court court, Member member
         String europeanDatePattern = "dd-MM-yyyy";
         DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(europeanDatePattern);
