@@ -96,6 +96,7 @@ public class Cache {
             for(ListIterator<Booking> iter = Estat.club.getForDayBookings(Estat.getDate()).listIterator();
                         iter.hasNext();){
                 Booking reserva = iter.next();
+                
                 // Agafem el array si ja n'hem guardat
                 Triplet<Image[], Member[], Boolean> court = courts.get(reserva.getFromTime());
                 
@@ -108,7 +109,7 @@ public class Cache {
                     courts.put(reserva.getFromTime(), court);
                 }
                 
-                int court_index = Estat.court_index.get(reserva.getCourt());
+                int court_index = Estat.court_index.get(reserva.getCourt().getName());
 
                 // Actualitzem l'estat del triplet
                 if(te_reserva){
@@ -116,7 +117,7 @@ public class Cache {
                             .second)[court_index] = reserva.getMember();
                 }
 
-                court.first[Estat.court_index.get(reserva.getCourt())] 
+                court.first[Estat.court_index.get(reserva.getCourt().getName())] 
                         = Hora.images.get(1);
                 
             }
@@ -240,7 +241,7 @@ class CacheThread extends Thread{
                         courts.put(reserva.getFromTime(), court);
                     }
 
-                    int court_index = Estat.court_index.get(reserva.getCourt());
+                    int court_index = Estat.court_index.get(reserva.getCourt().getName());
                     
                     if(te_reserva)
                         ((Member[]) courts.get(reserva.getFromTime()).setThird(true).second)

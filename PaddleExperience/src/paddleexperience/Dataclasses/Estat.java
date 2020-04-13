@@ -55,14 +55,14 @@ public final class Estat {
     private static Court selected_court;
     
     // Auxiliars
-    public static final HashMap<Court, Integer> court_index = new HashMap<Court, Integer>(){{
+    public static final HashMap<String, Integer> court_index = new HashMap<String, Integer>(){{
             for(int court_num = 0; court_num < club.getCourts().size(); court_num++) 
-                    put(club.getCourts().get(court_num), court_num);
+                    put(club.getCourts().get(court_num).getName(), court_num);
             }};
     
-    public static final HashMap<Integer, Court> court_by_index = new HashMap<Integer, Court>(){{
+    public static final HashMap<Integer, String> court_by_index = new HashMap<Integer, String>(){{
             for(int court_num = 0; court_num < club.getCourts().size(); court_num++) 
-                    put(court_num, club.getCourts().get(court_num));
+                    put(court_num, club.getCourts().get(court_num).getName());
             }};
     
     public static void start(){
@@ -179,5 +179,9 @@ public final class Estat {
     
     public static void setSelectedCourt(Court new_selected_court){
         selected_court = new_selected_court;
+    }
+    
+    public static Court get_court_by_index(int court_num){
+        return club.getCourt(court_by_index.get(court_num));
     }
 }

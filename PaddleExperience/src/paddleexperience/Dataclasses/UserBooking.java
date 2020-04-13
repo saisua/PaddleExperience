@@ -99,7 +99,7 @@ public class UserBooking {
             Cache.cache.get(this.booking.getMadeForDay()).put(this.booking.getFromTime(), actual_cache);
         }
         
-        actual_cache.first[Estat.court_index.get(this.booking.getCourt())] = Hora.images.get(1);
+        actual_cache.first[Estat.court_index.get(this.booking.getCourt().getName())] = Hora.images.get(1);
         
         Estat.save();
     }

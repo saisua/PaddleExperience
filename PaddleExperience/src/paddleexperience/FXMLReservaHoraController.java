@@ -238,7 +238,7 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
 
         this.selected_index = indexX + 2 * indexY;
 
-        Court court = Estat.court_by_index.get(this.selected_index); // 2*y
+        Court court = Estat.get_court_by_index(this.selected_index); // 2*y
 
         Estat.setSelectedCourt(court);
         this.text_reserva.setText(court.getName());
