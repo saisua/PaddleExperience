@@ -7,6 +7,7 @@ package paddleexperience;
 
 // Java imports
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -89,6 +90,7 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
     // Auxiliar
     private String hora_actual;
     private boolean te_reserva = false;
+    private boolean antelacio_24;
 
     private int selected_index;
     private ImageView selected_image;
@@ -115,6 +117,11 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
 
         this.text_hora.setText(this.hora_actual);
         this.text_data.setText(Estat.getDate().toString());
+        
+        this.antelacio_24 = LocalDateTime.of(Estat.getDate(), Estat.getTime()).minusDays(1)
+                .compareTo(LocalDateTime.now()) > 0;
+        
+        System.out.println(this.antelacio_24);
 
         LocalTime to_show = Estat.getBeforeTime();
         if (to_show == null) {
@@ -154,7 +161,8 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
 
             this.te_reserva = Estat.hores.get(this.hora_actual).getTeReserva();
 
-            this.text_reserva.setText((te_reserva) ? "Ja tens una hora reservada" : "Ninguna pista seleccionada");
+            this.text_reserva.setText((te_reserva) ? "Ja tens una hora reservada" : 
+                    (this.antelacio_24) ? "Ninguna pista seleccionada" : "Necessaries 24h antelació");
             this.button_reserva.setDisable(true);
 
             Estat.setSelectedCourt(null);
@@ -193,10 +201,11 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
     }
 
     public void on_hover_enter_pista(Event event) {
-        if (Estat.getMember() == null || Estat.hores.get(this.hora_actual).getTeReserva() != false
-                || ((ImageView) event.getSource()).getImage() != Hora.images.get(0)) {
+        if (Estat.getMember() == null || !this.antelacio_24 
+                    || Estat.hores.get(this.hora_actual).getTeReserva() != false
+                    || ((ImageView) event.getSource()).getImage() != Hora.images.get(0)) 
             return;
-        }
+        
 
         ((DropShadow) ((Node) event.getSource()).getEffect()).setHeight(20);
         ((DropShadow) ((Node) event.getSource()).getEffect()).setWidth(20);
@@ -208,7 +217,7 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
     }
 
     public void on_click_pista(MouseEvent event) {
-        if (Estat.getMember() == null || this.te_reserva != false) {
+        if (Estat.getMember() == null || this.te_reserva != false || !this.antelacio_24) {
             return;
         }
 
@@ -260,6 +269,13 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
     // de eficiència. El creixement de la funció depén únicament
     // de FXMLPaddleReservaController.refresh()
     public void on_click_reservar(Event _e) {
+        if(LocalDateTime.of(Estat.getDate(), Estat.getTime()).minusDays(1)
+                .compareTo(LocalDateTime.now()) > 0){
+            this.refresh();
+            
+            return;
+        }
+        
         // LocalDateTime bookingDate, LocalDate madeForDay, LocalTime fromHour, boolean paid, Court court, Member member
         String europeanDatePattern = "dd-MM-yyyy";
         DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(europeanDatePattern);
