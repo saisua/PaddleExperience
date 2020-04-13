@@ -101,7 +101,7 @@ public class Cache {
                 Triplet<Image[], Member[], Boolean> court = courts.get(reserva.getFromTime());
                 
                 boolean te_reserva = Estat.getMember() != null &&
-                                    reserva.getMember() == Estat.getMember();
+                                    reserva.getMember().getLogin().equals(Estat.getMember().getLogin());
                 
                 // si no n'hem guardat encara, clonem default_court
                 if(court == null){
@@ -234,7 +234,7 @@ class CacheThread extends Thread{
                     Triplet<Image[], Member[], Boolean> court = courts.get(reserva.getFromTime());
                     
                     boolean te_reserva = Estat.getMember() != null &&
-                                    reserva.getMember() == Estat.getMember();
+                                    reserva.getMember().getLogin().equals(Estat.getMember().getLogin());
                     
                     if(court == null){
                         court = new Triplet(Cache.default_court.clone(), new Member[Estat.numero_pistes], te_reserva);
