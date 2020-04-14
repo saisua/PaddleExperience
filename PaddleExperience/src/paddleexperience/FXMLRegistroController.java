@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.File;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
@@ -143,12 +145,17 @@ public class FXMLRegistroController implements Initializable, Stoppable {
         alert.setContentText("Hola " + nom + " gràcies per unir-te. "
                 + "Ara es guardaran les teues dades, això pot tardar uns minuts");
         alert.initStyle(StageStyle.UTILITY);
+        alert.getButtonTypes().clear();
+        ButtonType buttonContinuar = new ButtonType("Continuar");
+        alert.getButtonTypes().add(buttonContinuar);
+        //alert.getDialogPane().lookupButton(buttonContinuar).disableProperty().setValue(true);
         alert.showAndWait();
 
         clubDBAccess.saveDB();
         PaddleExperience.refresh("FXMLHome.fxml");
         PaddleExperience.setParent(event, "FXMLSidebar.fxml");
 
+        //alert.getDialogPane().lookupButton(buttonContinuar).disableProperty().setValue(false);
     }
 
     @FXML
@@ -329,7 +336,11 @@ public class FXMLRegistroController implements Initializable, Stoppable {
         if (!this.text_usuari_existent.isVisible()) {
             this.text_usuariObligatori.setVisible(!isUsuari);
         }
-        this.text_errorContrsena.setStyle("-fx-fill: #FF5722; -fx-opacity: 0.75");
+        if (this.textfield_contrasena.getText().length() < 6) {
+            this.text_errorContrsena.setStyle("-fx-fill: #FF5722; -fx-opacity: 0.75");
+        }
+        this.notEqual_text.setVisible(!this.textfield_contrasena.getText().equals(
+                this.textfield_ConfContrasena.getText()));
     }
 
 }

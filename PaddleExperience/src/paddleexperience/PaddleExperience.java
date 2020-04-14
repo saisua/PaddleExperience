@@ -6,6 +6,7 @@
 package paddleexperience;
 
 // Java imports
+import DBAcess.ClubDBAccess;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,8 +19,10 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import paddleexperience.Dataclasses.Estat;
 import paddleexperience.Dataclasses.Hora;
 
@@ -43,6 +46,8 @@ public class PaddleExperience extends Application {
 
     // Auxiliar
     static Class static_class;
+
+    ClubDBAccess clubDBAccess = ClubDBAccess.getSingletonClubDBAccess();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -84,6 +89,15 @@ public class PaddleExperience extends Application {
         stage.setMinHeight(minHeight);
         stage.setMinWidth(minWidth);
 
+        /*stage.setOnCloseRequest((WindowEvent event) -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Informacio");
+            alert.setHeaderText("Guardant en la base de dades");
+            alert.setContentText("L'aplicació està guardant els canvis a la base de dades,"
+                    + " això pot tardar uns minuts");
+            alert.show();
+            Estat.club.saveDB();
+        });*/
         stage.setTitle("Paddle Experience - International");
         stage.setScene(new Scene(initial_root));
         stage.show();
