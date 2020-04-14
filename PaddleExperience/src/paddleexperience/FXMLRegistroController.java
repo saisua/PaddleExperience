@@ -228,7 +228,7 @@ public class FXMLRegistroController implements Initializable, Stoppable {
         if (Character.isSpace(lastTyped.charAt(0))) {
             event.consume();
         }
-        if (this.textfield_usuari.getText().length() > 1) {
+        if (this.textfield_usuari.getText().length() > 0) {
             if (!Estat.club.existsLogin(textfield_usuari.getText())) {
                 isUsuari = true;
                 this.text_usuari_existent.setVisible(false);
