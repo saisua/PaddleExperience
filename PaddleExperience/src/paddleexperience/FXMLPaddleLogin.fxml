@@ -52,11 +52,11 @@
                         <Font name="Ubuntu Light" size="22.0" />
                      </font>
                   </Text>
-                  <Text fx:id="text_error_usuari" fill="#3c3c3c" layoutX="27.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #FF5722;" text="Usuari no vàlid" visible="false" wrappingWidth="215.47100067138672" AnchorPane.leftAnchor="27.0">
+                  <Text fx:id="text_error_usuari" fill="#3c3c3c" layoutX="27.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #FF5722;" text="Usuari no vàlid" visible="false" wrappingWidth="215.47100067138672" AnchorPane.leftAnchor="15.0">
                      <font>
                         <Font name="Ubuntu" size="13.0" />
                      </font></Text>
-                  <Text fx:id="text_error_contrasena" fill="#3c3c3c" layoutX="28.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #FF5722;" text="La contrasenya no és vàlida" visible="false" />
+                  <Text fx:id="text_error_contrasena" fill="#3c3c3c" layoutX="28.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #FF5722;" text="La contrasenya no és vàlida" visible="false" AnchorPane.leftAnchor="15.0" />
                   <JFXTextField id="jfx_Formulari" fx:id="textfield_usuari" focusColor="#78909c" labelFloat="true" layoutX="102.0" layoutY="147.0" promptText="Usuari" unFocusColor="#fafafa" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0">
                      <font>
                         <Font name="Ubuntu" size="17.0" />

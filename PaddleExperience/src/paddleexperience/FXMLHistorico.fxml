@@ -25,7 +25,7 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <Text layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pròximes partides:" />
+                  <Text id="text_Info" layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pròximes partides:" />
                   <TableView fx:id="tableView_Proximes" layoutX="14.0" layoutY="44.0" minWidth="190.0" prefHeight="174.0" prefWidth="589.0" style="-fx-fixed-cell-size: 20;" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="44.0">
                     <columns>
                       <TableColumn fx:id="tablecolumn_dia_proxim" prefWidth="135.0" text="Dia" />
@@ -43,7 +43,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="226.0" prefWidth="619.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Text layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Últimes partides jugades:" />
+                  <Text id="text_Info" layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Últimes partides jugades:" />
                   <TableView fx:id="tableView_Ultimes" layoutX="14.0" layoutY="42.0" minWidth="190.0" prefHeight="174.0" prefWidth="589.0" style="-fx-fixed-cell-size: 20;" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="44.0">
                      <columns>
                         <TableColumn fx:id="tablecolumn_dia_jugades" prefWidth="150.0" text="Dia" />

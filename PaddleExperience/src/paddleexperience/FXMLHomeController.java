@@ -45,12 +45,10 @@ public class FXMLHomeController implements Initializable, Stoppable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         if (Estat.getMember() != null) {
-            imPerfil.setImage((Image) Estat.getMember().getImage());
             Circle circle = new Circle(73);
             circle.setCenterX(imPerfil.getX() + (imPerfil.getFitWidth() / 2));
             circle.setCenterY(imPerfil.getY() + (imPerfil.getFitHeight() / 2));
             imPerfil.setClip(circle);
-
         }
     }
 
@@ -71,19 +69,23 @@ public class FXMLHomeController implements Initializable, Stoppable {
 
         //COMPLETAR
         //Pone el texto de la proxima y la última partida en caso de que haya
+        String europeanDatePattern = "dd-MM-yyyy";
+        DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(europeanDatePattern);
+
         if (proximaReserva >= 0) {
-            String dataProx = listaReservas.get(proximaReserva).getMadeForDay().format(DateTimeFormatter.BASIC_ISO_DATE);
-            proxPartida.setText(dataProx);
+            String dataProx = listaReservas.get(proximaReserva).getMadeForDay().format(europeanDateFormatter);
+            String pistaProx = listaReservas.get(proximaReserva).getCourt().getName();
+            String horaProx = listaReservas.get(proximaReserva).getFromTime().toString();
+            proxPartida.setText("El dia " + dataProx + " a les " + horaProx + " en la " + pistaProx);
         }
         if (ultimaReserva >= 0) {
-            ultPartida.setText(listaReservas.get(ultimaReserva).getMadeForDay().toString());
+            String dataUlt = listaReservas.get(ultimaReserva).getMadeForDay().format(europeanDateFormatter);
+            String pistaUlt = listaReservas.get(ultimaReserva).getCourt().getName();
+            String horaUlt = listaReservas.get(ultimaReserva).getFromTime().toString();
+            ultPartida.setText("El dia " + dataUlt + " a les " + horaUlt + " en la " + pistaUlt);
         }
 
         if (Estat.getMember() != null) {
-            Circle circle = new Circle(73);
-            circle.setCenterX(imPerfil.getX() + (imPerfil.getFitWidth() / 2));
-            circle.setCenterY(imPerfil.getY() + (imPerfil.getFitHeight() / 2));
-            imPerfil.setClip(circle);
             imPerfil.setImage((Image) Estat.getMember().getImage());
         }
     }

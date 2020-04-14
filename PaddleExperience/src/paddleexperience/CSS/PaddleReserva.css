@@ -93,11 +93,13 @@
     -fx-border-radius: 3;
     -fx-effect:  dropshadow( gaussian, rgba(28,28,28), 10, 0.3, 0.0, 0.0 );
     -fx-opacity: 0.75;
+    -fx-cursor: hand;
 
 }
-
 .table-cell {
     -fx-background-color: #37474F;
+    -fx-alignment: CENTER;
+    -fx-text-align: CENTER;
 }
 
 .table-column {
@@ -118,11 +120,17 @@
     -fx-min-height: 45.0px;
     -fx-cursor: hand;
 }
+
+.table-view-header {
+    -fx-bakground-color: transparent;
+}
+
 .table-view .column-header .label {
     -fx-font-size: 1.083333em;
-    -fx-font-weight: bold;
+    -fx-font-family: "Ubuntu Light";
+    -fx-background-color:transparent;
     -fx-text-fill: white;
-    -fx-alignment: center-center;
+    -fx-alignment: CENTER;
     -fx-padding: 5.0 5.0 5.0 5.0;
 }
 
