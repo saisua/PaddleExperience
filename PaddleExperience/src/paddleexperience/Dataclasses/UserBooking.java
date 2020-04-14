@@ -52,7 +52,7 @@ public class UserBooking {
         this.match_start = LocalDateTime.of(data.getMadeForDay(), data.getFromTime());
 
         Button cancel = new Button("Cancelar");
-        cancel.setStyle("-fx-backgound-color:transprent");
+        cancel.setStyle("-fx-backgound-color:#37474F");
         cancel.setOnMouseClicked((Event event) -> {
             try {
                 this.on_click_cancel(event);
@@ -73,10 +73,19 @@ public class UserBooking {
                 .plusMinutes(Estat.partides_duracio).toString()));
         this.pista.getChildren().add(new Text(data.getCourt().getName()));
         this.pagada.getChildren().add(new Text(data.getPaid() ? "Sí" : "No"));
-        if(this.match_start.minusDays(1).compareTo(LocalDateTime.now()) > 0)
+        if (this.match_start.minusDays(1).compareTo(LocalDateTime.now()) > 0) {
             this.cancelar.getChildren().add(cancel);
-        else
+        } else {
             Tooltip.install(this.cancelar, new Tooltip("No pots cancelar durant les últimes 24h"));
+        }
+
+        this.dia.setStyle("-fx-text-alignment: center;");
+        this.hora_inici.setStyle("-fx-text-alignment: center;");
+        this.hora_fi.setStyle("-fx-text-alignment: center;");
+        this.pista.setStyle("-fx-text-alignment: center;");
+        this.pagada.setStyle("-fx-text-alignment: center;");
+        this.cancelar.setStyle("-fx-background-color: transparent;"
+                + "-fx-text-alignment: center");
     }
 
     public int compareTo(UserBooking a_comparar) {
@@ -88,14 +97,13 @@ public class UserBooking {
     }
 
     public void on_click_cancel(Event event) throws InterruptedException {
-        if(this.match_start.minusDays(1).compareTo(LocalDateTime.now()) < 0){
+        if (this.match_start.minusDays(1).compareTo(LocalDateTime.now()) < 0) {
             this.cancelar.getChildren().clear();
-            
+
             Tooltip.install(this.cancelar, new Tooltip("No pots cancelar durant les últimes 24h"));
             return;
         }
-            
-        
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
         alert.setTitle("Confirmació");

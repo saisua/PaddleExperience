@@ -177,19 +177,19 @@ public class FXMLRegistroController implements Initializable, Stoppable {
     @FXML
     private void on_click_telefon(KeyEvent event) {
         String lastTyped = event.getCharacter();
+
         //Comprova que només s'escriuen números
         if (!Character.isDigit(lastTyped.charAt(0))) {
             event.consume();
         }
 
-        //PREGUNTAR PER LLARGARIA DE TELEFON
         isTelefon = this.textfield_telefon.getText().length() > 7;
         if (isTelefon) {
             this.text_errorTelefon.setStyle("-fx-fill: #FAFAFA");
         } else {
             this.text_errorTelefon.setStyle("-fx-fill: #FF5722");
         }
-        //System.out.println(isTelefon);
+
         isGood();
     }
 
@@ -206,7 +206,7 @@ public class FXMLRegistroController implements Initializable, Stoppable {
         } else {
             this.textfield_svc.setDisable(false);
         }
-        isTargeta = (numOf == 0 || numOf == 16); //FER QUE APAREGA L'ERROR EN PANTALLA
+        isTargeta = (numOf == 0 || numOf == 16);
         isGood();
     }
 
@@ -218,7 +218,7 @@ public class FXMLRegistroController implements Initializable, Stoppable {
                 || numOf > 2) {
             event.consume();
         }
-        isSvc = numOf == 0 || numOf == 3; //FER QUE APAREGA L'ERROR EN PANTALLA
+        isSvc = numOf == 0 || numOf == 3;
         isGood();
     }
 
@@ -277,7 +277,6 @@ public class FXMLRegistroController implements Initializable, Stoppable {
     private void isGood() {
         boolean is_good = isCognom && isConfirmacio && isContrasena && isNom
                 && isSvc && isTargeta && isTelefon && isUsuari;
-        // System.out.println(is_good);
 
         if (is_good) { //Es compleix tot
             if (this.textfield_usuari.getText().length() > 0) {

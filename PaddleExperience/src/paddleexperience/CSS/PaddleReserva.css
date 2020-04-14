@@ -85,7 +85,7 @@
 
 
 /*Estil table-view*/
-.table-view .filler,
+
 .table-view{
     -fx-background-color:  #37474F;
     -fx-background-radius: 3;
@@ -94,57 +94,51 @@
     -fx-effect:  dropshadow( gaussian, rgba(28,28,28), 10, 0.3, 0.0, 0.0 );
     -fx-opacity: 0.75;
     -fx-cursor: hand;
-
 }
+
+.table-view .filler {
+    -fx-background-fills: #37474F;
+    -fx-background-color: #37474F;
+}
+
+
 .table-cell {
     -fx-background-color: #37474F;
+    -fx-font-family: "Ubunt Light";
     -fx-alignment: CENTER;
-    -fx-text-align: CENTER;
-}
-
-.table-column {
-
-    -fx-background-color: #37474F;
-    -fx-alignment: CENTER;
-}
-
-.table-row-cell .text{
-    -fx-font-size: 20em;
-    -fx-fill: #FAFAFA;
-    -fx-text-alignment: center;
+    -fx-text-alignment: CENTER;
 }
 
 .table-view .column-header{
-    -fx-background-color: transparent;    /* made transparent */
+    -fx-background-color: transparent;
     -fx-size: 45.0px;
     -fx-min-height: 45.0px;
     -fx-cursor: hand;
 }
 
-.table-view-header {
-    -fx-bakground-color: transparent;
-}
-
 .table-view .column-header .label {
-    -fx-font-size: 1.083333em;
+    -fx-font-size: 15px;
     -fx-font-family: "Ubuntu Light";
-    -fx-background-color:transparent;
-    -fx-text-fill: white;
+    -fx-text-fill: #FAFAFA;
+
+    -fx-background-color:#37474F;
+    -fx-border-color: #37474F;
+
     -fx-alignment: CENTER;
     -fx-padding: 5.0 5.0 5.0 5.0;
 }
 
 .scroll-bar:vertical .track{
     -fx-background-color : #37474F;
-    -fx-border-color :transparent;
-    -fx-background-radius : 0.0em;
-    -fx-border-radius :10.0em;
+    -fx-border-color :#37474F;
+    -fx-background-radius : 0px;
+    -fx-border-radius :3px;
 }
 
 .scroll-bar:vertical .increment-button ,
 .scroll-bar:vertical .decrement-button {
-    -fx-background-color :transparent;
-    -fx-background-radius : 0.0em;
+    -fx-background-color :#37474F;
+    -fx-background-radius : 0px;
     -fx-padding :0.0 10.0 0.0 0.0;
 
 }

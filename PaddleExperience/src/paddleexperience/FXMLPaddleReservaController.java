@@ -289,46 +289,21 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
     }
 
     @FXML
-    public void test__10(Event event) {
-        event.consume();
-
-        Estat.setDate(Estat.getDate().minusDays(10));
-
-        System.out.println("Dia: " + Estat.getDate().toString());
-
-        this.refresh();
-    }
-
-    @FXML
     public void test__1(Event event) {
         event.consume();
-
         Estat.setDate(date_Picker.getValue());
-
         System.out.println("Dia: " + Estat.getDate().toString());
-
+        this.date_Picker.setChronology(Estat.getDate().getChronology());
         this.refresh();
     }
 
     @FXML
     public void test_1(Event event) {
         event.consume();
-
         Estat.setDate(Estat.getNextDate());
-
         System.out.println("Dia: " + Estat.getDate().toString());
-
+        this.date_Picker.setChronology(Estat.getDate().getChronology());
         this.refresh();
     }
 
-    @FXML
-    public void test_10(Event event) {
-        event.consume();
-
-        Estat.setDate(Estat.getDate().plusDays(10));
-
-        System.out.println("Dia: " + Estat.getDate().toString());
-
-        this.refresh();
-    }
 }

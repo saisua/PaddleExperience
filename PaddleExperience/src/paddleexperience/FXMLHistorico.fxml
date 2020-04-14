@@ -26,14 +26,14 @@
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <Text id="text_Info" layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pròximes partides:" />
-                  <TableView fx:id="tableView_Proximes" layoutX="14.0" layoutY="44.0" minWidth="190.0" prefHeight="174.0" prefWidth="589.0" style="-fx-fixed-cell-size: 20;" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="44.0">
+                  <TableView fx:id="tableView_Proximes" layoutX="14.0" layoutY="44.0" minWidth="190.0" prefHeight="174.0" prefWidth="589.0" style="-fx-fixed-cell-size: 30;" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="44.0">
                     <columns>
-                      <TableColumn fx:id="tablecolumn_dia_proxim" prefWidth="135.0" text="Dia" />
-                      <TableColumn fx:id="tablecolumn_hora_inici_proxim" prefWidth="93.0" text="Hora inici" />
-                        <TableColumn fx:id="tablecolumn_hora_fi_proxim" prefWidth="97.0" text="Hora fi" />
-                        <TableColumn fx:id="tablecolumn_pista_proxim" prefWidth="97.0" text="Pista" />
-                        <TableColumn fx:id="tablecolumn_pagada_proxim" prefWidth="97.0" text="Pagada?" />
-                        <TableColumn fx:id="tablecolumn_cancelar_proxim" prefWidth="131.0" text="Cancelar" />
+                      <TableColumn fx:id="tablecolumn_dia_proxim" prefWidth="135.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Dia" />
+                      <TableColumn fx:id="tablecolumn_hora_inici_proxim" prefWidth="93.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Hora inici" />
+                        <TableColumn fx:id="tablecolumn_hora_fi_proxim" prefWidth="97.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Hora fi" />
+                        <TableColumn fx:id="tablecolumn_pista_proxim" prefWidth="100.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Pista" />
+                        <TableColumn fx:id="tablecolumn_pagada_proxim" prefWidth="98.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Pagada?" />
+                        <TableColumn fx:id="tablecolumn_cancelar_proxim" prefWidth="131.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Cancelar" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -44,12 +44,12 @@
             <AnchorPane prefHeight="226.0" prefWidth="619.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <Text id="text_Info" layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Últimes partides jugades:" />
-                  <TableView fx:id="tableView_Ultimes" layoutX="14.0" layoutY="42.0" minWidth="190.0" prefHeight="174.0" prefWidth="589.0" style="-fx-fixed-cell-size: 20;" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="44.0">
+                  <TableView fx:id="tableView_Ultimes" layoutX="14.0" layoutY="42.0" minWidth="190.0" prefHeight="174.0" prefWidth="589.0" style="-fx-fixed-cell-size: 30;" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="44.0">
                      <columns>
-                        <TableColumn fx:id="tablecolumn_dia_jugades" prefWidth="150.0" text="Dia" />
-                        <TableColumn fx:id="tablecolumn_hora_inici_jugades" prefWidth="150.0" text="Hora inici" />
-                        <TableColumn fx:id="tablecolumn_hora_fi_jugades" prefWidth="150.0" text="Hora fi" />
-                        <TableColumn fx:id="tablecolumn_pista_jugades" prefWidth="150.0" text="Pista" />
+                        <TableColumn fx:id="tablecolumn_dia_jugades" prefWidth="150.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Dia" />
+                        <TableColumn fx:id="tablecolumn_hora_inici_jugades" prefWidth="150.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Hora inici" />
+                        <TableColumn fx:id="tablecolumn_hora_fi_jugades" prefWidth="150.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Hora fi" />
+                        <TableColumn fx:id="tablecolumn_pista_jugades" prefWidth="150.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Pista" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

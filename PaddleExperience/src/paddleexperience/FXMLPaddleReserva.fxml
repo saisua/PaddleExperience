@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="fons" onKeyPressed="#on_keypress_exit" onMouseClicked="#on_click_exit" prefHeight="578.0" prefWidth="831.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLPaddleReservaController">
    <children>
@@ -33,9 +34,9 @@
                <children>
                   <TableView fx:id="tableview_horari" cache="true" cacheHint="SCALE" depthTest="DISABLE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#on_click_horari" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <columns>
-                      <TableColumn fx:id="tablecolumn_hora" maxWidth="94.0" minWidth="85.0" prefWidth="85.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FFFFFF; -fx-text-fill: #FFFFFF; -fx-fill: #FFFFFF; -fx-text-color: #FFFFFF; -fx-text-align: center;" text="Hora" />
-                      <TableColumn fx:id="tablecolumn_courts" minWidth="100.0" prefWidth="353.0" sortable="false" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FFFFFF; -fx-text-fill: #FFFFFF; -fx-fill: #FFFFFF; -fx-text-color: #FFFFFF; -fx-text-align: center;" text="Pistes" />
-                        <TableColumn fx:id="tablecolumn_reservat" editable="false" maxWidth="1500.0" minWidth="-1.0" prefWidth="-1.0" sortable="false" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FFFFFF; -fx-text-fill: #FFFFFF; -fx-fill: #FFFFFF; -fx-text-color: #FFFFFF; -fx-text-align: center;" text="Reservat?" />
+                      <TableColumn fx:id="tablecolumn_hora" maxWidth="94.0" minWidth="85.0" prefWidth="85.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-color: #FAFAFA; -fx-text-align: center;" text="Hora" />
+                      <TableColumn fx:id="tablecolumn_courts" minWidth="100.0" prefWidth="353.0" sortable="false" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-color: #FAFAFA; -fx-text-align: center;" text="Pistes" />
+                        <TableColumn fx:id="tablecolumn_reservat" editable="false" maxWidth="1500.0" minWidth="-1.0" prefWidth="-1.0" sortable="false" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-color: #FAFAFA; -fx-text-align: center;" text="Reservat?" />
                     </columns>
                      <effect>
                         <DropShadow offsetY="1.0" spread="0.81" />
@@ -51,37 +52,30 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <DatePicker fx:id="date_Picker" layoutX="221.0" layoutY="16.0" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="17.0">
+                        <DatePicker fx:id="date_Picker" layoutX="212.0" layoutY="17.0" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="17.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </DatePicker>
+                        <Button id="button_Continuar" layoutX="192.0" layoutY="19.0" mnemonicParsing="false" onMouseClicked="#test__1" style="-fx-background-color: #37474F;" text="-1" visible="false" AnchorPane.bottomAnchor="19.0" AnchorPane.rightAnchor="258.0" AnchorPane.topAnchor="19.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="Ubuntu Light" size="13.0" />
+                           </font>
+                        </Button>
+                        <Button id="button_Continuar" layoutX="410.0" layoutY="18.0" mnemonicParsing="false" onMouseClicked="#test_1" style="-fx-background-color: #37474F;" text="+1" visible="false" AnchorPane.bottomAnchor="19.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="19.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="Ubuntu Light" size="13.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="85.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <children>
-                        <Button id="button_Continuar" mnemonicParsing="false" onMouseClicked="#test__10" text="-10">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button id="button_Continuar" mnemonicParsing="false" onMouseClicked="#test__1" text="-1">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button id="button_Continuar" mnemonicParsing="false" onMouseClicked="#test_1" text="+1">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button id="button_Continuar" mnemonicParsing="false" onMouseClicked="#test_10" text="+10">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="85.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
          </center>
