@@ -65,14 +65,24 @@ public class FXMLRegistroController implements Initializable, Stoppable {
     private Text notEqual_text;
     @FXML
     private Text text_usuari_existent;
+    @FXML
+    private Text text_errorContrsena;
+    @FXML
+    private Text text_nomObligatori;
+    @FXML
+    private Text text_cognomObligatori;
+    @FXML
+    private Text text_errorTelefon;
+    @FXML
+    private Text text_usuariObligatori;
+    @FXML
+    private Button button_Error;
 
     private ClubDBAccess clubDBAccess;
 
     //Condicions des camps
     private boolean isNom, isCognom, isUsuari, isTelefon, isContrasena, isConfirmacio,
             isTargeta, isSvc;
-    @FXML
-    private Text text_errorContrsena;
 
     /**
      * Initializes the controller class.
@@ -118,23 +128,25 @@ public class FXMLRegistroController implements Initializable, Stoppable {
         String telefon = this.textfield_telefon.getText();
         String targeta = this.textfield_targeta.getText();
         String svc = this.textfield_svc.getText();
-        //IMPLEMENTAR SELECCIÓ D'IMATGE
+
         Image image_perfil = this.userImage.getImage();
 
         Member new_member = new Member(nom, cognom, telefon, login, pass, targeta, svc, image_perfil);
         clubDBAccess = ClubDBAccess.getSingletonClubDBAccess();
         clubDBAccess.getMembers().add(new_member);
-        clubDBAccess.saveDB();
         Estat.setMember(new_member);
 
         //Pantalla de confirmacio i passar a la següent pantalla
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setTitle("Gracies per unir-te");
-        alert.setContentText("Hola " + nom + " gràcies per unir-te");
+        alert.setContentText("Hola " + nom + " gràcies per unir-te. "
+                + "Ara es guardaran les teues dades, això pot tardar uns minuts");
         alert.initStyle(StageStyle.UTILITY);
         alert.showAndWait();
 
+        clubDBAccess.saveDB();
+        PaddleExperience.refresh("FXMLHome.fxml");
         PaddleExperience.setParent(event, "FXMLSidebar.fxml");
 
     }
@@ -164,7 +176,12 @@ public class FXMLRegistroController implements Initializable, Stoppable {
         }
 
         //PREGUNTAR PER LLARGARIA DE TELEFON
-        isTelefon = this.textfield_telefon.getText().length() > 7; //FER PRINT DE L'ERROR
+        isTelefon = this.textfield_telefon.getText().length() > 7;
+        if (isTelefon) {
+            this.text_errorTelefon.setStyle("-fx-fill: #FAFAFA");
+        } else {
+            this.text_errorTelefon.setStyle("-fx-fill: #FF5722");
+        }
         //System.out.println(isTelefon);
         isGood();
     }
@@ -176,6 +193,11 @@ public class FXMLRegistroController implements Initializable, Stoppable {
         if (!Character.isDigit(lastTyped.charAt(0))
                 || numOf > 15) {
             event.consume();
+        }
+        if (numOf != 16) {
+            this.textfield_svc.setDisable(true);
+        } else {
+            this.textfield_svc.setDisable(false);
         }
         isTargeta = (numOf == 0 || numOf == 16); //FER QUE APAREGA L'ERROR EN PANTALLA
         isGood();
@@ -208,8 +230,10 @@ public class FXMLRegistroController implements Initializable, Stoppable {
                 System.out.println("Usuari ja existent");
                 this.text_usuari_existent.setVisible(true);
             }
+            this.text_usuariObligatori.setVisible(false);
         } else {
             isUsuari = false;
+            this.text_usuariObligatori.setVisible(true);
         }
         isGood();
     }
@@ -219,6 +243,7 @@ public class FXMLRegistroController implements Initializable, Stoppable {
         JFXTextField source = (JFXTextField) event.getSource();
         isCognom = source.getText().length() > 0;
         System.out.println("isCognom es " + isCognom);
+        text_cognomObligatori.setVisible(!isCognom);
         isGood();
     }
 
@@ -227,6 +252,7 @@ public class FXMLRegistroController implements Initializable, Stoppable {
         JFXTextField source = (JFXTextField) event.getSource();
         isNom = source.getText().length() > 0;
         System.out.println("isCognom es " + isNom);
+        text_nomObligatori.setVisible(!isNom);
         isGood();
     }
 
@@ -250,11 +276,13 @@ public class FXMLRegistroController implements Initializable, Stoppable {
             if (this.textfield_usuari.getText().length() > 0) {
                 this.button_continua.setOpacity(1);
                 this.button_continua.setDisable(false);
+                this.button_Error.setVisible(false);
             }
 
         } else { //Alguna condicio no es compleix
             this.button_continua.setOpacity(0.2);
             this.button_continua.setDisable(true);
+            this.button_Error.setVisible(true);
         }
     }
 
@@ -289,6 +317,19 @@ public class FXMLRegistroController implements Initializable, Stoppable {
         WritableImage newImage = new WritableImage(reader, startX, startY, (int) limiter, (int) limiter);
         userImage.setImage(newImage);
 
+    }
+
+    @FXML
+    private void mostraErrors(MouseEvent event) {
+        this.text_cognomObligatori.setVisible(!isCognom);
+        this.text_nomObligatori.setVisible(!isNom);
+        if (!isTelefon) {
+            this.text_errorTelefon.setStyle("-fx-fill: #FF5722");
+        }
+        if (!this.text_usuari_existent.isVisible()) {
+            this.text_usuariObligatori.setVisible(!isUsuari);
+        }
+        this.text_errorContrsena.setStyle("-fx-fill: #FF5722; -fx-opacity: 0.75");
     }
 
 }

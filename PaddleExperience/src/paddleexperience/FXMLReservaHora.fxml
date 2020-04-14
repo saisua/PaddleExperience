@@ -6,6 +6,9 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -86,32 +89,32 @@
             </VBox>
             <AnchorPane GridPane.columnIndex="1">
                <children>
-                  <Text id="text_Info" fx:id="text_data" layoutX="131.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F" textAlignment="RIGHT" underline="true" wrappingWidth="197.7294921875" AnchorPane.rightAnchor="0.2705078125">
+                  <Text id="text_Info" fx:id="text_data" layoutX="190.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F" textAlignment="RIGHT" underline="true" wrappingWidth="197.7294921875" AnchorPane.rightAnchor="14.2705078125">
                      <font>
                         <Font size="25.0" />
                      </font>
                   </Text>
-                  <HBox layoutY="20.0" prefHeight="100.0" prefWidth="165.0">
-                     <children>
-                        <Text id="text_Info" fx:id="text_hora" strokeType="OUTSIDE" strokeWidth="0.0" text="19:00" wrappingWidth="64.7294921875">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets top="35.0" />
-                           </HBox.margin>
-                        </Text>
-                        <ImageView fx:id="imageview_rellotge" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Images/Clock.png" />
-                           </image>
-                           <HBox.margin>
-                              <Insets top="35.0" />
-                           </HBox.margin>
-                        </ImageView>
-                     </children>
-                  </HBox>
-                  <DatePicker fx:id="date_Picker" layoutX="107.0" layoutY="54.0" />
+                  <Text id="text_Info" fx:id="text_hora" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="19:00" wrappingWidth="64.7294921875">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <ImageView fx:id="imageview_rellotge" fitHeight="22.0" fitWidth="22.0" layoutX="54.0" layoutY="29.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/Clock.png" />
+                     </image>
+                     <effect>
+                        <Lighting specularConstant="1.93" specularExponent="0.0" surfaceScale="9.0">
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </ImageView>
+                  <DatePicker fx:id="date_Picker" layoutX="107.0" layoutY="54.0" visible="false" />
                </children>
             </AnchorPane>
             <GridPane fx:id="gridpane_imageview_court" GridPane.columnIndex="1" GridPane.rowIndex="1">

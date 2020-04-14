@@ -63,30 +63,32 @@ public class FXMLHomeController implements Initializable, Stoppable {
     public void refresh() {
         ClubDBAccess clubDBAccess;
         clubDBAccess = Estat.club;
-        ArrayList<Booking> listaReservas = clubDBAccess.getBookings();
-        int proximaReserva = proximaReserva(listaReservas);
-        int ultimaReserva = ultimaReserva(listaReservas);
-
-        //COMPLETAR
-        //Pone el texto de la proxima y la última partida en caso de que haya
-        String europeanDatePattern = "dd-MM-yyyy";
-        DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(europeanDatePattern);
-
-        if (proximaReserva >= 0) {
-            String dataProx = listaReservas.get(proximaReserva).getMadeForDay().format(europeanDateFormatter);
-            String pistaProx = listaReservas.get(proximaReserva).getCourt().getName();
-            String horaProx = listaReservas.get(proximaReserva).getFromTime().toString();
-            proxPartida.setText("El dia " + dataProx + " a les " + horaProx + " en la " + pistaProx);
-        }
-        if (ultimaReserva >= 0) {
-            String dataUlt = listaReservas.get(ultimaReserva).getMadeForDay().format(europeanDateFormatter);
-            String pistaUlt = listaReservas.get(ultimaReserva).getCourt().getName();
-            String horaUlt = listaReservas.get(ultimaReserva).getFromTime().toString();
-            ultPartida.setText("El dia " + dataUlt + " a les " + horaUlt + " en la " + pistaUlt);
-        }
-
         if (Estat.getMember() != null) {
+            ArrayList<Booking> listaReservas = clubDBAccess.getUserBookings(Estat.getMemberLogin());
+            int proximaReserva = proximaReserva(listaReservas);
+            int ultimaReserva = ultimaReserva(listaReservas);
+
+            //COMPLETAR
+            //Pone el texto de la proxima y la última partida en caso de que haya
+            String europeanDatePattern = "dd-MM-yyyy";
+            DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(europeanDatePattern);
+
+            if (proximaReserva >= 0) {
+                String dataProx = listaReservas.get(proximaReserva).getMadeForDay().format(europeanDateFormatter);
+                String pistaProx = listaReservas.get(proximaReserva).getCourt().getName();
+                String horaProx = listaReservas.get(proximaReserva).getFromTime().toString();
+                proxPartida.setText("El dia " + dataProx + " a les " + horaProx + " en la " + pistaProx);
+            }
+            if (ultimaReserva >= 0) {
+                String dataUlt = listaReservas.get(ultimaReserva).getMadeForDay().format(europeanDateFormatter);
+                String pistaUlt = listaReservas.get(ultimaReserva).getCourt().getName();
+                String horaUlt = listaReservas.get(ultimaReserva).getFromTime().toString();
+                ultPartida.setText("El dia " + dataUlt + " a les " + horaUlt + " en la " + pistaUlt);
+            }
+
+            //if (Estat.getMember() != null) {
             imPerfil.setImage((Image) Estat.getMember().getImage());
+            //}
         }
     }
 
