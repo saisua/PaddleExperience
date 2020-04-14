@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import model.Booking;
 import model.Court;
 import model.Member;
@@ -53,6 +54,8 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
     private TableColumn tablecolumn_pagada_proxim;
     @FXML
     private TableColumn tablecolumn_cancelar_proxim;
+    @FXML
+    private HBox hbox_no_targeta;
     @FXML
     TableView<UserBooking> tableView_Ultimes;
     @FXML
@@ -110,25 +113,6 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
                 return true;
         });;
         
-        // TESTS
-        
-        /*
-        Estat.club.getBookings().add(new Booking(LocalDateTime.now(), LocalDate.now().minusDays(1),
-                            LocalTime.of(17, 30), true, new Court("Pista4"),
-                            Estat.club.getMemberByCredentials("Login1", "Password1")));
-        Estat.club.getBookings().add(new Booking(LocalDateTime.now(), LocalDate.now().plusDays(1),
-                            LocalTime.of(10, 30), true, new Court("Pista1"),
-                            Estat.club.getMemberByCredentials("Login1", "Password1")));
-        Estat.club.getBookings().add(new Booking(LocalDateTime.now(), LocalDate.now().plusDays(1),
-                            LocalTime.of(9, 0), false, new Court("Pista1"),
-                            Estat.club.getMemberByCredentials("Login1", "Password1")));
-        Estat.club.getBookings().add(new Booking(LocalDateTime.now(), LocalDate.now().minusDays(1),
-                            LocalTime.of(10, 30), true, new Court("Pista4"),
-                            Estat.club.getMemberByCredentials("Login1", "Password1")));
-        */
-
-        // END TESTS
-        
         System.out.println("Historico initialized");
     }
 
@@ -155,6 +139,8 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
     public void refresh() {
         if(Estat.getMember() == null) return;
         
+        this.hbox_no_targeta.setVisible(Estat.getMember().getCreditCard() == null);
+        
         try{
             if(this.__thread_per_jugar != null && this.__thread_per_jugar.isAlive()){
                 this.__thread_per_jugar.open = false;
@@ -167,10 +153,6 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
             }
         } catch (InterruptedException err) { return; }
         
-        System.out.println(Estat.club.existsLogin(Estat.getMemberLogin()));
-        // true
-        System.out.println(Estat.getMember().getLogin());
-        System.out.println();
         
         this.__user_bookings = ((ArrayList) Estat.club.getBookings().stream()
                     .filter(booking -> (
@@ -178,7 +160,6 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
                             booking.getMember().getLogin().equals(Estat.getMemberLogin())))
                     .collect(Collectors.toList()));
  
-        System.out.println(this.__jugades_count); System.out.println(this.__proximes_count);
         int total_bookings = (this.__jugades_count + this.__proximes_count);
         
         if(this.__user_bookings.size() > total_bookings){
