@@ -72,7 +72,18 @@ public class UserBooking {
         this.hora_fi.getChildren().add(new Text(data.getFromTime()
                 .plusMinutes(Estat.partides_duracio).toString()));
         this.pista.getChildren().add(new Text(data.getCourt().getName()));
-        this.pagada.getChildren().add(new Text(data.getPaid() ? "Sí" : "No"));
+        
+        if(data.getPaid())
+            this.pagada.getChildren().add(new Text("Sí"));
+        else if(Estat.getMember().getCreditCard() == null)
+            this.pagada.getChildren().add(new Text("No"));
+        else {
+            Button per_a_pagar = new Button("Pagar");
+            per_a_pagar.setOnMouseClicked((Event event) -> this.on_click_pay(event));
+            
+            this.pagada.getChildren().add(per_a_pagar);
+        }
+        
         if (this.match_start.minusDays(1).compareTo(LocalDateTime.now()) > 0) {
             this.cancelar.getChildren().add(cancel);
         } else {
@@ -106,7 +117,7 @@ public class UserBooking {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
-        alert.setTitle("Confirmació");
+        alert.setTitle("Confirmació de cancelació");
         alert.setContentText("Vols cancelar la reserva?");
         alert.initStyle(StageStyle.UTILITY);
         Optional<ButtonType> result = alert.showAndWait();
@@ -135,9 +146,23 @@ public class UserBooking {
             }
 
             actual_cache.first[Estat.court_index.get(this.booking.getCourt().getName())] = Hora.images.get(1);
-
-            Estat.save();
         }
+    }
+    
+    public void on_click_pay(Event event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Confirmació de pago");
+        alert.setContentText("Vols pagar la reserva amb la targeta?");
+        alert.initStyle(StageStyle.UTILITY);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            this.pagada.getChildren().clear();
+            this.pagada.getChildren().add(new Text("Sí"));
+            
+            booking.setPaid(true);
+        }
+        
     }
 
     // // GETTERS
