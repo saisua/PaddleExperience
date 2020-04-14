@@ -67,7 +67,7 @@
                         <Font name="Ubuntu" size="17.0" />
                      </font>
                   </JFXPasswordField>
-                  <Text id="button_TextBenvinguda" layoutX="89.0" layoutY="383.0" onMouseClicked="#on_click_registrar" opacity="0.8" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #Fafafa;" text="No tens compte? Registrat" underline="true">
+                  <Text id="button_TextBenvinguda" layoutX="89.0" layoutY="383.0" onMouseClicked="#on_click_registrar" opacity="0.8" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #Fafafa;" text="No tens compte? Registra't" underline="true">
                      <font>
                         <Font name="Ubuntu Light" size="16.0" />
                      </font>

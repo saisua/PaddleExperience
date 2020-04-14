@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane id="fons" prefHeight="550.0" prefWidth="670.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLHistoricoController">
@@ -39,6 +40,11 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
+                  <Text fill="#fafafa" layoutX="152.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Només es poden cancel·lar les reserves amb més de 24 hores d'antelació)" AnchorPane.leftAnchor="152.0" AnchorPane.topAnchor="15.0">
+                     <font>
+                        <Font name="Ubuntu Light" size="13.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="226.0" prefWidth="619.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
