@@ -14,6 +14,7 @@ import java.util.HashMap;
 // Javafx imports
 import javafx.application.Application;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -36,8 +37,8 @@ import paddleexperience.Structures.Cache;
  */
 public class PaddleExperience extends Application {
 
-    private static final int minHeight = 550;
-    private static final int minWidth = 800;
+    public static final int minHeight = 550;
+    public static final int minWidth = 800;
 
     // Loader
     private static final HashMap<String, Parent> root = new HashMap<String, Parent>();
@@ -118,6 +119,8 @@ public class PaddleExperience extends Application {
         controller.stop();
 
         Cache.stop();
+        
+        Estat.save();
 
         System.exit(0);
     }
@@ -170,6 +173,52 @@ public class PaddleExperience extends Application {
 
     public static void refresh(String sceneName) {
         controllers.get(sceneName).refresh();
+    }
+    
+    public static void window(String sceneName) 
+                    throws IOException {
+        window(sceneName, "", minWidth, minHeight);
+    }
+
+    public static void window(String sceneName, String title)
+                    throws IOException {
+        window(sceneName, title, minWidth, minHeight);
+    }
+    
+    public static void window(String sceneName, String title, double width, double height) 
+                    throws IOException {
+        
+        if (controllers.containsKey(sceneName)) {
+            controllers.get(sceneName).refresh();
+        } else {
+            FXMLLoader loader = new FXMLLoader(static_class.getResource(sceneName));
+            root.put(sceneName, loader.load());
+            controllers.put(sceneName, loader.getController());
+            //controllers.get(sceneName).refresh();
+        }
+        
+        
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root.get(sceneName)));
+        stage.setTitle(title);
+        
+        stage.setMinWidth(width);
+        stage.setMinHeight(height);
+        
+        stage.setWidth(width);
+        stage.setHeight(height);
+        
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(final WindowEvent event) {
+                    try{
+                        controllers.get(sceneName).stop();
+                    } catch (InterruptedException err) {}
+                }
+            });
+        
+        stage.show();
+        
     }
 
     // // GETTERS

@@ -73,7 +73,7 @@
                </GridPane.margin>
                <children>
                   <Text fill="#dd2c00" strokeType="OUTSIDE" strokeWidth="0.0" text="No has afegit una targeta de crèdit, i per tant no pots pagar" textAlignment="CENTER" wrappingWidth="284.40283203125" />
-                  <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Afegir targeta" />
+                  <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#on_click_add_card" text="Afegir targeta" />
                </children>
             </HBox>
          </children>

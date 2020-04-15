@@ -5,6 +5,7 @@
  */
 package paddleexperience;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -139,7 +141,7 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
     public void refresh() {
         if(Estat.getMember() == null) return;
         
-        this.hbox_no_targeta.setVisible(Estat.getMember().getCreditCard() == null);
+        this.hbox_no_targeta.setVisible(Estat.getMember().getCreditCard().length() == 0);
         
         try{
             if(this.__thread_per_jugar != null && this.__thread_per_jugar.isAlive()){
@@ -171,6 +173,11 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
         this.__thread_ja_jugades.start();
             
         System.out.println("Historico refreshed");
+    }
+    
+    public void on_click_add_card(Event _ev) throws IOException {
+        PaddleExperience.window("FXMLTargeta.fxml", "Afegir targeta de crèdit", 
+                PaddleExperience.minWidth/2, PaddleExperience.minHeight/2);
     }
 
 }
