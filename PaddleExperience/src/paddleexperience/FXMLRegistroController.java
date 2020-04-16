@@ -102,6 +102,8 @@ public class FXMLRegistroController implements Initializable, Stoppable {
         isNom = isCognom = isUsuari = isTelefon = isContrasena = isConfirmacio = false;
         isTargeta = isSvc = true;
 
+        this.textfield_svc.setDisable(true);
+
     }
 
     // S'executa cada vegada que es tanca l'escena
@@ -151,7 +153,8 @@ public class FXMLRegistroController implements Initializable, Stoppable {
         //alert.getDialogPane().lookupButton(buttonContinuar).disableProperty().setValue(true);
         alert.showAndWait();
 
-        clubDBAccess.saveDB();
+        //POSAR SAVEDB AL TANCAR APLICACIO
+        //clubDBAccess.saveDB();
         PaddleExperience.refresh("FXMLHome.fxml");
         PaddleExperience.setParent(event, "FXMLSidebar.fxml");
 

@@ -119,7 +119,7 @@ public class PaddleExperience extends Application {
         controller.stop();
 
         Cache.stop();
-        
+
         Estat.save();
 
         System.exit(0);
@@ -174,20 +174,20 @@ public class PaddleExperience extends Application {
     public static void refresh(String sceneName) {
         controllers.get(sceneName).refresh();
     }
-    
-    public static void window(String sceneName) 
-                    throws IOException {
+
+    public static void window(String sceneName)
+            throws IOException {
         window(sceneName, "", minWidth, minHeight);
     }
 
     public static void window(String sceneName, String title)
-                    throws IOException {
+            throws IOException {
         window(sceneName, title, minWidth, minHeight);
     }
-    
-    public static void window(String sceneName, String title, double width, double height) 
-                    throws IOException {
-        
+
+    public static void window(String sceneName, String title, double width, double height)
+            throws IOException {
+
         if (controllers.containsKey(sceneName)) {
             controllers.get(sceneName).refresh();
         } else {
@@ -196,29 +196,28 @@ public class PaddleExperience extends Application {
             controllers.put(sceneName, loader.getController());
             //controllers.get(sceneName).refresh();
         }
-        
-        
+
         Stage stage = new Stage();
         stage.setScene(new Scene(root.get(sceneName)));
         stage.setTitle(title);
-        
         stage.setMinWidth(width);
         stage.setMinHeight(height);
-        
+
         stage.setWidth(width);
         stage.setHeight(height);
-        
+
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(final WindowEvent event) {
-                    try{
-                        controllers.get(sceneName).stop();
-                    } catch (InterruptedException err) {}
+            @Override
+            public void handle(final WindowEvent event) {
+                try {
+                    controllers.get(sceneName).stop();
+                } catch (InterruptedException err) {
                 }
-            });
-        
+            }
+        });
+
         stage.show();
-        
+
     }
 
     // // GETTERS

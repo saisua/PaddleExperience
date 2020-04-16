@@ -13,8 +13,12 @@ import javafx.fxml.FXML;
 
 // JavaFX imports
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import paddleexperience.Dataclasses.Estat;
 
 // Internal imports
@@ -30,36 +34,78 @@ public class FXMLTargetaController implements Initializable, Stoppable {
     @FXML
     private TextField textfield_targeta;
     @FXML
-    private TextField textfield_cvc;
+    private TextField textfield_svc;
     @FXML
     private Button button_aceptar;
-    
+    @FXML
+    private Button button_cancelar;
+
+    boolean isSvc, isTargeta;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Targeta initialized");
-    }    
+    }
 
     @Override
-    public void refresh(){
+    public void refresh() {
         this.textfield_targeta.setText("");
-        this.textfield_cvc.setText("");
-        
+        this.textfield_svc.setText("");
+
         this.button_aceptar.setDisable(true);
-        
+
         System.out.println("Targeta refreshed");
     }
-    
+
     @Override
-    public void stop(){
+    public void stop() {
         System.out.println("Targeta stopped");
     }
-    
-    public void on_click_acceptar(Event event){
+
+    @FXML
+    public void on_click_acceptar(Event event) {
         Estat.getMember().setCreditCard(this.textfield_targeta.getText());
-        Estat.getMember().setSvc(this.textfield_cvc.getText());
+        Estat.getMember().setSvc(this.textfield_svc.getText());
     }
-    
+
+    @FXML
+    private void on_click_cancelar(MouseEvent event) {
+        this.stop();
+    }
+
+    @FXML
+    private void on_click_svc(KeyEvent event) {
+        String lastTyped = event.getCharacter();
+        int numOf = this.textfield_svc.getText().length();
+        System.out.println(numOf);
+        if (!Character.isDigit(lastTyped.charAt(0))
+                || numOf > 2) {
+            event.consume();
+        }
+        isSvc = numOf == 3;
+
+        isGood();
+    }
+
+    @FXML
+    private void on_click_targeta(KeyEvent event) {
+        String lastTyped = event.getCharacter();
+        int numOf = this.textfield_targeta.getText().length();
+        if (!Character.isDigit(lastTyped.charAt(0))
+                || numOf > 15) {
+            event.consume();
+        }
+
+        isTargeta = numOf == 16;
+
+        isGood();
+    }
+
+    private void isGood() {
+        this.button_aceptar.setDisable(!(isSvc && isTargeta));
+    }
+
 }
