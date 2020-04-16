@@ -16,8 +16,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Separator;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import paddleexperience.PaddleExperience;
 import paddleexperience.Structures.Stoppable;
 import paddleexperience.Dataclasses.Estat;
@@ -30,6 +32,8 @@ import paddleexperience.Dataclasses.Estat;
 public class FXMLSidebarController implements Initializable, Stoppable {
 
     @FXML
+    private HBox hbox_sidebar;
+    @FXML
     private BorderPane borderpane;
     @FXML
     private Button btn_home;
@@ -37,9 +41,16 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     private Button btn_reserva;
     @FXML
     private Button btn_historico;
+    @FXML
+    private Separator separator_resize;
 
     private Stoppable sub_menu_controller;
 
+    private final double MIN_SIZE = 145.d;
+    private final double MAX_SIZE = 300.d;
+    
+    
+    
     public void FXMLSidebarController() {
         Estat.setSidebar(this);
     }
@@ -109,6 +120,16 @@ public class FXMLSidebarController implements Initializable, Stoppable {
         //    Logger.getLogger(FXMLSidebarController.class.getName()).log(Level.SEVERE, null, e);
         //}
         borderpane.setCenter(root);
+    }
+    
+    public void on_drag_resize(MouseEvent event){
+        double x = event.getSceneX();
+        
+        System.out.println(x);
+        
+        if(x > this.MIN_SIZE && x < this.MAX_SIZE)
+            this.hbox_sidebar.setPrefWidth(x);
+        
     }
 
 }
