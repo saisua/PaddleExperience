@@ -72,18 +72,18 @@ public class UserBooking {
         this.hora_fi.getChildren().add(new Text(data.getFromTime()
                 .plusMinutes(Estat.partides_duracio).toString()));
         this.pista.getChildren().add(new Text(data.getCourt().getName()));
-        
-        if(data.getPaid())
+
+        if (data.getPaid()) {
             this.pagada.getChildren().add(new Text("Sí"));
-        else if(Estat.getMember().getCreditCard() == null)
+        } else if (Estat.getMember().getCreditCard().equals("")) {
             this.pagada.getChildren().add(new Text("No"));
-        else {
+        } else {
             Button per_a_pagar = new Button("Pagar");
             per_a_pagar.setOnMouseClicked((Event event) -> this.on_click_pay(event));
-            
+
             this.pagada.getChildren().add(per_a_pagar);
         }
-        
+
         if (this.match_start.minusDays(1).compareTo(LocalDateTime.now()) > 0) {
             this.cancelar.getChildren().add(cancel);
         } else {
@@ -148,7 +148,7 @@ public class UserBooking {
             actual_cache.first[Estat.court_index.get(this.booking.getCourt().getName())] = Hora.images.get(1);
         }
     }
-    
+
     public void on_click_pay(Event event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
@@ -159,10 +159,10 @@ public class UserBooking {
         if (result.get() == ButtonType.OK) {
             this.pagada.getChildren().clear();
             this.pagada.getChildren().add(new Text("Sí"));
-            
+
             booking.setPaid(true);
         }
-        
+
     }
 
     // // GETTERS
