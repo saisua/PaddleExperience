@@ -27,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import model.Booking;
 import model.Court;
 import model.Member;
@@ -158,6 +159,8 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
         } catch (InterruptedException err) {
             return;
         }
+        
+        ListIterator<UserBooking> next_bookings_iter = this.tableView_Proximes.getItems().listIterator();
 
         this.__user_bookings = ((ArrayList) Estat.club.getBookings().stream()
                 .filter(booking -> (booking.getMember() != null
@@ -173,13 +176,16 @@ public class FXMLHistoricoController implements Initializable, Stoppable {
 
         this.__thread_ja_jugades = new ReservaThread(this, true, 0);
         this.__thread_ja_jugades.start();
+        
+        for(; next_bookings_iter.hasNext();)
+            next_bookings_iter.next().refresh();
 
         System.out.println("Historico refreshed");
     }
 
     public void on_click_add_card(Event _ev) throws IOException {
         PaddleExperience.window("FXMLTargeta.fxml", "Afegir targeta de crèdit",
-                350, 300);
+                350, 300, Modality.APPLICATION_MODAL);
     }
 
 }
@@ -273,7 +279,7 @@ class ReservaThread extends Thread {
         // i probablement la base de dades vinga ja ordenada
         for (ListIterator<UserBooking> iter = this.controller.tableView_Proximes.getItems()
                 .listIterator(proximes_size);
-                iter.hasPrevious() && iter.previous().compareTo(hora_comparar) < 0;
+                iter.hasPrevious() && iter.previous().compareTo(hora_comparar) > 0;
                 proximes_size--);
 
         this.controller.tableView_Proximes.getItems().add(proximes_size, to_book);

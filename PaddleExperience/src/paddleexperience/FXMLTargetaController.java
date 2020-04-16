@@ -41,6 +41,8 @@ public class FXMLTargetaController implements Initializable, Stoppable {
     private Button button_cancelar;
 
     boolean isSvc, isTargeta;
+    
+    private Stage window;
 
     /**
      * Initializes the controller class.
@@ -52,6 +54,9 @@ public class FXMLTargetaController implements Initializable, Stoppable {
 
     @Override
     public void refresh() {
+        if(this.window == null)
+            this.window = PaddleExperience.last_window;
+        
         this.textfield_targeta.setText("");
         this.textfield_svc.setText("");
 
@@ -62,6 +67,8 @@ public class FXMLTargetaController implements Initializable, Stoppable {
 
     @Override
     public void stop() {
+        this.window = null;
+        
         System.out.println("Targeta stopped");
     }
 
@@ -69,10 +76,16 @@ public class FXMLTargetaController implements Initializable, Stoppable {
     public void on_click_acceptar(Event event) {
         Estat.getMember().setCreditCard(this.textfield_targeta.getText());
         Estat.getMember().setSvc(this.textfield_svc.getText());
+        
+        PaddleExperience.refresh("FXMLHistorico.fxml");
+        
+        this.on_click_cancelar(event);
     }
 
     @FXML
-    private void on_click_cancelar(MouseEvent event) {
+    private void on_click_cancelar(Event event) {
+        this.window.close();
+        
         this.stop();
     }
 

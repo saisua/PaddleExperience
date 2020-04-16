@@ -21,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -48,7 +49,7 @@ public class PaddleExperience extends Application {
     // Auxiliar
     static Class static_class;
 
-    ClubDBAccess clubDBAccess = ClubDBAccess.getSingletonClubDBAccess();
+    public static Stage last_window;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -177,16 +178,21 @@ public class PaddleExperience extends Application {
 
     public static void window(String sceneName)
             throws IOException {
-        window(sceneName, "", minWidth, minHeight);
+        window(sceneName, "", minWidth, minHeight, Modality.NONE);
     }
 
     public static void window(String sceneName, String title)
             throws IOException {
-        window(sceneName, title, minWidth, minHeight);
+        window(sceneName, title, minWidth, minHeight, Modality.NONE);
     }
 
     public static void window(String sceneName, String title, double width, double height)
             throws IOException {
+        window(sceneName, title, width, height, Modality.NONE);
+    }
+    
+    public static void window(String sceneName, String title, double width, double height, 
+            Modality mode) throws IOException {
 
         if (controllers.containsKey(sceneName)) {
             controllers.get(sceneName).refresh();
@@ -205,6 +211,10 @@ public class PaddleExperience extends Application {
 
         stage.setWidth(width);
         stage.setHeight(height);
+        
+        stage.initModality(mode);
+        
+        last_window = stage;
 
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -216,7 +226,9 @@ public class PaddleExperience extends Application {
             }
         });
 
-        stage.show();
+        controllers.get(sceneName).refresh();
+        
+        stage.showAndWait();
 
     }
 
