@@ -10,6 +10,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -299,7 +300,10 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
         alert.setHeaderText(null);
         alert.setTitle("Confirmació");
         alert.setContentText("Vols reservar la " + pista + " el dia "
-                + dia + " a les " + hora + "?");
+                + dia + " a les " + hora + "?" +
+                ((LocalDateTime.of(Estat.getDate(), Estat.getTime()).minusDays(1)
+                        .compareTo(LocalDateTime.now()) < 0) 
+                ? " No podràs cancelar esta reserva." : ""));
         alert.initStyle(StageStyle.UTILITY);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
