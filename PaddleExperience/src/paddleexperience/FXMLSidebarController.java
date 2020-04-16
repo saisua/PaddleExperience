@@ -125,8 +125,6 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     public void on_drag_resize(MouseEvent event){
         double x = event.getSceneX();
         
-        System.out.println(x);
-        
         if(x > this.MIN_SIZE && x < this.MAX_SIZE)
             this.hbox_sidebar.setPrefWidth(x);
         
