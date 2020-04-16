@@ -44,6 +44,9 @@ public class UserBooking {
 
     // Auxiliar
     private LocalDateTime match_start;
+    
+    private int pagada_state;
+    private int cancelar_state;
 
     public UserBooking(Booking data, TableView table) {
         this.booking = data;
@@ -51,9 +54,9 @@ public class UserBooking {
 
         this.match_start = LocalDateTime.of(data.getMadeForDay(), data.getFromTime());
 
-        Button cancel = new Button("Cancelar");
-        cancel.setStyle("-fx-backgound-color:#37474F");
-        cancel.setOnMouseClicked((Event event) -> {
+        Button button_cancel = new Button("Cancelar");
+        button_cancel.setStyle("-fx-backgound-color:#37474F");
+        button_cancel.setOnMouseClicked((Event event) -> {
             try {
                 this.on_click_cancel(event);
             } catch (InterruptedException err) {
@@ -73,8 +76,13 @@ public class UserBooking {
                 .plusMinutes(Estat.partides_duracio).toString()));
         this.pista.getChildren().add(new Text(data.getCourt().getName()));
 
+        System.out.println(Estat.getMember().getCreditCard());
+        
         if (data.getPaid()) {
             this.pagada.getChildren().add(new Text("Sí"));
+            
+            this.pagada_state = 0;
+            
         } else if (Estat.getMember().getCreditCard().equals("")) {
             this.pagada.getChildren().add(new Text("No"));
         } else {
@@ -82,12 +90,16 @@ public class UserBooking {
             per_a_pagar.setOnMouseClicked((Event event) -> this.on_click_pay(event));
 
             this.pagada.getChildren().add(per_a_pagar);
+            
+            this.pagada_state = 1;
         }
 
         if (this.match_start.minusDays(1).compareTo(LocalDateTime.now()) > 0) {
-            this.cancelar.getChildren().add(cancel);
+            this.cancelar.getChildren().add(button_cancel);
         } else {
             Tooltip.install(this.cancelar, new Tooltip("No pots cancelar durant les últimes 24h"));
+            
+            this.cancelar_state = 1;
         }
 
         this.dia.setStyle("-fx-text-alignment: center;");
@@ -102,6 +114,29 @@ public class UserBooking {
         this.pagada.getChildren().get(0).setStyle("-fx-fill: #fafafa");
         this.cancelar.setStyle("-fx-background-color: transparent;"
                 + "-fx-text-alignment: center");
+    }
+    
+    public void refresh(){
+        if (this.booking.getPaid()) {
+            if(this.pagada_state != 0){
+                this.pagada.getChildren().clear();
+                this.pagada.getChildren().add(new Text("Sí"));
+            }
+        } else if(this.pagada_state != 1 && !Estat.getMember().getCreditCard().equals("")){
+            this.pagada.getChildren().clear();
+            
+            Button per_a_pagar = new Button("Pagar");
+            per_a_pagar.setOnMouseClicked((Event event) -> this.on_click_pay(event));
+
+            this.pagada.getChildren().add(per_a_pagar);
+        }
+        
+        if (!(this.match_start.minusDays(1).compareTo(LocalDateTime.now()) > 0) &&
+                    this.cancelar_state != 1) {
+            this.cancelar.getChildren().clear();
+            
+            Tooltip.install(this.cancelar, new Tooltip("No pots cancelar durant les últimes 24h"));
+        }
     }
 
     public int compareTo(UserBooking a_comparar) {
