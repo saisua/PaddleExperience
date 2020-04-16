@@ -91,10 +91,15 @@ public class UserBooking {
         }
 
         this.dia.setStyle("-fx-text-alignment: center;");
+        this.dia.getChildren().get(0).setStyle("-fx-fill: #fafafa");
         this.hora_inici.setStyle("-fx-text-alignment: center;");
+        this.hora_inici.getChildren().get(0).setStyle("-fx-fill: #fafafa");
         this.hora_fi.setStyle("-fx-text-alignment: center;");
+        this.hora_fi.getChildren().get(0).setStyle("-fx-fill: #fafafa");
         this.pista.setStyle("-fx-text-alignment: center;");
+        this.pista.getChildren().get(0).setStyle("-fx-fill: #fafafa");
         this.pagada.setStyle("-fx-text-alignment: center;");
+        this.pagada.getChildren().get(0).setStyle("-fx-fill: #fafafa");
         this.cancelar.setStyle("-fx-background-color: transparent;"
                 + "-fx-text-alignment: center");
     }
