@@ -93,7 +93,7 @@
     -fx-border-radius: 3;
     -fx-effect:  dropshadow( gaussian, rgba(28,28,28), 10, 0.3, 0.0, 0.0 );
     -fx-opacity: 0.75;
-    -fx-cursor: hand;
+    /*-fx-cursor: hand;*/
 }
 
 .table-view .filler {
@@ -102,18 +102,20 @@
 }
 
 
-.table-cell {
-    -fx-background-color: #37474F;
+.table-cell * {
+    -fx-background-color: transparent;
     -fx-font-family: "Ubunt Light";
-    -fx-alignment: CENTER;
+    -fx-font-size: 16px;
+    -fx-fill: #FAFAFA;
     -fx-text-alignment: CENTER;
+    -fx-cursor: hand;
 }
 
 .table-view .column-header{
     -fx-background-color: transparent;
     -fx-size: 45.0px;
     -fx-min-height: 45.0px;
-    -fx-cursor: hand;
+    /*-fx-cursor: hand;*/
 }
 
 .table-view .column-header .label {

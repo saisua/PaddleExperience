@@ -109,12 +109,14 @@ public class FXMLPaddleLoginController implements Initializable, Stoppable {
 
     public void refresh() {
         System.out.println("Login Refreshed");
+        this.textfield_usuari.setText("");
+        this.textfield_contrasena.setText("");
     }
 
     // // Manejadors d'events
     @FXML
     public void on_keyTyped_contrasena(KeyEvent event) {
-        boolean is_good = this.textfield_contrasena.getText().length() > 6;
+        boolean is_good = this.textfield_contrasena.getText().length() > 5;
 
         // Comprove si la contrasenya era bona abans per
         // si en un futur havera de modificar moltes coses,

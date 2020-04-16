@@ -206,13 +206,16 @@
                   </HBox>
                </children>
             </VBox>
-            <Button fx:id="button_reserva" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#on_click_reservar" prefHeight="26.0" prefWidth="174.0" text="Reserva la pista" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Button fx:id="button_reserva" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#on_click_reservar" prefHeight="26.0" prefWidth="174.0" style="-fx-background-color: #263238;" text="Reserva la pista" textFill="#fafafa" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <GridPane.margin>
                   <Insets bottom="15.0" />
-               </GridPane.margin></Button>
+               </GridPane.margin>
+               <font>
+                  <Font name="Ubuntu Light" size="15.0" />
+               </font></Button>
             <Text id="text_Info" fx:id="text_reserva" strokeType="OUTSIDE" strokeWidth="0.0" text="Easter egg #5 potser?" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BASELINE" />
          </children>
       </GridPane>
