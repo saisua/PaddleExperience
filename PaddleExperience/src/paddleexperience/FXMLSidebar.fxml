@@ -4,9 +4,11 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -16,7 +18,7 @@
     <left>
       <HBox fx:id="hbox_sidebar" maxHeight="1.7976931348623157E308" prefHeight="502.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
-              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="502.0" prefWidth="374.0" style="-fx-background-color: #37474F;">
+              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="502.0" prefWidth="251.0" style="-fx-background-color: #37474F;">
                   <children>
                       <Button id="button_SideBar" fx:id="btn_home" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#goHome" prefHeight="60.0" style="-fx-background-color: transparent; -fx-text-fill: #FAFAFAFA; -fx-background-radius: 0;" text="Home">
                           <VBox.margin>
@@ -51,9 +53,15 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <graphic>
-                        <AnchorPane>
+                        <GridPane>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
                            <children>
-                              <TextFlow maxWidth="1.7976931348623157E308" prefHeight="48.0" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+                              <TextFlow maxHeight="-Infinity" minHeight="-Infinity" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <children>
                                     <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservas y cancelaciones" textAlignment="CENTER">
                                        <font>
@@ -63,7 +71,7 @@
                                  </children>
                               </TextFlow>
                            </children>
-                        </AnchorPane>
+                        </GridPane>
                      </graphic>
                       </Button>
                   </children>
