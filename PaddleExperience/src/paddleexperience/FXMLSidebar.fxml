@@ -16,9 +16,9 @@
 
 <BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="718.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLSidebarController">
     <left>
-      <HBox fx:id="hbox_sidebar" maxHeight="1.7976931348623157E308" prefHeight="502.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="hbox_sidebar" maxHeight="1.7976931348623157E308" prefHeight="502.0" prefWidth="228.0" BorderPane.alignment="CENTER">
          <children>
-              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="502.0" prefWidth="251.0" style="-fx-background-color: #37474F;">
+              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1000.0" style="-fx-background-color: #37474F;">
                   <children>
                       <Button id="button_SideBar" fx:id="btn_home" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#goHome" prefHeight="60.0" style="-fx-background-color: transparent; -fx-text-fill: #FAFAFAFA; -fx-background-radius: 0;" text="Home">
                           <VBox.margin>
