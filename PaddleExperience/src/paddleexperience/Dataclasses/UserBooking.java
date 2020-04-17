@@ -7,6 +7,7 @@ package paddleexperience.Dataclasses;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Optional;
 import javafx.event.Event;
@@ -44,7 +45,7 @@ public class UserBooking {
 
     // Auxiliar
     private LocalDateTime match_start;
-    
+
     private int pagada_state;
     private int cancelar_state;
 
@@ -54,8 +55,9 @@ public class UserBooking {
 
         this.match_start = LocalDateTime.of(data.getMadeForDay(), data.getFromTime());
 
-        Button button_cancel = new Button("Cancelar");
-        button_cancel.setStyle("-fx-backgound-color:#37474F");
+        Button button_cancel = new Button("Cancel·lar");
+        button_cancel.setStyle("-fx-text-fill: #A58279;");
+
         button_cancel.setOnMouseClicked((Event event) -> {
             try {
                 this.on_click_cancel(event);
@@ -70,27 +72,32 @@ public class UserBooking {
         this.pagada = new TextFlow();
         this.cancelar = new TextFlow();
 
-        this.dia.getChildren().add(new Text(data.getMadeForDay().toString()));
+        String europeanDatePattern = "dd-MM-yyyy";
+        DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(europeanDatePattern);
+
+        this.dia.getChildren().add(new Text(data.getMadeForDay().format(europeanDateFormatter)));
         this.hora_inici.getChildren().add(new Text(data.getFromTime().toString()));
         this.hora_fi.getChildren().add(new Text(data.getFromTime()
                 .plusMinutes(Estat.partides_duracio).toString()));
         this.pista.getChildren().add(new Text(data.getCourt().getName()));
 
         System.out.println(Estat.getMember().getCreditCard());
-        
+
         if (data.getPaid()) {
             this.pagada.getChildren().add(new Text("Sí"));
-            
+
             this.pagada_state = 0;
-            
+
         } else if (Estat.getMember().getCreditCard().equals("")) {
             this.pagada.getChildren().add(new Text("No"));
         } else {
             Button per_a_pagar = new Button("Pagar");
+            per_a_pagar.setStyle("-fx-background-color: #A59979; -fx-fill: #A59979");
             per_a_pagar.setOnMouseClicked((Event event) -> this.on_click_pay(event));
 
             this.pagada.getChildren().add(per_a_pagar);
-            
+            this.pagada.getChildren().get(0).setStyle("-fx-text-fill: #A58279; -fx-fill: #A58279");
+
             this.pagada_state = 1;
         }
 
@@ -98,7 +105,7 @@ public class UserBooking {
             this.cancelar.getChildren().add(button_cancel);
         } else {
             Tooltip.install(this.cancelar, new Tooltip("No pots cancelar durant les últimes 24h"));
-            
+
             this.cancelar_state = 1;
         }
 
@@ -113,28 +120,28 @@ public class UserBooking {
         this.pagada.setStyle("-fx-text-alignment: center;");
         this.pagada.getChildren().get(0).setStyle("-fx-fill: #fafafa");
         this.cancelar.setStyle("-fx-background-color: transparent;"
-                + "-fx-text-alignment: center");
+                + "-fx-text-alignment: center;");
     }
-    
-    public void refresh(){
+
+    public void refresh() {
         if (this.booking.getPaid()) {
-            if(this.pagada_state != 0){
+            if (this.pagada_state != 0) {
                 this.pagada.getChildren().clear();
                 this.pagada.getChildren().add(new Text("Sí"));
             }
-        } else if(this.pagada_state != 1 && !Estat.getMember().getCreditCard().equals("")){
+        } else if (this.pagada_state != 1 && !Estat.getMember().getCreditCard().equals("")) {
             this.pagada.getChildren().clear();
-            
+
             Button per_a_pagar = new Button("Pagar");
             per_a_pagar.setOnMouseClicked((Event event) -> this.on_click_pay(event));
 
             this.pagada.getChildren().add(per_a_pagar);
         }
-        
-        if (!(this.match_start.minusDays(1).compareTo(LocalDateTime.now()) > 0) &&
-                    this.cancelar_state != 1) {
+
+        if (!(this.match_start.minusDays(1).compareTo(LocalDateTime.now()) > 0)
+                && this.cancelar_state != 1) {
             this.cancelar.getChildren().clear();
-            
+
             Tooltip.install(this.cancelar, new Tooltip("No pots cancelar durant les últimes 24h"));
         }
     }
@@ -158,7 +165,10 @@ public class UserBooking {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
         alert.setTitle("Confirmació de cancelació");
-        alert.setContentText("Vols cancelar la reserva?");
+        alert.setContentText("Segur que vols cancelar la reserva?");
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Sí");
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
+
         alert.initStyle(StageStyle.UTILITY);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {

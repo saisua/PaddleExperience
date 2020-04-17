@@ -29,12 +29,12 @@
           <RowConstraints maxHeight="105.0" minHeight="0.0" prefHeight="50.0" vgrow="NEVER" />
         </rowConstraints>
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <AnchorPane minWidth="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <Text id="text_Info" layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pròximes partides:" />
                   <TableView fx:id="tableView_Proximes" cache="true" cacheHint="SCALE" fixedCellSize="30.0" layoutX="14.0" layoutY="44.0" minWidth="190.0" prefHeight="174.0" prefWidth="589.0" style="-fx-fixed-cell-size: 30;" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="44.0">
                     <columns>
-                      <TableColumn fx:id="tablecolumn_dia_proxim" prefWidth="135.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Dia" />
+                      <TableColumn fx:id="tablecolumn_dia_proxim" minWidth="45.0" prefWidth="135.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Dia" />
                       <TableColumn fx:id="tablecolumn_hora_inici_proxim" prefWidth="93.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Hora inici" />
                         <TableColumn fx:id="tablecolumn_hora_fi_proxim" prefWidth="97.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Hora fi" />
                         <TableColumn fx:id="tablecolumn_pista_proxim" prefWidth="100.0" style="-fx-background-color: #37474F; -fx-background-radius: 0; -fx-fill-color: #FAFAFA; -fx-text-fill: #FAFAFA; -fx-fill: #FAFAFA; -fx-text-align: CENTER; -fx-alignment: CENTER;" text="Pista" />

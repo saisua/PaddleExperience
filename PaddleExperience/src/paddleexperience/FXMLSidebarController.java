@@ -47,10 +47,8 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     private Stoppable sub_menu_controller;
 
     private final double MIN_SIZE = 145.d;
-    private final double MAX_SIZE = 300.d;
-    
-    
-    
+    private final double MAX_SIZE = 280.d;
+
     public void FXMLSidebarController() {
         Estat.setSidebar(this);
     }
@@ -121,13 +119,14 @@ public class FXMLSidebarController implements Initializable, Stoppable {
         //}
         borderpane.setCenter(root);
     }
-    
-    public void on_drag_resize(MouseEvent event){
+
+    public void on_drag_resize(MouseEvent event) {
         double x = event.getSceneX();
-        
-        if(x > this.MIN_SIZE && x < this.MAX_SIZE)
+
+        if (x > this.MIN_SIZE && x < this.MAX_SIZE) {
             this.hbox_sidebar.setPrefWidth(x);
-        
+        }
+
     }
 
 }
