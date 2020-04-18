@@ -78,7 +78,7 @@ public final class Hora{
         this.time_str = hora.toString();
         
         Text text_hora = new Text(this.time_str);
-        text_hora.setTranslateY(60.d);
+        text_hora.setTranslateY(50.d);
         
         // #388E3C
         
@@ -92,7 +92,7 @@ public final class Hora{
             
             image.setPreserveRatio(true);
             
-            image.setTranslateY(35.d);
+            //image.setTranslateY(25.d);
             
             //System.out.println(image.isResizable());
             // false
@@ -115,6 +115,7 @@ public final class Hora{
         text_hora.setStyle("-fx-fill:  #FAFAFA;"
                 + "-fx-font-size: 20;");
         this.hora.setStyle("-fx-text-alignment: center;");
+        this.courts.setStyle("-fx-alignment: center;");
 
         this.courts.setBackground(background_not_selected);
         
