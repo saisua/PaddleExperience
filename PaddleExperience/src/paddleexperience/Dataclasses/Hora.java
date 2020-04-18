@@ -52,7 +52,7 @@ public final class Hora{
     private String time_str;
     
     private final TextFlow hora = new TextFlow();
-    private final TextFlow courts = new TextFlow();
+    private final HBox courts = new HBox();
     private final TextFlow reservat = new TextFlow();
     
     // Estètic
@@ -78,13 +78,11 @@ public final class Hora{
         this.time_str = hora.toString();
         
         Text text_hora = new Text(this.time_str);
+        text_hora.setTranslateY(60.d);
         
         // #388E3C
         
         this.hora.getChildren().add(text_hora);
-        
-        Text h = new Text(this.time_str);
-        h.setVisible(false); 
         
         for(int court_num = 0; court_num < courts_state.size(); court_num++){
             ImageView image = new ImageView(this.images.get(courts_state.get(court_num)));
@@ -94,19 +92,24 @@ public final class Hora{
             
             image.setPreserveRatio(true);
             
+            image.setTranslateY(35.d);
+            
             //System.out.println(image.isResizable());
             // false
             
             this.courts_images[court_num] = image;
         }
         
-        HBox hbox_images = new HBox();
+        //hbox_images = new HBox();
         
-        hbox_images.getChildren().addAll(this.courts_images);
+        //hbox_images.getChildren().addAll(this.courts_images);
         
-        this.courts.getChildren().add(hbox_images);
+        this.courts.getChildren().addAll(this.courts_images);
         
-        this.reservat.getChildren().add(new Text("No"));
+        Text text_reserva = new Text("No");
+        text_reserva.setTranslateY(50.d);
+        
+        this.reservat.getChildren().add(text_reserva);
         
         // Definició de comportaments
         text_hora.setStyle("-fx-fill:  #FAFAFA;"
@@ -114,7 +117,6 @@ public final class Hora{
         this.hora.setStyle("-fx-text-alignment: center;");
 
         this.courts.setBackground(background_not_selected);
-        this.courts.setStyle("-fx-padding: 100 0 0 0;");
         
         this.hora.onMouseEnteredProperty().set((Event ev) -> this.on_hover_enter(ev));
         this.hora.onMouseExitedProperty().set((Event ev) -> this.on_hover_exit(ev));
@@ -208,7 +210,7 @@ public final class Hora{
         return this.hora;
     }
     
-    public TextFlow getCourts(){
+    public HBox getCourts(){
         return this.courts;
     }
     
