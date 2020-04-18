@@ -45,13 +45,13 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     private Button btn_historico;
     @FXML
     private Separator separator_resize;
+    @FXML
+    private Text text_Historico;
 
     private Stoppable sub_menu_controller;
 
     private final double MIN_SIZE = 145.d;
     private final double MAX_SIZE = 280.d;
-    @FXML
-    private Text text_Historico;
 
     public void FXMLSidebarController() {
         Estat.setSidebar(this);
@@ -63,7 +63,7 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        btn_home.setStyle("-fx-background-color:#78909C;-fx-background-radius:0;");
+        btn_home.setStyle("-fx-background-color:#78909C;-fx-background-radius:0; -fx-text-fill: #FAFAFA");
         btn_reserva.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_historico.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
 
@@ -91,19 +91,17 @@ public class FXMLSidebarController implements Initializable, Stoppable {
 
     @FXML
     private void goHome(MouseEvent event) throws IOException {
-        btn_home.setStyle("-fx-background-color:#78909C;-fx-background-radius:0;");
+        btn_home.setStyle("-fx-background-color:#78909C;-fx-background-radius:0; -fx-text-fill: #FAFAFA");
         btn_reserva.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_historico.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
-        text_Historico.setStyle("-fx-text-fill; #FAFAFA");
         loadUI("FXMLHome");
     }
 
     @FXML
     private void goReserva(MouseEvent event) throws IOException {
         btn_home.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
-        btn_reserva.setStyle("-fx-background-color:#78909C;-fx-background-radius:0;");
+        btn_reserva.setStyle("-fx-background-color:#78909C;-fx-background-radius:0; -fx-text-fill: #FAFAFA");
         btn_historico.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
-        text_Historico.setStyle("-fx-text-fill; #FAFAFA");
         loadUI("FXMLPaddleReserva");
     }
 
@@ -111,8 +109,7 @@ public class FXMLSidebarController implements Initializable, Stoppable {
     private void goHistorial(MouseEvent event) throws IOException {
         btn_home.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_reserva.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
-        btn_historico.setStyle("-fx-background-color:#78909C;-fx-background-radius:0;");
-        text_Historico.setStyle("-fx-text-fill; #222222");
+        btn_historico.setStyle("-fx-background-color:#78909C;-fx-background-radius:0; -fx-text-fill: #FAFAFA");
         loadUI("FXMLHistorico");
     }
 
