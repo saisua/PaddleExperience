@@ -233,10 +233,10 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
             Estat.setTime(Estat.time_inici.plusMinutes(Estat.partides_duracio * ((TableCell) ((TextFlow) event.getTarget()).getParent()).getTableRow().getIndex()));
 
         } else if (ImageView.class.isInstance(event.getTarget())) {
-            Estat.setTime(Estat.time_inici.plusMinutes(Estat.partides_duracio * ((TableCell) ((TextFlow) ((HBox) ((ImageView) event.getTarget()).getParent()).getParent()).getParent()).getTableRow().getIndex()));
+            Estat.setTime(Estat.time_inici.plusMinutes(Estat.partides_duracio * ((TableCell) ((HBox) ((ImageView) event.getTarget()).getParent()).getParent()).getTableRow().getIndex()));
 
         } else if (HBox.class.isInstance(event.getTarget())) {
-            Estat.setTime(Estat.time_inici.plusMinutes(Estat.partides_duracio * ((TableCell) ((TextFlow) ((HBox) event.getTarget()).getParent()).getParent()).getTableRow().getIndex()));
+            Estat.setTime(Estat.time_inici.plusMinutes(Estat.partides_duracio * ((TableCell) ((HBox) event.getTarget()).getParent()).getTableRow().getIndex()));
 
         } else {
             return;
@@ -286,6 +286,11 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
         if (BorderPane.class.isInstance(event.getSource())) {
             event.consume();
         }
+    }
+    
+    @FXML
+    public void on_mouse_refresh(Event _e){
+        this.tableview_horari.refresh();
     }
 
     @FXML
