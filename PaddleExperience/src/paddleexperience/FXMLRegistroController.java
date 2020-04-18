@@ -145,7 +145,7 @@ public class FXMLRegistroController implements Initializable, Stoppable {
         alert.setHeaderText(null);
         alert.setTitle("Gracies per unir-te");
         alert.setContentText("Hola " + nom + " gràcies per unir-te. "
-                + "Ara es guardaran les teues dades, això pot tardar uns minuts");
+                + "Ara es guardaran les teues dades");
         alert.initStyle(StageStyle.UTILITY);
         alert.getButtonTypes().clear();
         ButtonType buttonContinuar = new ButtonType("Continuar");

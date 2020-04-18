@@ -20,6 +20,8 @@ import javafx.scene.control.Separator;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import paddleexperience.PaddleExperience;
 import paddleexperience.Structures.Stoppable;
 import paddleexperience.Dataclasses.Estat;
@@ -48,6 +50,8 @@ public class FXMLSidebarController implements Initializable, Stoppable {
 
     private final double MIN_SIZE = 145.d;
     private final double MAX_SIZE = 280.d;
+    @FXML
+    private Text text_Historico;
 
     public void FXMLSidebarController() {
         Estat.setSidebar(this);
@@ -90,6 +94,7 @@ public class FXMLSidebarController implements Initializable, Stoppable {
         btn_home.setStyle("-fx-background-color:#78909C;-fx-background-radius:0;");
         btn_reserva.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_historico.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
+        text_Historico.setStyle("-fx-text-fill; #FAFAFA");
         loadUI("FXMLHome");
     }
 
@@ -98,6 +103,7 @@ public class FXMLSidebarController implements Initializable, Stoppable {
         btn_home.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_reserva.setStyle("-fx-background-color:#78909C;-fx-background-radius:0;");
         btn_historico.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
+        text_Historico.setStyle("-fx-text-fill; #FAFAFA");
         loadUI("FXMLPaddleReserva");
     }
 
@@ -106,6 +112,7 @@ public class FXMLSidebarController implements Initializable, Stoppable {
         btn_home.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_reserva.setStyle("-fx-background-color:transparent;-fx-text-fill:#FAFAFA;");
         btn_historico.setStyle("-fx-background-color:#78909C;-fx-background-radius:0;");
+        text_Historico.setStyle("-fx-text-fill; #222222");
         loadUI("FXMLHistorico");
     }
 
@@ -120,6 +127,7 @@ public class FXMLSidebarController implements Initializable, Stoppable {
         borderpane.setCenter(root);
     }
 
+    @FXML
     public void on_drag_resize(MouseEvent event) {
         double x = event.getSceneX();
 

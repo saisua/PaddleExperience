@@ -41,6 +41,8 @@ public class FXMLHomeController implements Initializable, Stoppable {
      */
     LocalDate todayDate = LocalDate.now();
     LocalTime nowTime = LocalTime.now();
+    @FXML
+    private Text text_Benvinguda;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -68,7 +70,7 @@ public class FXMLHomeController implements Initializable, Stoppable {
             int proximaReserva = proximaReserva(listaReservas);
             int ultimaReserva = ultimaReserva(listaReservas);
 
-            //COMPLETAR
+            this.text_Benvinguda.setText("Hola " + Estat.getMember().getName() + "!");
             //Pone el texto de la proxima y la última partida en caso de que haya
             String europeanDatePattern = "dd-MM-yyyy";
             DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(europeanDatePattern);
@@ -78,12 +80,16 @@ public class FXMLHomeController implements Initializable, Stoppable {
                 String pistaProx = listaReservas.get(proximaReserva).getCourt().getName();
                 String horaProx = listaReservas.get(proximaReserva).getFromTime().toString();
                 proxPartida.setText("El dia " + dataProx + " a les " + horaProx + " en la " + pistaProx);
+            } else {
+                proxPartida.setText("No tens partides pròximament");
             }
             if (ultimaReserva >= 0) {
                 String dataUlt = listaReservas.get(ultimaReserva).getMadeForDay().format(europeanDateFormatter);
                 String pistaUlt = listaReservas.get(ultimaReserva).getCourt().getName();
                 String horaUlt = listaReservas.get(ultimaReserva).getFromTime().toString();
                 ultPartida.setText("El dia " + dataUlt + " a les " + horaUlt + " en la " + pistaUlt);
+            } else {
+                ultPartida.setText("No has jugat encara");
             }
 
             //if (Estat.getMember() != null) {

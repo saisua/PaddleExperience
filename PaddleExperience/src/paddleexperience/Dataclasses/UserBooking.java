@@ -56,7 +56,7 @@ public class UserBooking {
         this.match_start = LocalDateTime.of(data.getMadeForDay(), data.getFromTime());
 
         Button button_cancel = new Button("Cancel·lar");
-        button_cancel.setStyle("-fx-text-fill: #A58279;");
+        button_cancel.setStyle("-fx-text-fill: #FAFAFA;");
 
         button_cancel.setOnMouseClicked((Event event) -> {
             try {
@@ -104,7 +104,7 @@ public class UserBooking {
         if (this.match_start.minusDays(1).compareTo(LocalDateTime.now()) > 0) {
             this.cancelar.getChildren().add(button_cancel);
         } else {
-            Tooltip.install(this.cancelar, new Tooltip("No pots cancelar durant les últimes 24h"));
+            Tooltip.install(this.cancelar, new Tooltip("No pots cancel·lar durant les últimes 24h"));
 
             this.cancelar_state = 1;
         }
@@ -142,7 +142,7 @@ public class UserBooking {
                 && this.cancelar_state != 1) {
             this.cancelar.getChildren().clear();
 
-            Tooltip.install(this.cancelar, new Tooltip("No pots cancelar durant les últimes 24h"));
+            Tooltip.install(this.cancelar, new Tooltip("No pots cancel·lar durant les últimes 24h"));
         }
     }
 
@@ -158,14 +158,14 @@ public class UserBooking {
         if (this.match_start.minusDays(1).compareTo(LocalDateTime.now()) < 0) {
             this.cancelar.getChildren().clear();
 
-            Tooltip.install(this.cancelar, new Tooltip("No pots cancelar durant les últimes 24h"));
+            Tooltip.install(this.cancelar, new Tooltip("No pots cancel·lar durant les últimes 24h"));
             return;
         }
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
-        alert.setTitle("Confirmació de cancelació");
-        alert.setContentText("Segur que vols cancelar la reserva?");
+        alert.setTitle("Confirmació de cancel·lació");
+        alert.setContentText("Segur que vols cancel·lar la reserva?");
         ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Sí");
         ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
 
@@ -178,7 +178,8 @@ public class UserBooking {
 
             // Açò és literalment per a curar-me en salut
             PaddleExperience.stop("FXMLHistorico.fxml");
-
+            PaddleExperience.refresh("FXMLHome.fxml");
+            PaddleExperience.refresh("FXMLPaddleReserva.fxml");
             FXMLHistoricoController.__proximes_count--;
 
             HashMap<LocalTime, Triplet<Image[], Member[], Boolean>> day_cache = Cache.cache.get(this.booking.getMadeForDay());
@@ -202,7 +203,7 @@ public class UserBooking {
     public void on_click_pay(Event event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
-        alert.setTitle("Confirmació de pago");
+        alert.setTitle("Confirmació de pagagment");
         alert.setContentText("Vols pagar la reserva amb la targeta?");
         alert.initStyle(StageStyle.UTILITY);
         Optional<ButtonType> result = alert.showAndWait();

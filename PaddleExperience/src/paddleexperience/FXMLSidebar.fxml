@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="718.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLSidebarController">
+<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="718.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLSidebarController">
     <left>
       <HBox fx:id="hbox_sidebar" maxHeight="1.7976931348623157E308" prefHeight="502.0" prefWidth="228.0" BorderPane.alignment="CENTER">
          <children>
@@ -31,7 +31,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                       </Button>
-                      <Button id="button_SideBar" fx:id="btn_reserva" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#goReserva" prefHeight="60.0" style="-fx-background-color: transparent; -fx-text-fill: #FAFAFAFA; -fx-background-radius: 0;" text="Nueva reserva">
+                      <Button id="button_SideBar" fx:id="btn_reserva" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#goReserva" prefHeight="60.0" style="-fx-background-color: transparent; -fx-text-fill: #FAFAFAFA; -fx-background-radius: 0;" text="Nova reserva">
                           <VBox.margin>
                               <Insets />
                           </VBox.margin>
@@ -63,7 +63,7 @@
                            <children>
                               <TextFlow maxHeight="-Infinity" minHeight="-Infinity" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <children>
-                                    <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservas y cancelaciones" textAlignment="CENTER">
+                                    <Text fx:id="text_Historico" fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" text="Reserves i cancel·lacions" textAlignment="CENTER">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
