@@ -39,7 +39,7 @@ import paddleexperience.Structures.Cache;
 public class PaddleExperience extends Application {
 
     public static final int minHeight = 550;
-    public static final int minWidth = 800;
+    public static final int minWidth = 810;
 
     // Loader
     private static final HashMap<String, Parent> root = new HashMap<String, Parent>();
@@ -190,8 +190,8 @@ public class PaddleExperience extends Application {
             throws IOException {
         window(sceneName, title, width, height, Modality.NONE);
     }
-    
-    public static void window(String sceneName, String title, double width, double height, 
+
+    public static void window(String sceneName, String title, double width, double height,
             Modality mode) throws IOException {
 
         if (controllers.containsKey(sceneName)) {
@@ -211,9 +211,9 @@ public class PaddleExperience extends Application {
 
         stage.setWidth(width);
         stage.setHeight(height);
-        
+
         stage.initModality(mode);
-        
+
         last_window = stage;
 
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -227,7 +227,7 @@ public class PaddleExperience extends Application {
         });
 
         controllers.get(sceneName).refresh();
-        
+
         stage.showAndWait();
 
     }

@@ -72,9 +72,6 @@ import paddleexperience.Dataclasses.Estat;
  */
 public class FXMLPaddleReservaController implements Initializable, Stoppable {
 
-    // // Scene
-    @FXML
-    private Text text_data;
     @FXML
     private BorderPane borderpane_main;
     @FXML
@@ -101,6 +98,8 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
     private GridPane gridpane_OverBlur;
     @FXML
     private DatePicker date_Picker;
+    @FXML
+    private Text creu_Eixir;
 
     /**
      * Initializes the controller class.
@@ -252,6 +251,8 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
 
         this.menu_hora = true;
 
+        this.creu_Eixir.setVisible(true);
+
         System.out.println(Estat.getTime().toString());
 
         PaddleExperience.refresh("FXMLReservaHora.fxml");
@@ -278,6 +279,7 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
 
             this.borderpane_main.setDisable(false);
             this.gridpane_OverBlur.setDisable(true);
+            this.creu_Eixir.setVisible(false);
         }
     }
 
@@ -287,9 +289,9 @@ public class FXMLPaddleReservaController implements Initializable, Stoppable {
             event.consume();
         }
     }
-    
+
     @FXML
-    public void on_mouse_refresh(Event _e){
+    public void on_mouse_refresh(Event _e) {
         this.tableview_horari.refresh();
     }
 
