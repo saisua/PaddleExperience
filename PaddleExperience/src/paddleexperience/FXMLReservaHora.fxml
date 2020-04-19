@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.effect.DropShadow?>
@@ -21,7 +22,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane id="fons_Flotant" maxHeight="450.0" maxWidth="600.0" prefHeight="450.0" prefWidth="600.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLReservaHoraController">
+<AnchorPane id="fons_Flotant" maxHeight="485.0" maxWidth="600.0" prefHeight="485.0" prefWidth="600.0" stylesheets="@CSS/PaddleReserva.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paddleexperience.FXMLReservaHoraController">
    <children>
       <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="450.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -35,7 +36,7 @@
           <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="91.0" valignment="CENTER" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox id="button_Enrere" fx:id="vbox_Lhora" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_click_befHora" prefHeight="92.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <VBox id="button_Enrere" fx:id="vbox_Lhora" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_click_befHora" onMouseEntered="#on_hover_enter_fletxa" onMouseExited="#on_hover_exit_fletxa" prefHeight="92.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <children>
                   <ImageView id="move_Hora" fx:id="imageview_Lfletxa" fitHeight="74.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -51,7 +52,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Text id="text_Info" fx:id="text_Lhora" strokeType="OUTSIDE" strokeWidth="0.0" text="18:00">
+                  <Text id="text_Info" fx:id="text_Lhora" strokeType="OUTSIDE" strokeWidth="0.0" text="18:00" visible="false">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -61,7 +62,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </VBox>
-            <VBox id="button_Enrere" fx:id="vbox_Rhora" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_click_nextHora" prefHeight="92.0" prefWidth="144.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <VBox id="button_Enrere" fx:id="vbox_Rhora" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_click_nextHora" onMouseEntered="#on_hover_enter_fletxa" onMouseExited="#on_hover_exit_fletxa" prefHeight="92.0" prefWidth="144.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <children>
                   <ImageView id="move_Hora" fx:id="imageview_Rfletxa" fitHeight="74.0" fitWidth="76.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -77,7 +78,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Text id="text_Info" fx:id="text_Rhora" strokeType="OUTSIDE" strokeWidth="0.0" text="20:00">
+                  <Text id="text_Info" fx:id="text_Rhora" strokeType="OUTSIDE" strokeWidth="0.0" text="20:00" visible="false">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -89,17 +90,13 @@
             </VBox>
             <AnchorPane GridPane.columnIndex="1">
                <children>
-                  <Text id="text_Info" fx:id="text_data" layoutX="190.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F" textAlignment="RIGHT" underline="true" wrappingWidth="197.7294921875" AnchorPane.rightAnchor="14.2705078125">
+                  <Text id="text_Info_Big" fx:id="text_data" layoutX="190.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F" textAlignment="RIGHT" underline="true" wrappingWidth="197.7294921875" AnchorPane.rightAnchor="14.2705078125">
                      <font>
                         <Font size="25.0" />
                      </font>
                   </Text>
-                  <Text id="text_Info" fx:id="text_hora" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="19:00" wrappingWidth="64.7294921875">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
-                  <ImageView fx:id="imageview_rellotge" fitHeight="22.0" fitWidth="22.0" layoutX="54.0" layoutY="29.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
+                  <Text id="text_Info_Big" fx:id="text_hora" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="19:00" wrappingWidth="73.7294921875" AnchorPane.topAnchor="25.0" />
+                  <ImageView fx:id="imageview_rellotge" fitHeight="22.0" fitWidth="22.0" layoutX="54.0" layoutY="29.0" opacity="0.7" pickOnBounds="true" preserveRatio="true" translateX="30.0">
                      <image>
                         <Image url="@Images/Clock.png" />
                      </image>
@@ -217,6 +214,11 @@
                   <Font name="Ubuntu Light" size="15.0" />
                </font></Button>
             <Text id="text_Info" fx:id="text_reserva" strokeType="OUTSIDE" strokeWidth="0.0" text="Easter egg #5 potser?" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BASELINE" />
+            <CheckBox fx:id="checkbox_pagar" mnemonicParsing="false" text="Pagar amb targeta" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="30.0" />
+               </GridPane.margin>
+            </CheckBox>
          </children>
       </GridPane>
    </children>

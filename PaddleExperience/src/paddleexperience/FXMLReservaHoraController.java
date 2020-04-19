@@ -29,6 +29,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.DropShadow;
@@ -86,6 +87,8 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
     private VBox vbox_no_login;
     @FXML
     private Text text_reserva;
+    @FXML
+    private CheckBox checkbox_pagar;
     @FXML
     private Button button_reserva;
 
@@ -161,6 +164,8 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
             this.vbox_no_login.setVisible(true);
             this.text_reserva.setVisible(false);
             this.button_reserva.setVisible(false);
+            
+            this.checkbox_pagar.setVisible(false);
 
             this.reservable = false;
         } else {
@@ -175,13 +180,22 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
             if (LocalDateTime.of(Estat.getDate(), Estat.getTime())
                     .compareTo(LocalDateTime.now()) > 0) {
                 this.te_reserva = hora.getTeReserva();
-
-                this.text_reserva.setText((te_reserva) ? "Ja tens una hora reservada"
-                        : "Ninguna pista seleccionada");
+                
+                if(te_reserva) {
+                    this.text_reserva.setText("Ja tens una hora reservada");
+                    
+                    this.checkbox_pagar.setVisible(false);
+                } else {
+                    this.text_reserva.setText("Ninguna pista seleccionada");
+                    
+                    this.checkbox_pagar.setVisible(!Estat.getMember().getCreditCard().equals(""));
+                }
 
                 this.reservable = true;
             } else {
                 this.text_reserva.setText("Ja ha passat el temps de reserva");
+                
+                this.checkbox_pagar.setVisible(false);
 
                 this.reservable = false;
             }
@@ -228,11 +242,23 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
 
         ((DropShadow) ((Node) event.getSource()).getEffect()).setHeight(20);
         ((DropShadow) ((Node) event.getSource()).getEffect()).setWidth(20);
+        
+        //z((Text) ((VBox) event.getTarget()).getChildren().get(1)).setVisible(true);
     }
 
     public void on_hover_exit_pista(Event event) {
         ((DropShadow) ((Node) event.getSource()).getEffect()).setHeight(0);
         ((DropShadow) ((Node) event.getSource()).getEffect()).setWidth(0);
+        
+        //((Text) ((VBox) event.getTarget()).getChildren().get(1)).setVisible(false);
+    }
+    
+    public void on_hover_enter_fletxa(Event event) {
+        ((Text) ((VBox) event.getSource()).getChildren().get(1)).setVisible(true);
+    }
+    
+    public void on_hover_exit_fletxa(Event event) {
+        ((Text) ((VBox) event.getSource()).getChildren().get(1)).setVisible(false);
     }
 
     public void on_click_pista(MouseEvent event) {
@@ -309,7 +335,7 @@ public class FXMLReservaHoraController implements Initializable, Stoppable {
         if (result.get() == ButtonType.OK) {
 
             Estat.club.getBookings().add(new Booking(LocalDateTime.now(), Estat.getDate(), Estat.getTime(),
-                    false, Estat.getSelectedCourt(), Estat.getMember()));
+                    this.checkbox_pagar.isSelected(), Estat.getSelectedCourt(), Estat.getMember()));
 
             this.te_reserva = true;
 
