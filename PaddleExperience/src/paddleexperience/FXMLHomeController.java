@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,8 +19,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 import model.Booking;
 import paddleexperience.Dataclasses.Estat;
+import paddleexperience.Dataclasses.Triplet;
 import paddleexperience.Structures.Stoppable;
 
 /**
@@ -66,27 +69,31 @@ public class FXMLHomeController implements Initializable, Stoppable {
         ClubDBAccess clubDBAccess;
         clubDBAccess = Estat.club;
         if (Estat.getMember() != null) {
-            ArrayList<Booking> listaReservas = clubDBAccess.getUserBookings(Estat.getMemberLogin());
-            int proximaReserva = proximaReserva(listaReservas);
-            int ultimaReserva = ultimaReserva(listaReservas);
+            todayDate = LocalDate.now();
+            nowTime = LocalTime.now();
+            
+            Booking[] ant_prox = reserves_ant_prox(Estat.club.getUserBookings(Estat.getMemberLogin()));
+            
+            Booking reserva_anterior = ant_prox[0];
+            Booking reserva_seguent = ant_prox[1];
 
             this.text_Benvinguda.setText("Hola " + Estat.getMember().getName() + "!");
             //Pone el texto de la proxima y la última partida en caso de que haya
             String europeanDatePattern = "dd-MM-yyyy";
             DateTimeFormatter europeanDateFormatter = DateTimeFormatter.ofPattern(europeanDatePattern);
 
-            if (proximaReserva >= 0) {
-                String dataProx = listaReservas.get(proximaReserva).getMadeForDay().format(europeanDateFormatter);
-                String pistaProx = listaReservas.get(proximaReserva).getCourt().getName();
-                String horaProx = listaReservas.get(proximaReserva).getFromTime().toString();
+            if (reserva_seguent != null) {
+                String dataProx = reserva_seguent.getMadeForDay().format(europeanDateFormatter);
+                String pistaProx = reserva_seguent.getCourt().getName();
+                String horaProx = reserva_seguent.getFromTime().toString();
                 proxPartida.setText("El dia " + dataProx + " a les " + horaProx + " en la " + pistaProx);
             } else {
                 proxPartida.setText("No tens partides pròximament");
             }
-            if (ultimaReserva >= 0) {
-                String dataUlt = listaReservas.get(ultimaReserva).getMadeForDay().format(europeanDateFormatter);
-                String pistaUlt = listaReservas.get(ultimaReserva).getCourt().getName();
-                String horaUlt = listaReservas.get(ultimaReserva).getFromTime().toString();
+            if (reserva_anterior != null) {
+                String dataUlt = reserva_anterior.getMadeForDay().format(europeanDateFormatter);
+                String pistaUlt = reserva_anterior.getCourt().getName();
+                String horaUlt = reserva_anterior.getFromTime().toString();
                 ultPartida.setText("El dia " + dataUlt + " a les " + horaUlt + " en la " + pistaUlt);
             } else {
                 ultPartida.setText("No has jugat encara");
@@ -97,33 +104,40 @@ public class FXMLHomeController implements Initializable, Stoppable {
             //}
         }
     }
-
-    //Calcula cunado será la próxima reserva
-    private int proximaReserva(ArrayList<Booking> listaReservas) {
-        if (listaReservas.isEmpty()) {
-            return -1;
+    
+    private Booking[] reserves_ant_prox(ArrayList<Booking> listaReservas){
+        Booking next = null;
+        Booking last = null;
+        
+        for(Iterator<Booking> iter = listaReservas.iterator(); iter.hasNext();){
+            Booking reserva = iter.next();
+            
+            int day_compare = todayDate.compareTo(reserva.getMadeForDay());
+            // Si ja ha passat el dia
+            if(day_compare > 0) {
+                if(last == null || last.compareTo(reserva) < 0)
+                    last = reserva;
+            // Si encara no ha passat el dia
+            } else if(day_compare < 0){
+                if(next == null || next.compareTo(reserva) > 0)
+                    next = reserva;
+            // Si és hui
+            } else {                
+                int time_compare = nowTime.compareTo(reserva.getFromTime());
+                
+                // Si ja ha passat l'hora
+                if(time_compare >= 0){
+                    if(last == null || last.compareTo(reserva) < 0)
+                        last = reserva;
+                
+                // Si encara no ha passat l'hora
+                } else 
+                    if(next == null || next.compareTo(reserva) > 0)
+                        next = reserva;
+            } 
         }
-        for (int i = 0; i < listaReservas.size(); i++) {
-            if (todayDate.compareTo(listaReservas.get(i).getMadeForDay()) < 0
-                    && nowTime.compareTo(listaReservas.get(i).getFromTime()) < 0) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    //Calcula cuándo fue la última partida
-    private int ultimaReserva(ArrayList<Booking> listaReservas) {
-        if (listaReservas.isEmpty()) {
-            return -1;
-        }
-        for (int i = 0; i < listaReservas.size(); i++) {
-            if (todayDate.compareTo(listaReservas.get(i).getMadeForDay()) < 0
-                    && nowTime.compareTo(listaReservas.get(i).getFromTime()) < 0) {
-                return i - 1;
-            }
-        }
-        return listaReservas.size() - 1;
+        
+        return new Booking[]{last, next};
     }
 
 }
