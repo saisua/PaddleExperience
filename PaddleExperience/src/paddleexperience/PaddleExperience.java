@@ -191,20 +191,31 @@ public class PaddleExperience extends Application {
         window(sceneName, title, width, height, Modality.NONE);
     }
 
+    // It will use 
     public static void window(String sceneName, String title, double width, double height,
             Modality mode) throws IOException {
+        
+        Parent new_window_root = root.get(sceneName);
+        Stoppable new_window_controller = controllers.get(sceneName);
+        
+        boolean exists = controllers.containsKey(sceneName);
 
-        if (controllers.containsKey(sceneName)) {
-            controllers.get(sceneName).refresh();
-        } else {
+        if (!exists || new_window_root.getScene() != null) {
+            System.out.println("### NEW");
+            
             FXMLLoader loader = new FXMLLoader(static_class.getResource(sceneName));
-            root.put(sceneName, loader.load());
-            controllers.put(sceneName, loader.getController());
-            //controllers.get(sceneName).refresh();
+            
+            new_window_root = loader.load();
+            new_window_controller = loader.getController();
+                    
+            if(!exists){ // crea el Parent i guarda'l per al seu ús global
+                root.put(sceneName, new_window_root);
+                controllers.put(sceneName, new_window_controller);
+            }
         }
 
         Stage stage = new Stage();
-        stage.setScene(new Scene(root.get(sceneName)));
+        stage.setScene(new Scene(new_window_root));
         stage.setTitle(title);
         stage.setMinWidth(width);
         stage.setMinHeight(height);
@@ -215,21 +226,22 @@ public class PaddleExperience extends Application {
         stage.initModality(mode);
 
         last_window = stage;
+        
+        final Stoppable controller_copy = new_window_controller;
 
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(final WindowEvent event) {
                 try {
-                    controllers.get(sceneName).stop();
+                    controller_copy.stop();
                 } catch (InterruptedException err) {
                 }
             }
         });
 
-        controllers.get(sceneName).refresh();
+        new_window_controller.refresh();
 
         stage.showAndWait();
-
     }
 
     // // GETTERS
@@ -272,3 +284,4 @@ public class PaddleExperience extends Application {
         return controllers.get(sceneName);
     }
 }
+
