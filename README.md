@@ -10,8 +10,9 @@ A desktop app meant to be used in a padel club for the end user
 Working prototype with front-end + back-end
 
 Among its features:
-  Registration
-  Login
-  Court renting
-  Court avaliability check
-  Court cancelation
+
+  Registration<br/>
+  Login<br/>
+  Court renting<br/>
+  Court avaliability check<br/>
+  Court cancelation<br/>
